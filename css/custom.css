@@ -1,0 +1,132 @@
+body {
+    padding-top: 49px;
+    background-color: #1F4E79 !important;
+}
+
+iframe {
+    background-color: white !important;
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.table td {
+	padding: 0px;	
+}
+
+.bg-dark {
+    background-color: #1F4E79 !important;
+}
+
+.box-form {
+	padding: 20px;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #4e6a82;
+    border-color: #4c6075;
+}
+
+iframe{
+    overflow:hidden;
+}
+
+.breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.1rem 1.1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #1F4E79;
+}
+
+.btn-primary, .btn-primary:disabled {
+    color: #fff;
+    background-color: #1F4E79;
+    border-color: #1e5f77;
+}
+
+a {
+    color: #1F4E79;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: !important #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 800px;
+        margin: 1.75rem auto;
+    }
+}
+
+.card {
+    margin-bottom:20px;
+}
+
+
+.table tr {
+    text-align: center;
+}
+
+.double {
+  zoom: 2.4;
+  transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+}
+
+.log {
+  width:100%; 
+  height:650px;
+  color: white;
+  background-color: black;
+  font-size: 12px;
+}
+
+.navbar-collapse {
+  background-color: rgb(31, 78, 121);
+  padding-left: 15px;
+}

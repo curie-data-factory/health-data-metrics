@@ -1,0 +1,6 @@
+{
+	"name":"hdm/hdm",
+	"require":	{
+		"adldap2/adldap2": ">=10.2.0"
+	}
+}

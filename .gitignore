@@ -1,0 +1,4 @@
+logs/
+conf/ldap/
+conf/db/
+vendor/
