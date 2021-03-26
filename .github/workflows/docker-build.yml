@@ -5,10 +5,14 @@ on:
     branches:
       - 'master'
 
-    tags:
-      - '*'
-
   pull_request:
+    branches:
+      - 'master'
+
+  tags:
+    - '*'
+
+  workflow_dispatch:
 
 env:
   IMAGE_NAME: "hdm"
