@@ -11,7 +11,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: "job-orchestrator"
+  IMAGE_NAME: "hdm"
 
 jobs:
   docker:
