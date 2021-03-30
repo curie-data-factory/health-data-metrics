@@ -1,4 +1,4 @@
-logs/
 conf/ldap/
-conf/db/
+conf/db/conf-db.json
+conf/appli/
 vendor/
