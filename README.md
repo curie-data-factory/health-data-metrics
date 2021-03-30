@@ -67,7 +67,7 @@ As you may have understood, Job orchestrator needs an **ecosystem** of applicati
     "PACK": {
         "NEXUS_URL": "http:\/\/localhost:8081\/",
         "NEXUS_API_URL": "http:\/\/localhost:8081\/service\/rest\/v1\/",
-        "NEXUS_PACKS_ROOT_REPOSITORY": "",
+        "NEXUS_PACKS_ROOT_REPOSITORY": ""
     }
 }
 ```
