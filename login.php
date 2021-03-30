@@ -5,6 +5,10 @@ session_start();
 require __DIR__ . '/vendor/autoload.php';
 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
+
+switch ($conf['AUTH']['AUTH_MODE']) {
+	case 'ldap':
+
 $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['AUTH']['AUTH_LDAP_CONF_PATH']),true);
 
 $service_ldap_authorization_domain = $ldap_conf['service_ldap_authorization_domain'];
@@ -194,3 +198,12 @@ if(isset($_POST['login']) AND isset($_POST['password'])) {
 </script>
 </body>
 </html>
+
+<?php
+		break;
+	
+	case 'none':
+	    $_SESSION['connected'] = true;
+		header('location:index.php');
+		break;
+} ?>

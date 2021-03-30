@@ -49,7 +49,70 @@ As you may have understood, Job orchestrator needs an **ecosystem** of applicati
 
 ```json
 {
+    "AUTH": {
+        "AUTH_MODE": "none",
+        "AUTH_LDAP_CONF_PATH": "\/conf\/ldap\/conf-ldap.json"
+    },
+    "DB": {
+        "DB_CONF_PATH": "\/conf\/db\/conf-db.json",
+        "DB_CREATE_SCRIPT_PATH": "\/conf\/db\/create_tables.sql"
+    },
+    "EXPLORER": {
+        "KIBANA_URL": "http:\/\/localhost:5601\/",
+        "KIBANA_NAMESPACE": "default",
+        "KIBANA_HOME_DASHBOARD": "",
+        "KIBANA_EXPLORATOR_DASHBOARD": "",
+        "KIBANA_EXPLORATOR_INDEX": ""
+    },
+    "PACK": {
+        "NEXUS_URL": "http:\/\/localhost:8081\/",
+        "NEXUS_API_URL": "http:\/\/localhost:8081\/service\/rest\/v1\/",
+        "NEXUS_PACKS_ROOT_REPOSITORY": "",
+    }
+}
+```
 
+`/var/www/html/conf/db/conf-db.php` : 
+
+```json
+{
+  "hdm-nexus-creds": {
+      "user": "",
+      "password": ""
+  },
+  "hdm-core-database": {
+      "user": "hdm",
+      "password": "password",
+      "host": "mysql",
+      "port": "3306",
+      "database": "dbhdm",
+      "ssl": "false"
+  },
+  "hdm-nosql-database": {
+      "user": "",
+      "password": "",
+      "host": "elasticsearch",
+      "namespace": "default",
+      "port": "9200",
+      "ssl": "false"
+  },
+  "hdm-sql-database": {
+      "user": "hdm",
+      "password": "password",
+      "host": "mysql",
+      "port": "3306",
+      "database": "dbhdm",
+      "ssl": "false"
+  },
+  "hdm-scanned-database": [
+    {
+        "user":"hdm",
+        "host":"mysql",
+        "port":"3306",
+        "database":"dbtoscan",
+        "ssl": "false"
+    }
+    ]
 }
 ```
 
@@ -62,7 +125,7 @@ You can run job orchestrator from 3 different ways :
 To run anywhere : 
 
 ```bash
-docker run -p 80:80 -v conf/:/var/www/html/conf/ health-data-metrics:latest
+docker run -p 80:80 -v conf/:/var/www/html/conf/ ghcr.io/curie-data-factory/hdm:latest
 ```
 
 ### Helm Chart

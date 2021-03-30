@@ -1,9 +1,12 @@
 <?php 
 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
+if ($conf['AUTH']['AUTH_MODE'] == "ldap") {
+
 $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['AUTH']['AUTH_LDAP_CONF_PATH']),true);
 
-if ($conf['AUTH']['AUTH_MODE'] != "table") {
+}
+else if ($conf['AUTH']['AUTH_MODE'] != "table") {
 	?>
 	<div class="alert alert-primary" role="alert">
 		The Authentication mode is set to <?php echo $conf['AUTH']['AUTH_MODE']; ?>. You can't manage credentials locally. Please change the AUTH_MODE to "table" in your config file or contact your LDAP administrator.
