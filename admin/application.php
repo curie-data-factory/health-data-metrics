@@ -74,7 +74,7 @@ if (isset($_POST['editApplicationConfiguration'])) {
 							echo('
 							<div class="alert alert-primary" role="alert">
 								Notice : 
-								<br> - AUTH_MODE : (table,ldap) : Local is not yet supported
+								<br> - AUTH_MODE : (table,ldap,none) : Local is not yet supported
 								<br> - AUTH_LDAP_CONF_PATH : Path to json LDAP configuration file
 							</div>
 								');
@@ -84,6 +84,7 @@ if (isset($_POST['editApplicationConfiguration'])) {
 							<div class="alert alert-primary" role="alert">
 								Notice : 
 								<br> - PIPELINE_RUNNING_MODE : (local,docker-runner,airflow) : Docker runner & Airflow not yet supported
+								<br> - AIRFLOW_URL : If PIPELINE_RUNNING_MODE==airflow : Airflow Endpoint URL
 							</div>
 								');
 								break;

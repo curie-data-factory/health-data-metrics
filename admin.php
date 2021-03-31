@@ -11,6 +11,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
 $_SESSION['page'] = "admin";
 
 include($_SERVER['DOCUMENT_ROOT'].'/header.php');
+$conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 
 $showAuth = false;
 $showApp = false;
@@ -65,7 +66,7 @@ if(isset($_GET['tab'])) {
 			  <a class="nav-link <?php if($showHealth){ echo('active'); } ?>" id="v-pills-health-check-tab" data-toggle="pill" href="#v-pills-health-check" role="tab" aria-controls="v-pills-health-check" aria-selected="false"><i class="fas fa-notes-medical"></i> Health Check</a>
 			  <a class="nav-link <?php if($showMetPacks){ echo('active'); } ?>" id="v-pills-metric-packs-tab" data-toggle="pill" href="#v-pills-metric-packs" role="tab" aria-controls="v-pills-metric-packs" aria-selected="false"><i class="fas fa-square-root-alt"></i> Metric Packs</a>
 			  <a class="nav-link <?php if($showRulePacks){ echo('active'); } ?>" id="v-pills-rule-packs-tab" data-toggle="pill" href="#v-pills-rule-packs" role="tab" aria-controls="v-pills-rule-packs" aria-selected="false"><i class="far fa-check-circle"></i> Rule Packs</a>
-			  <a class="nav-link <?php if($showjobs){ echo('active'); } ?>" id="v-pills-job-pipelines-tab" target="_blank" href="https://dev-airflow-data.curie.net/graph?dag_id=hdm-pipeline"><i class="fas fa-play"></i> Job Pipelines</a>
+			  <a class="nav-link <?php if($showjobs){ echo('active'); } ?>" id="v-pills-job-pipelines-tab" target="_blank" href="<?php echo($conf['PIPELINE']['AIRFLOW_URL']); ?>graph?dag_id=hdm-pipeline"><i class="fas fa-play"></i> Job Pipelines</a>
 			  <h1 class="border-bottom border-gray pb-2 mb-0"></h1>
 			  <a class="nav-link <?php if($showLog){ echo('active'); } ?>" id="v-pills-log-tab" data-toggle="pill" href="#v-pills-log" role="tab" aria-controls="v-pills-log" aria-selected="false"><i class="fas fa-clipboard-list"></i> Log History</a>
 			</div>

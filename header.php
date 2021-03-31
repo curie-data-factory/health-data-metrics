@@ -48,9 +48,9 @@
 				<li class="nav-item">
 					<a class='nav-link <?php if($_SESSION["page"] == "alert"){echo("active");} ?>' href="/alert/alert.php"><i class="fas fa-exclamation-circle"></i> Alerts</a>
 				</li>
-<!-- 				<li class="nav-item">
+				<li class="nav-item">
 					<a class='nav-link <?php if($_SESSION["page"] == "compare"){echo("active");} ?>' href="/db-compare/compare.php"><i class="fas fa-wave-square"></i> DB Compare</a>
-				</li> -->
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-1 mr-2">
 				<li class="nav-item">

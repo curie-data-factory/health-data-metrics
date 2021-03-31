@@ -35,7 +35,8 @@ WORKDIR /var/www/html/
 COPY . /var/www/html/
 
 # Add Version number
-RUN mkdir /var/www/html/version && \
+RUN rm -rf /var/www/html/version && \
+    mkdir /var/www/html/version && \
 	touch /var/www/html/version/version.json && \
 	echo '{	"version":"${APP_VERSION}" }' >> /var/www/html/version/version.json
 

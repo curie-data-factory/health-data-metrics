@@ -37,11 +37,11 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
 					<p class="card-text">Consultez les alertes sur vos entrepôts de données.</p>
 					<a href="/alert/alert.php" class="btn btn-primary">> Alerts</a>
 				</div>
-<!-- 				<div class="card-body">
+				<div class="card-body">
 					<h5 class="card-title"><i class="fas fa-wave-square"></i> DB Compare</a></h5>
 					<p class="card-text">Comparez deux bases de données ou deux version d'une base de donnée, à travers les métriques qui y sont calculés.</p>
 					<a href="/db-compare/compare.php" class="btn btn-primary">> DB Compare</a>
-				</div> -->
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-4">
