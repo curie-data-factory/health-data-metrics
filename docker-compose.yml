@@ -12,9 +12,6 @@ services:
   hdm:
     container_name: hdm
     hostname: hdm
-    depends_on:
-      - mysql
-      - elasticsearch
     build: "."
     ports:
       - "80:80"

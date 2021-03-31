@@ -11,8 +11,8 @@
 		* [Docker Image](#docker-image)
 		* [Helm Chart](#helm-chart)
 		* [From Sources](#from-sources)
-* [Build the doc]($build-doc)
 * [Screenshots & User Guide](#screenshots--user-guide)
+* [Build the doc](#build-doc)
 
 # Goal
 
