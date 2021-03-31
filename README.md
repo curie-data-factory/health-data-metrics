@@ -16,28 +16,34 @@
 
 # Goal
 
-Site qui permet de visualiser les métriques de qualité de la donnée.
+The main goal of HDM is to help asses data quality by running ad-hoc programs that "scan" databases regularly to compute metrics & calculate divergence wether in structure or content of databases. Generating alerts that gives Data Engineers insights on what broke down.
+
+To do this we have developed the following features:
+
+Calculate metrics on the data from our warehouses.
+
+* Set up rules to be able to apply operational / business constraints on the databases in connection with the calculated metrics.
+* Detect breaks and regressions in the database structure or in the data itself by generating alerts using business rules.
+* Allow constraints to be centralized and create a unified HUB to manage data quality in order to deliver the best possible quality data to doctors and researchers.
+* Create dashboards on metrics to be able to visualize and explore them.
 
 # Get Started
 
-As you may have understood, Job orchestrator needs an **ecosystem** of application in order to work. It serves as a pass between all application's APIS.
+As you may have understood, Health Data Metrics needs an **ecosystem** of application in order to work.
 
 ## Dependencies
 
-- Kubernetes Cluster `>=v1.15.15`
+- Elasticsearch `>=v7.10.0`
+  - Elasticsearch Installed and API Endpoint accessible.
 
-	- Rancher Installed `>=2.2.10` and API Endpoint accessible.
-	- Need Rancher Project with rights to : [Check workload statues, API Access, Check logs].
-	- Need a kubernetes Namespace with rights to : [deploy jobs, creates secrets, create configmaps].
+- Kibana `>=v7.10.0`
+  - Kibana Installed and API Endpoint accessible.
 
-- Gitlab `>=12.0.4`
-
-	- Gitlab Installed and API Endpoint accessible.
-	- Group Project containing Docker Runner Images repositories.
-	- API ACCESS TOKEN for this particular group with rights to [ Read Registries, Read Repositories].
+- Airflow `>=v2.1.0`
+  - Airflow Installed and API Endpoint accessible.
+  - HDM Pipeline imported, setup & running (See More on [Airflow Pipeline](#Airflow-Pipeline).
 
 - Nexus `>=3.29.2-02`
-
 	- Nexus Installed and API Endpoint accessible.
 	- Default Repository
 	- User / Password with rights to [Read artifacts, Search Queries]
@@ -157,9 +163,7 @@ cd health-data-metrics/
 ```
 2. Create Conf files & folders :
 ```bash
-mkdir conf ldapconf
-touch conf/appli/conf-appli.php
-touch ldapconf/conf.php
+touch conf/ldap/conf-ldap.json
 ```
 3. Set configuration variables [see templates above](#configuration)
 4. Then run the [Docker Compose](https://docs.docker.com/compose/) stack.
@@ -202,3 +206,6 @@ cd health-data-metrics
 ```bash
 docker run --rm -i -v "$PWD:/docs" squidfunk/mkdocs-material:latest build
 ```
+
+____
+Data Factory - Institut Curie - 2021
