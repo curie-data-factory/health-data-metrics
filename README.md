@@ -11,6 +11,7 @@
 		* [Docker Image](#docker-image)
 		* [Helm Chart](#helm-chart)
 		* [From Sources](#from-sources)
+* [Build the doc]($build-doc)
 * [Screenshots & User Guide](#screenshots--user-guide)
 
 # Goal
@@ -68,6 +69,10 @@ As you may have understood, Job orchestrator needs an **ecosystem** of applicati
         "NEXUS_URL": "http:\/\/localhost:8081\/",
         "NEXUS_API_URL": "http:\/\/localhost:8081\/service\/rest\/v1\/",
         "NEXUS_PACKS_ROOT_REPOSITORY": ""
+    },
+    "PIPELINE": {
+        "PIPELINE_RUNNING_MODE": "airflow",
+        "AIRFLOW_URL": "http:\/\/localhost:8080/"
     }
 }
 ```
@@ -180,3 +185,20 @@ composer install --no-dev --optimize-autoloader
 ![home](img/capture-hdm1.PNG)
 ![explorator](img/capture-hdm2.PNG)
 ![rule-editor](img/capture-hdm3.PNG)
+
+# Build Doc
+
+The documentation is compiled from **markdown sources** using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
+To compile the documentation : 
+
+1. Go to your source directory : 
+
+```bash
+cd health-data-metrics
+```
+
+2. Run the docker build command : 
+
+```bash
+docker run --rm -i -v "$PWD:/docs" squidfunk/mkdocs-material:latest build
+```
