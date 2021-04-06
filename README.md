@@ -172,6 +172,13 @@ touch conf/ldap/conf-ldap.json
 docker-compose up -d
 ```
 
+* [http://localhost:80](http://localhost:80) Hdm front
+* [http://localhost:8081](http://localhost:8081) Nexus
+* [http://localhost:5601](http://localhost:5601) Kibana
+* [http://localhost:9200](http://localhost:9200) Elasticsearch
+* [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint 
+  > (host: 127.0.0.1 Port: 3306 User: hdm Password: password Database: dbhdm)
+
 5. Exec into the docker image
 
 ```bash
