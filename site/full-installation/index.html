@@ -1,0 +1,488 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>HDM Full Installation - HDM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/style.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hdm-full-installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="HDM Documentation" class="md-header__button md-logo" aria-label="HDM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HDM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HDM Full Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      HDM Full Installation
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="HDM Documentation" class="md-nav__button md-logo" aria-label="HDM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    HDM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          HDM Full Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        HDM Full Installation
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-launch-all-the-software-stack" class="md-nav__link">
+    1. Launch all the software stack
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ingest-a-dataset" class="md-nav__link">
+    2. Ingest a Dataset
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Ingest a Dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-kaggle-cli-installation" class="md-nav__link">
+    2.1 Kaggle cli installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-kaggle-cli-login" class="md-nav__link">
+    2.2 Kaggle cli login
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-download-heart-attack-dataset" class="md-nav__link">
+    2.3 Download Heart Attack Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-run-python-ingestion-script" class="md-nav__link">
+    2.4 Run Python Ingestion Script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="hdm-full-installation">HDM Full Installation</h1>
+<p><strong>⚠️     REQUIREMENTS ⚠️</strong></p>
+<p><strong>Minimal</strong>🤓</p>
+<blockquote>
+<div class="highlight"><pre><span></span><code>- CPU     :   4 Cores
+- RAM     :  16 Go
+- Storage :  10 Go
+</code></pre></div>
+</blockquote>
+<p><strong>Recommended</strong>  😎</p>
+<blockquote>
+<div class="highlight"><pre><span></span><code>- CPU     :  12 Cores
+- RAM     :  32 Go
+- Storage :  30 Go
+</code></pre></div>
+</blockquote>
+<ul>
+<li>Python 3.9+</li>
+</ul>
+<p>In this Tutorial, we are going to install HDM in Full Stack mode. That means that we are going to :</p>
+<p><a href="#1-launch-all-the-software-stack">1. <strong>Launch</strong> all the <strong>software stack</strong> :</a></p>
+<div class="highlight"><pre><span></span><code>- Airflow
+- Nexus
+- Elasticsearch
+- Kibana
+- MySQL
+- HDM frontend
+</code></pre></div>
+<p><a href="#2-ingest-a-dataset">2. Then, we are going to <strong>ingest some dataset</strong> to our <strong>MySQL</strong> database, simulating a dataware that we want to scan.</a></p>
+<p><a href="">3. We are going to <strong>register our Metric Packs &amp; Rule Packs</strong> on <strong>Nexus</strong> and configure them into <strong>HDM</strong>.</a></p>
+<p><a href="">4. We are going to <strong>add an Airflow DAG</strong> to run them.</a></p>
+<p><a href="">5. We are going to <strong>run</strong> our HDM Airflow DAG and <strong>compute metrics/alerts</strong>.</a></p>
+<p><a href="">6. Finally we are going to add our <strong>Kibana Dashboards</strong> and use the Explorer and <strong>Alert Dashboard</strong>.</a></p>
+<h2 id="1-launch-all-the-software-stack">1. Launch all the software stack</h2>
+<p>To run the stack we need :</p>
+<ul>
+<li><code>Docker</code> See <a href="https://docs.docker.com/get-docker/">Get Docker</a></li>
+<li><code>Docker Compose</code> See <a href="https://docs.docker.com/compose/install/">Get Docker Compose</a></li>
+</ul>
+<p>We are going to run the <code>docker-compose</code> files :
+- <code>docker-compose.yml</code> (HDM primary Stack)
+- <code>docker-compose-airflow.yml</code> (Airflow Stack) More INFO <a href="https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#">Here</a></p>
+<div class="highlight"><pre><span></span><code>docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose-airflow.yaml up -d
+</code></pre></div>
+<p>When the installation is complete, you should check the different application endpoints :</p>
+<ul>
+<li><a href="http://localhost:80">http://localhost:80</a> Hdm front</li>
+<li><a href="http://localhost:8081">http://localhost:8081</a> Nexus</li>
+<li><a href="http://localhost:5601">http://localhost:5601</a> Kibana</li>
+<li><a href="http://localhost:9200">http://localhost:9200</a> Elasticsearch</li>
+<li><a href="tcp://127.0.0.1:3306">tcp://127.0.0.1:3306</a> MySQL Endpoint<blockquote>
+<p>(host: 127.0.0.1 | Port: 3306 | User: hdm | Password: password | Database: dbhdm)</p>
+</blockquote>
+</li>
+<li><a href="http://localhost:5555">http://localhost:5555</a> Flower (Celery Scheduler frontend)</li>
+<li><a href="http://localhost:8080">http://localhost:8080</a> Airflow (User: airflow | Password: airflow)</li>
+</ul>
+<p>When you have all done. Let's go to the next step.</p>
+<h2 id="2-ingest-a-dataset">2. Ingest a Dataset</h2>
+<p>We are using the <a href="https://github.com/Kaggle/kaggle-api">Kaggle API</a> to download our example datasets.</p>
+<h3 id="21-kaggle-cli-installation">2.1 Kaggle cli installation</h3>
+<p>In a Client with python 3 on it, run :</p>
+<div class="highlight"><pre><span></span><code>pip install kaggle --upgrade
+</code></pre></div>
+<h3 id="22-kaggle-cli-login">2.2 Kaggle cli login</h3>
+<p>Type <code>kaggle</code> to check if kaggle is installed.</p>
+<p>Run the commandline if needed :</p>
+<blockquote>
+<div class="highlight"><pre><span></span><code>Warning: Your Kaggle API key is readable by other users on this system! To fix this, you can run &#39;chmod 600 /home/&lt;User&gt;/.kaggle/kaggle.json&#39;
+</code></pre></div>
+</blockquote>
+<p>Test with : <code>kaggle datasets list</code></p>
+<h3 id="23-download-heart-attack-dataset">2.3 Download Heart Attack Dataset</h3>
+<div class="highlight"><pre><span></span><code>kaggle datasets download rashikrahmanpritom/heart-attack-analysis-prediction-dataset -p ./datasets --unzip
+</code></pre></div>
+<h3 id="24-run-python-ingestion-script">2.4 Run Python Ingestion Script</h3>
+<p>We are now going to ingest our Kaggle dataset to our MySQL database.</p>
+<p>Requirements installation</p>
+<ul>
+<li>
+<p>MySQL Client Driver
+<div class="highlight"><pre><span></span><code>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install -y libmysqlclient-dev
+</code></pre></div></p>
+</li>
+<li>
+<p>Python Package dependencies
+<div class="highlight"><pre><span></span><code>python -m pip install -r tutorials/full-installation/requirements.txt
+</code></pre></div></p>
+</li>
+<li>Ingestion Script :</li>
+</ul>
+<div class="highlight"><pre><span></span><code>python ./tutorials/full-installation/ingest-data.py
+</code></pre></div>
+<p>Data is ingested ! Check it out on <strong>mysql://127.0.0.1:3306/heart-attack</strong></p>
+<ol>
+<li>Metric Pack &amp; Rule Pack Registration</li>
+</ol>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -18,7 +18,7 @@
 
 In this Tutorial, we are going to install HDM in Full Stack mode. That means that we are going to :
 
-1. **Launch** all the **software stack** :
+[1. **Launch** all the **software stack** :](#1-launch-all-the-software-stack)
 
 	- Airflow
 	- Nexus
@@ -27,15 +27,15 @@ In this Tutorial, we are going to install HDM in Full Stack mode. That means tha
 	- MySQL
 	- HDM frontend
 
-2. Then, we are going to **ingest some dataset** to our **MySQL** database, simulating a dataware that we want to scan.
+[2. Then, we are going to **ingest some dataset** to our **MySQL** database, simulating a dataware that we want to scan.](#2-ingest-a-dataset)
 
-3. We are going to **register our Metric Packs & Rule Packs** on **Nexus** and configure them into **HDM**.
+[3. We are going to **register our Metric Packs & Rule Packs** on **Nexus** and configure them into **HDM**.]()
 
-4. We are going to **add an Airflow DAG** to run them.
+[4. We are going to **add an Airflow DAG** to run them.]()
 
-5. We are going to **run** our HDM Airflow DAG and **compute metrics/alerts**.
+[5. We are going to **run** our HDM Airflow DAG and **compute metrics/alerts**.]()
 
-6. Finally we are going to add our **Kibana Dashboards** and use the Explorer and **Alert Dashboard**.
+[6. Finally we are going to add our **Kibana Dashboards** and use the Explorer and **Alert Dashboard**.]()
 
 ## 1. Launch all the software stack
 
@@ -95,6 +95,8 @@ kaggle datasets download rashikrahmanpritom/heart-attack-analysis-prediction-dat
 
 ### 2.4 Run Python Ingestion Script
 
+We are now going to ingest our Kaggle dataset to our MySQL database.
+
 Requirements installation
 
 * MySQL Client Driver
@@ -111,3 +113,24 @@ python -m pip install -r tutorials/full-installation/requirements.txt
 ```bash
 python ./tutorials/full-installation/ingest-data.py
 ```
+
+Data is ingested ! Check it out on **mysql://127.0.0.1:3306/heart-attack**
+
+## 3. Metric Pack & Rule Pack Registration
+
+### 3.1 Setup Nexus
+
+1. In order to setup nexus we need to get the password :
+
+```bash
+docker exec -ti nexus sh -c "cat /nexus-data/admin.password"
+```
+
+This will give you the **admin** password for [Nexus](http://localhost:8081/)
+
+2. Go to [http://localhost:8081/](http://localhost:8081/) and login as "admin" + [Password from previous command]
+
+3. Do the setup by changing the default admin password and then checkout the **[x][Enable Anonymous Access]**
+
+### 3.2 Run Nexus Import Script
+

@@ -4,11 +4,11 @@ services:
   nexus:
     container_name: nexus
     hostname: nexus
-    image: "sonatype/nexus3:latest"
+    image: "sonatype/nexus3"
     ports:
       - '8081:8081'
     volumes:
-      - "nexus-data:/nexus-data sonatype/nexus3"
+      - "nexus-data:/nexus-data"
 
   hdm:
     container_name: hdm
