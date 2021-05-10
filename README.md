@@ -11,6 +11,7 @@
 		* [Docker Image](#docker-image)
 		* [Helm Chart](#helm-chart)
 		* [From Sources](#from-sources)
+		* [Going Deeper](#going-deeper)
 * [Screenshots & User Guide](#screenshots--user-guide)
 * [Build the doc](#build-doc)
 
@@ -190,6 +191,11 @@ docker exec -it hdm /bin/bash
 ```bash
 composer install --no-dev --optimize-autoloader
 ```
+
+### Going deeper
+
+You can install Airflow and your the entire stack on local if you have enough RAM & CPU (4 core & 16 Go RAM recommended).
+To see how : go [Here](./docs/full-installation.md)
 
 # Screenshots & User Guide
 

@@ -1,3 +1,4 @@
 conf/ldap/
 conf/db/conf-db.json
 vendor/
+logs/
