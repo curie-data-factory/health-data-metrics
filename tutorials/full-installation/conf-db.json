@@ -1,0 +1,22 @@
+{
+    "hdm-data": {
+        "host":"127.0.0.1",
+        "port":"3306",
+        "user":"hdm",
+        "password":"password",
+        "dbname":"heart-attack"
+    },
+    "hdm-metrics": {
+        "host":"127.0.0.1",
+        "port":"3306",
+        "user":"hdm",
+        "password":"password",
+        "dbname":"dbhdm"
+    },
+    "db-root":{
+        "host":"127.0.0.1",
+        "port":"3306",
+        "user":"root",
+        "password":"rootpassword"
+    }
+}

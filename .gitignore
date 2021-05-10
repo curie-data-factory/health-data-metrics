@@ -2,3 +2,6 @@ conf/ldap/
 conf/db/conf-db.json
 vendor/
 logs/
+*.zip
+*.csv
+*.pyc
