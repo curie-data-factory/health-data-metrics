@@ -1,0 +1,7 @@
+{
+	"name":"basic",
+	"version":"0.2.1",
+	"author":"armand leopold",
+	"description": "Ce pack permet de générer des alertes basé sur des règles que l'on a créé avec le script contenus également dans le pack. Ces règles et alertes sont définies sur les métriques du MP basic.",
+	"mainscript":"rule_basic.py"
+}

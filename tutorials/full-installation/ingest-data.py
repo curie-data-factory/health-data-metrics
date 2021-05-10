@@ -1,3 +1,11 @@
+##################################################
+# Credits Institut Curie 
+# Ce Script upload les données Kaggle vers une base MySQL locale
+
+# Armand Leopold
+# 10/05/2021
+##################################################
+
 import pandas as pd
 import sqlalchemy as db
 import helper

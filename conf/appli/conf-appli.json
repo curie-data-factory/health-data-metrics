@@ -17,7 +17,7 @@
     "PACK": {
         "NEXUS_URL": "http:\/\/localhost:8081\/",
         "NEXUS_API_URL": "http:\/\/localhost:8081\/service\/rest\/v1\/",
-        "NEXUS_PACKS_ROOT_REPOSITORY": "maven-snapshots"
+        "NEXUS_PACKS_ROOT_REPOSITORY": "hdm-snapshots"
     },
     "PIPELINE": {
         "PIPELINE_RUNNING_MODE": "airflow",

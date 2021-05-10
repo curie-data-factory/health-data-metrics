@@ -1,0 +1,7 @@
+{
+	"name":"basic",
+	"version":"0.3.5",
+	"author":"armand leopold",
+	"description": "Ce pack contient des métriques de base ainsi que l'analyse du delta d'un jour a l'autre des mêmes metriques, et ajoute un coefficient de leur variation.",
+	"mainscript":"metrics.py"
+}

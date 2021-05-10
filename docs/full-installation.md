@@ -118,9 +118,11 @@ Data is ingested ! Check it out on **mysql://127.0.0.1:3306/heart-attack**
 
 ## 3. Metric Pack & Rule Pack Registration
 
+In this step, we are going to register the metric pack and rule pack that are used for HDM.
+
 ### 3.1 Setup Nexus
 
-1. In order to setup nexus we need to get the password :
+1. In order to setup Nexus we need to get the password :
 
 ```bash
 docker exec -ti nexus sh -c "cat /nexus-data/admin.password"
@@ -134,3 +136,45 @@ This will give you the **admin** password for [Nexus](http://localhost:8081/)
 
 ### 3.2 Run Nexus Import Script
 
+⚠️ Change the **PASSWORDNEXUS** to your Nexus **admin** password value.
+
+```bash
+# Nexus User Credentials
+export PASSWORDNEXUS="123qwe"
+export USERNEXUS="admin"
+
+# Prerequis :
+# ZIP
+sudo apt update && sudo apt install -y zip
+
+# Create repo
+curl -u $USERNEXUS:$PASSWORDNEXUS -X POST "http://localhost:8081/service/rest/v1/repositories/maven/hosted" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"name\": \"hdm-snapshots\", \"online\": true, \"storage\": { \"blobStoreName\": \"default\", \"strictContentTypeValidation\": false, \"writePolicy\": \"allow\" }, \"cleanup\": { \"policyNames\": [ \"string\" ] }, \"component\": { \"proprietaryComponents\": true }, \"maven\": { \"versionPolicy\": \"MIXED\", \"layoutPolicy\": \"PERMISSIVE\" }}"
+
+# Zip & Upload
+verScript=`egrep -o "([0-9]{1,}\.)+[0-9]{1,}" ./packs/hdm-rule-packs/basic/properties.json`
+cd ./packs/hdm-rule-packs/basic/ && zip -r ../basic_$verScript.zip . && cd ../../../
+
+# create
+export JOBTOUPLOAD="http://localhost:8081/repository/hdm-snapshots/hdm/rulepacks/basic/$verScript/basic_$verScript.zip"
+export PATHARTIFACT="./packs/hdm-rule-packs/"
+export ROOTNEXUSURL="http://localhost:8081/service/rest/v1/components?repository="
+
+python ./tutorials/full-installation/upload-to-nexus-*.py
+
+# Zip & Upload
+verScript=`egrep -o "([0-9]{1,}\.)+[0-9]{1,}" ./packs/hdm-metric-packs/basic/properties.json`
+cd ./packs/hdm-metric-packs/basic/ && zip -r ../basic_$verScript.zip . && cd ../../../
+
+# create
+export JOBTOUPLOAD="http://localhost:8081/repository/hdm-snapshots/hdm/metricpacks/basic/$verScript/basic_$verScript.zip"
+export PATHARTIFACT="./packs/hdm-metric-packs/"
+
+python ./tutorials/full-installation/upload-to-nexus-*.py
+
+```
+
+This script will create a Maven2 Repository on Nexus named : **hdm-snapshots**
+
+Check if it exist : [http://localhost:8081/#browse/browse:hdm-snapshots](http://localhost:8081/#browse/browse:hdm-snapshots)
+
+The script then packages into zip files the metric pack & rule pack basic and upload them into the maven repository.

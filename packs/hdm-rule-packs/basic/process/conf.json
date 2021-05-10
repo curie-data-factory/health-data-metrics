@@ -1,0 +1,26 @@
+{
+    "dev" : {
+        "user": "hdm",
+        "password": "password",
+        "host": "mysql",
+        "port": "3306",
+        "database": "dbhdm"        
+    },
+    "prod" : {
+        "user": "hdm",
+        "password": "password",
+        "host": "mysql",
+        "port": "3306",
+        "database": "dbhdm"        
+    },
+    "databases": [
+        {
+            "user":"hdm",
+            "host":"mysql",
+            "port":"3306",
+            "database":"heart-attack",
+            "password":"password",
+            "ssl": "false"
+        }
+    ]
+}

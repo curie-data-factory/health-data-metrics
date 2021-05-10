@@ -1,3 +1,11 @@
+##################################################
+# Credits Institut Curie 
+# Ce Script est un Helper
+
+# Armand Leopold
+# 10/05/2021
+##################################################
+
 import json as js
 import sqlalchemy as db
 
