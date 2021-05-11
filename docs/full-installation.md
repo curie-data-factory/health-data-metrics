@@ -1,22 +1,33 @@
 # HDM Full Installation
 
+This Tutorial guides you on How to install install full stack on your local machine.
+
 **⚠️	 REQUIREMENTS ⚠️**
 
+Software :
+
+* Linux/MacOS 64bit or Windows 10 64bit **with WSL2**
+* Docker
+* Docker-compose
+* Python 3.9+
+
+Hardware :
 **Minimal**🤓
 >
 	- CPU     :   4 Cores
 	- RAM     :  16 Go
 	- Storage :  10 Go
 
+Hardware :
 **Recommended**  😎
 >
 	- CPU     :  12 Cores
 	- RAM     :  32 Go
 	- Storage :  30 Go
 
-* Python 3.9+
-
 In this Tutorial, we are going to install HDM in Full Stack mode. That means that we are going to :
+
+> ⚠️ Before we start : **all comandlines have to be executed at the root folder of the git source repository**
 
 [1. **Launch** all the **software stack** :](#1-launch-all-the-software-stack)
 
@@ -27,15 +38,17 @@ In this Tutorial, we are going to install HDM in Full Stack mode. That means tha
 	- MySQL
 	- HDM frontend
 
-[2. Then, we are going to **ingest some dataset** to our **MySQL** database, simulating a dataware that we want to scan.](#2-ingest-a-dataset)
+[2. **Ingest some dataset** to our **MySQL** database, simulating a dataware that we want to scan.](#2-ingest-a-dataset)
 
-[3. We are going to **register our Metric Packs & Rule Packs** on **Nexus** and configure them into **HDM**.]()
+[3. **Register our Metric Packs & Rule Packs** on **Nexus** and configure them into **HDM**.](#3-metric-pack--rule-pack-registration)
 
-[4. We are going to **add an Airflow DAG** to run them.]()
+[4. **Add an Airflow DAG** to run them.]()
 
-[5. We are going to **run** our HDM Airflow DAG and **compute metrics/alerts**.]()
+[5. **Run** our HDM Airflow DAG and **compute metrics/alerts**.]()
 
-[6. Finally we are going to add our **Kibana Dashboards** and use the Explorer and **Alert Dashboard**.]()
+[6. Finally, add our **Kibana Dashboards** and use the Explorer and **Alert Dashboard**.]()
+
+___
 
 ## 1. Launch all the software stack
 
@@ -55,16 +68,21 @@ docker-compose -f docker-compose-airflow.yaml up -d
 
 When the installation is complete, you should check the different application endpoints :
 
-* [http://localhost:80](http://localhost:80) Hdm front
+* [http://localhost:80](http://localhost:80) HDM
 * [http://localhost:8081](http://localhost:8081) Nexus
 * [http://localhost:5601](http://localhost:5601) Kibana
 * [http://localhost:9200](http://localhost:9200) Elasticsearch
-* [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint
-  > (host: 127.0.0.1 | Port: 3306 | User: hdm | Password: password | Database: dbhdm)
-* [http://localhost:5555](http://localhost:5555) Flower (Celery Scheduler frontend)
 * [http://localhost:8080](http://localhost:8080) Airflow (User: airflow | Password: airflow)
+* [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint
+  > **host**: 127.0.0.1 | **Port**: 3306 | **User**: hdm | **Password**: password | **Database**: dbhdm
+
+  or:
+
+  > **host**: 127.0.0.1 | **Port**: 3306 | **User**: root | **Password**: rootpassword
 
 When you have all done. Let's go to the next step.
+
+___
 
 ## 2. Ingest a Dataset
 
@@ -115,6 +133,8 @@ python ./tutorials/full-installation/ingest-data.py
 ```
 
 Data is ingested ! Check it out on **mysql://127.0.0.1:3306/heart-attack**
+
+___
 
 ## 3. Metric Pack & Rule Pack Registration
 
@@ -175,6 +195,94 @@ python ./tutorials/full-installation/upload-to-nexus-*.py
 
 This script will create a Maven2 Repository on Nexus named : **hdm-snapshots**
 
-Check if it exist : [http://localhost:8081/#browse/browse:hdm-snapshots](http://localhost:8081/#browse/browse:hdm-snapshots)
-
 The script then packages into zip files the metric pack & rule pack basic and upload them into the maven repository.
+
+Check if it's ok : [http://localhost:8081/#browse/browse:hdm-snapshots](http://localhost:8081/#browse/browse:hdm-snapshots)
+
+___
+
+### 3.3. Metric Pack & Rule Pack Configuration
+
+#### 3.3.1 Enabling Metric Pack / Rule Pack
+
+We Then have to activate our mp & rp on :
+
+* http://localhost/admin.php?tab=metricpacks
+* http://localhost/admin.php?tab=rulepacks
+
+![metric pack configuration page](metrickpacks_conf_1.png)
+![Rule pack configuration page](rulepacks_conf_1.png)
+
+#### 3.3.2 Edit Configuration Metric Pack / Rule Pack
+
+![metric pack configuration page](metrickpacks_conf_2.png)
+
+We edit our metric pack configuration to add :
+
+```json
+{
+  "print_cat_var": false,
+  "print_mat_num_plot": false,
+  "limit_enabled": true,
+  "search_results_limit": 2000000,
+  "rootResultFolder": "../results/",
+  "esHost": "elasticsearch",
+  "esPort": 9200,
+  "esSSL": false
+}
+```
+![metric pack configuration page](metrickpacks_conf_3.png)
+
+And same for our rule pack with :
+
+```text
+dev
+```
+
+___
+
+## 4. Airflow DAG
+
+Login to Airflow [http://localhost:8080/home](http://localhost:8080/home) with (login : airflow | password: airflow)
+
+### 4.1 Add env variables :
+
+In your previous terminal run these commands :
+
+```bash
+# Airflow User Credentials
+export PASSWORDAIRFLOW="airflow"
+export USERAIRFLOW="airflow"
+
+# Add variables
+curl -u $USERAIRFLOW:$PASSWORDAIRFLOW -X POST "http://localhost:8080/api/v1/variables" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"key\":\"env\",\"value\":\"dev\"}"
+```
+
+They will create all the airflow environment variables in order for our DAG to run.
+
+### 4.2 Enable the dag :
+
+Toggle the dag :
+![airflow-dag.png](airflow-dag.png)
+___
+
+## 5. Run the dag
+
+Copy python files :
+
+```bash
+mkdir dags/packs
+cp packs/* dags/packs/
+```
+
+Trigger the dag :
+
+![dag_trigger.png](dag_trigger.png)
+
+You can check it's execution :
+
+[http://localhost:8080/graph?dag_id=hdm-pipeline](http://localhost:8080/graph?dag_id=hdm-pipeline)
+
+___
+
+## 6. HDM Visualisation

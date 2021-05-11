@@ -53,7 +53,7 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 ### Application Configuration File
 
-`/var/www/html/conf/appli/conf-appli.php` : 
+`/var/www/html/conf/appli/conf-appli.php` :
 
 ```json
 {
@@ -84,7 +84,7 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 }
 ```
 
-`/var/www/html/conf/db/conf-db.php` : 
+`/var/www/html/conf/db/conf-db.php` :
 
 ```json
 {
@@ -130,11 +130,11 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 ## Run it !
 
-You can run job orchestrator from 3 different ways : 
+You can run job orchestrator from 3 different ways :
 
-### Docker Image 
+### Docker Image
 
-To run anywhere : 
+To run anywhere :
 
 ```bash
 docker run -p 80:80 -v conf/:/var/www/html/conf/ ghcr.io/curie-data-factory/hdm:latest
@@ -155,7 +155,7 @@ More info [Here](https://artifacthub.io/packages/helm/curie-df-helm-charts/hdm)
 
 ### From sources
 
-For dev purposes : 
+For dev purposes :
 
 1. Clone git repository :
 ```bash
@@ -177,7 +177,7 @@ docker-compose up -d
 * [http://localhost:8081](http://localhost:8081) Nexus
 * [http://localhost:5601](http://localhost:5601) Kibana
 * [http://localhost:9200](http://localhost:9200) Elasticsearch
-* [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint 
+* [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint
   > (host: 127.0.0.1 Port: 3306 User: hdm Password: password Database: dbhdm)
 
 5. Exec into the docker image
@@ -194,7 +194,7 @@ composer install --no-dev --optimize-autoloader
 
 ### Going deeper
 
-You can install Airflow and your the entire stack on local if you have enough RAM & CPU (4 core & 16 Go RAM recommended).
+You can install Airflow and run the entire stack on local if you have enough RAM & CPU (4 core & 16 Go RAM recommended).
 To see how : go [Here](./docs/full-installation.md)
 
 # Screenshots & User Guide
@@ -206,15 +206,15 @@ To see how : go [Here](./docs/full-installation.md)
 # Build Doc
 
 The documentation is compiled from **markdown sources** using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-To compile the documentation : 
+To compile the documentation :
 
-1. Go to your source directory : 
+1. Go to your source directory :
 
 ```bash
 cd health-data-metrics
 ```
 
-2. Run the docker build command : 
+2. Run the docker build command :
 
 ```bash
 docker run --rm -i -v "$PWD:/docs" squidfunk/mkdocs-material:latest build

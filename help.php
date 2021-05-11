@@ -21,7 +21,7 @@ body, html {width: 100%; height: 100%; margin: 0; padding: 0}
 
 </style>
 <div class="second-row">
-	<iframe src="./site/index.html" height="99%" width="100%"></iframe>
+	<iframe src="./site/" height="99%" width="100%"></iframe>
 </div>
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'/footer.php';

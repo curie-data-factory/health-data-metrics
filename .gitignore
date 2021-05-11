@@ -5,3 +5,4 @@ logs/
 *.zip
 *.csv
 *.pyc
+dags/packs/

@@ -305,6 +305,101 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#3-metric-pack-rule-pack-registration" class="md-nav__link">
+    3. Metric Pack &amp; Rule Pack Registration
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Metric Pack &amp; Rule Pack Registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-setup-nexus" class="md-nav__link">
+    3.1 Setup Nexus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-run-nexus-import-script" class="md-nav__link">
+    3.2 Run Nexus Import Script
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-metric-pack-rule-pack-configuration" class="md-nav__link">
+    3.3. Metric Pack &amp; Rule Pack Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Metric Pack &amp; Rule Pack Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-enabling-metric-pack-rule-pack" class="md-nav__link">
+    3.3.1 Enabling Metric Pack / Rule Pack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-edit-configuration-metric-pack-rule-pack" class="md-nav__link">
+    3.3.2 Edit Configuration Metric Pack / Rule Pack
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-airflow-dag" class="md-nav__link">
+    4. Airflow DAG
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Airflow DAG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-add-env-variables" class="md-nav__link">
+    4.1 Add env variables :
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-enable-the-dag" class="md-nav__link">
+    4.2 Enable the dag :
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-run-the-dag" class="md-nav__link">
+    5. Run the dag
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hdm-visualisation" class="md-nav__link">
+    6. HDM Visualisation
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -327,25 +422,35 @@
                 
                 
                 <h1 id="hdm-full-installation">HDM Full Installation</h1>
+<p>This Tutorial guides you on How to install install full stack on your local machine.</p>
 <p><strong>⚠️     REQUIREMENTS ⚠️</strong></p>
-<p><strong>Minimal</strong>🤓</p>
+<p>Software :</p>
+<ul>
+<li>Linux/MacOS 64bit or Windows 10 64bit <strong>with WSL2</strong></li>
+<li>Docker</li>
+<li>Docker-compose</li>
+<li>Python 3.9+</li>
+</ul>
+<p>Hardware :
+<strong>Minimal</strong>🤓</p>
 <blockquote>
 <div class="highlight"><pre><span></span><code>- CPU     :   4 Cores
 - RAM     :  16 Go
 - Storage :  10 Go
 </code></pre></div>
 </blockquote>
-<p><strong>Recommended</strong>  😎</p>
+<p>Hardware :
+<strong>Recommended</strong>  😎</p>
 <blockquote>
 <div class="highlight"><pre><span></span><code>- CPU     :  12 Cores
 - RAM     :  32 Go
 - Storage :  30 Go
 </code></pre></div>
 </blockquote>
-<ul>
-<li>Python 3.9+</li>
-</ul>
 <p>In this Tutorial, we are going to install HDM in Full Stack mode. That means that we are going to :</p>
+<blockquote>
+<p>⚠️ Before we start : <strong>all comandlines have to be executed at the root folder of the git source repository</strong></p>
+</blockquote>
 <p><a href="#1-launch-all-the-software-stack">1. <strong>Launch</strong> all the <strong>software stack</strong> :</a></p>
 <div class="highlight"><pre><span></span><code>- Airflow
 - Nexus
@@ -354,11 +459,12 @@
 - MySQL
 - HDM frontend
 </code></pre></div>
-<p><a href="#2-ingest-a-dataset">2. Then, we are going to <strong>ingest some dataset</strong> to our <strong>MySQL</strong> database, simulating a dataware that we want to scan.</a></p>
-<p><a href="">3. We are going to <strong>register our Metric Packs &amp; Rule Packs</strong> on <strong>Nexus</strong> and configure them into <strong>HDM</strong>.</a></p>
-<p><a href="">4. We are going to <strong>add an Airflow DAG</strong> to run them.</a></p>
-<p><a href="">5. We are going to <strong>run</strong> our HDM Airflow DAG and <strong>compute metrics/alerts</strong>.</a></p>
-<p><a href="">6. Finally we are going to add our <strong>Kibana Dashboards</strong> and use the Explorer and <strong>Alert Dashboard</strong>.</a></p>
+<p><a href="#2-ingest-a-dataset">2. <strong>Ingest some dataset</strong> to our <strong>MySQL</strong> database, simulating a dataware that we want to scan.</a></p>
+<p><a href="#3-metric-pack--rule-pack-registration">3. <strong>Register our Metric Packs &amp; Rule Packs</strong> on <strong>Nexus</strong> and configure them into <strong>HDM</strong>.</a></p>
+<p><a href="">4. <strong>Add an Airflow DAG</strong> to run them.</a></p>
+<p><a href="">5. <strong>Run</strong> our HDM Airflow DAG and <strong>compute metrics/alerts</strong>.</a></p>
+<p><a href="">6. Finally, add our <strong>Kibana Dashboards</strong> and use the Explorer and <strong>Alert Dashboard</strong>.</a></p>
+<hr />
 <h2 id="1-launch-all-the-software-stack">1. Launch all the software stack</h2>
 <p>To run the stack we need :</p>
 <ul>
@@ -373,18 +479,22 @@ docker-compose -f docker-compose-airflow.yaml up -d
 </code></pre></div>
 <p>When the installation is complete, you should check the different application endpoints :</p>
 <ul>
-<li><a href="http://localhost:80">http://localhost:80</a> Hdm front</li>
+<li><a href="http://localhost:80">http://localhost:80</a> HDM</li>
 <li><a href="http://localhost:8081">http://localhost:8081</a> Nexus</li>
 <li><a href="http://localhost:5601">http://localhost:5601</a> Kibana</li>
 <li><a href="http://localhost:9200">http://localhost:9200</a> Elasticsearch</li>
+<li><a href="http://localhost:8080">http://localhost:8080</a> Airflow (User: airflow | Password: airflow)</li>
 <li><a href="tcp://127.0.0.1:3306">tcp://127.0.0.1:3306</a> MySQL Endpoint<blockquote>
-<p>(host: 127.0.0.1 | Port: 3306 | User: hdm | Password: password | Database: dbhdm)</p>
+<p><strong>host</strong>: 127.0.0.1 | <strong>Port</strong>: 3306 | <strong>User</strong>: hdm | <strong>Password</strong>: password | <strong>Database</strong>: dbhdm</p>
 </blockquote>
 </li>
-<li><a href="http://localhost:5555">http://localhost:5555</a> Flower (Celery Scheduler frontend)</li>
-<li><a href="http://localhost:8080">http://localhost:8080</a> Airflow (User: airflow | Password: airflow)</li>
 </ul>
+<p>or:</p>
+<blockquote>
+<p><strong>host</strong>: 127.0.0.1 | <strong>Port</strong>: 3306 | <strong>User</strong>: root | <strong>Password</strong>: rootpassword</p>
+</blockquote>
 <p>When you have all done. Let's go to the next step.</p>
+<hr />
 <h2 id="2-ingest-a-dataset">2. Ingest a Dataset</h2>
 <p>We are using the <a href="https://github.com/Kaggle/kaggle-api">Kaggle API</a> to download our example datasets.</p>
 <h3 id="21-kaggle-cli-installation">2.1 Kaggle cli installation</h3>
@@ -421,9 +531,112 @@ docker-compose -f docker-compose-airflow.yaml up -d
 <div class="highlight"><pre><span></span><code>python ./tutorials/full-installation/ingest-data.py
 </code></pre></div>
 <p>Data is ingested ! Check it out on <strong>mysql://127.0.0.1:3306/heart-attack</strong></p>
+<hr />
+<h2 id="3-metric-pack-rule-pack-registration">3. Metric Pack &amp; Rule Pack Registration</h2>
+<p>In this step, we are going to register the metric pack and rule pack that are used for HDM.</p>
+<h3 id="31-setup-nexus">3.1 Setup Nexus</h3>
 <ol>
-<li>Metric Pack &amp; Rule Pack Registration</li>
+<li>In order to setup Nexus we need to get the password :</li>
 </ol>
+<div class="highlight"><pre><span></span><code>docker <span class="nb">exec</span> -ti nexus sh -c <span class="s2">&quot;cat /nexus-data/admin.password&quot;</span>
+</code></pre></div>
+<p>This will give you the <strong>admin</strong> password for <a href="http://localhost:8081/">Nexus</a></p>
+<ol>
+<li>
+<p>Go to <a href="http://localhost:8081/">http://localhost:8081/</a> and login as "admin" + [Password from previous command]</p>
+</li>
+<li>
+<p>Do the setup by changing the default admin password and then checkout the <strong>[x][Enable Anonymous Access]</strong></p>
+</li>
+</ol>
+<h3 id="32-run-nexus-import-script">3.2 Run Nexus Import Script</h3>
+<p>⚠️ Change the <strong>PASSWORDNEXUS</strong> to your Nexus <strong>admin</strong> password value.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Nexus User Credentials</span>
+<span class="nb">export</span> <span class="nv">PASSWORDNEXUS</span><span class="o">=</span><span class="s2">&quot;123qwe&quot;</span>
+<span class="nb">export</span> <span class="nv">USERNEXUS</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span>
+
+<span class="c1"># Prerequis :</span>
+<span class="c1"># ZIP</span>
+sudo apt update <span class="o">&amp;&amp;</span> sudo apt install -y zip
+
+<span class="c1"># Create repo</span>
+curl -u <span class="nv">$USERNEXUS</span>:<span class="nv">$PASSWORDNEXUS</span> -X POST <span class="s2">&quot;http://localhost:8081/service/rest/v1/repositories/maven/hosted&quot;</span> -H <span class="s2">&quot;accept: application/json&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{ \&quot;name\&quot;: \&quot;hdm-snapshots\&quot;, \&quot;online\&quot;: true, \&quot;storage\&quot;: { \&quot;blobStoreName\&quot;: \&quot;default\&quot;, \&quot;strictContentTypeValidation\&quot;: false, \&quot;writePolicy\&quot;: \&quot;allow\&quot; }, \&quot;cleanup\&quot;: { \&quot;policyNames\&quot;: [ \&quot;string\&quot; ] }, \&quot;component\&quot;: { \&quot;proprietaryComponents\&quot;: true }, \&quot;maven\&quot;: { \&quot;versionPolicy\&quot;: \&quot;MIXED\&quot;, \&quot;layoutPolicy\&quot;: \&quot;PERMISSIVE\&quot; }}&quot;</span>
+
+<span class="c1"># Zip &amp; Upload</span>
+<span class="nv">verScript</span><span class="o">=</span><span class="sb">`</span>egrep -o <span class="s2">&quot;([0-9]{1,}\.)+[0-9]{1,}&quot;</span> ./packs/hdm-rule-packs/basic/properties.json<span class="sb">`</span>
+<span class="nb">cd</span> ./packs/hdm-rule-packs/basic/ <span class="o">&amp;&amp;</span> zip -r ../basic_<span class="nv">$verScript</span>.zip . <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ../../../
+
+<span class="c1"># create</span>
+<span class="nb">export</span> <span class="nv">JOBTOUPLOAD</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/repository/hdm-snapshots/hdm/rulepacks/basic/</span><span class="nv">$verScript</span><span class="s2">/basic_</span><span class="nv">$verScript</span><span class="s2">.zip&quot;</span>
+<span class="nb">export</span> <span class="nv">PATHARTIFACT</span><span class="o">=</span><span class="s2">&quot;./packs/hdm-rule-packs/&quot;</span>
+<span class="nb">export</span> <span class="nv">ROOTNEXUSURL</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/service/rest/v1/components?repository=&quot;</span>
+
+python ./tutorials/full-installation/upload-to-nexus-*.py
+
+<span class="c1"># Zip &amp; Upload</span>
+<span class="nv">verScript</span><span class="o">=</span><span class="sb">`</span>egrep -o <span class="s2">&quot;([0-9]{1,}\.)+[0-9]{1,}&quot;</span> ./packs/hdm-metric-packs/basic/properties.json<span class="sb">`</span>
+<span class="nb">cd</span> ./packs/hdm-metric-packs/basic/ <span class="o">&amp;&amp;</span> zip -r ../basic_<span class="nv">$verScript</span>.zip . <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ../../../
+
+<span class="c1"># create</span>
+<span class="nb">export</span> <span class="nv">JOBTOUPLOAD</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/repository/hdm-snapshots/hdm/metricpacks/basic/</span><span class="nv">$verScript</span><span class="s2">/basic_</span><span class="nv">$verScript</span><span class="s2">.zip&quot;</span>
+<span class="nb">export</span> <span class="nv">PATHARTIFACT</span><span class="o">=</span><span class="s2">&quot;./packs/hdm-metric-packs/&quot;</span>
+
+python ./tutorials/full-installation/upload-to-nexus-*.py
+</code></pre></div>
+<p>This script will create a Maven2 Repository on Nexus named : <strong>hdm-snapshots</strong></p>
+<p>The script then packages into zip files the metric pack &amp; rule pack basic and upload them into the maven repository.</p>
+<p>Check if it's ok : <a href="http://localhost:8081/#browse/browse:hdm-snapshots">http://localhost:8081/#browse/browse:hdm-snapshots</a></p>
+<hr />
+<h3 id="33-metric-pack-rule-pack-configuration">3.3. Metric Pack &amp; Rule Pack Configuration</h3>
+<h4 id="331-enabling-metric-pack-rule-pack">3.3.1 Enabling Metric Pack / Rule Pack</h4>
+<p>We Then have to activate our mp &amp; rp on :</p>
+<ul>
+<li>http://localhost/admin.php?tab=metricpacks</li>
+<li>http://localhost/admin.php?tab=rulepacks</li>
+</ul>
+<p><img alt="metric pack configuration page" src="../metrickpacks_conf_1.png" />
+<img alt="Rule pack configuration page" src="../rulepacks_conf_1.png" /></p>
+<h4 id="332-edit-configuration-metric-pack-rule-pack">3.3.2 Edit Configuration Metric Pack / Rule Pack</h4>
+<p><img alt="metric pack configuration page" src="../metrickpacks_conf_2.png" /></p>
+<p>We edit our metric pack configuration to add :</p>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;print_cat_var&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nt">&quot;print_mat_num_plot&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nt">&quot;limit_enabled&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;search_results_limit&quot;</span><span class="p">:</span> <span class="mi">2000000</span><span class="p">,</span>
+  <span class="nt">&quot;rootResultFolder&quot;</span><span class="p">:</span> <span class="s2">&quot;../results/&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;esHost&quot;</span><span class="p">:</span> <span class="s2">&quot;elasticsearch&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;esPort&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">,</span>
+  <span class="nt">&quot;esSSL&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div>
+<img alt="metric pack configuration page" src="../metrickpacks_conf_3.png" /></p>
+<p>And same for our rule pack with :</p>
+<div class="highlight"><pre><span></span><code>dev
+</code></pre></div>
+<hr />
+<h2 id="4-airflow-dag">4. Airflow DAG</h2>
+<p>Login to Airflow <a href="http://localhost:8080/home">http://localhost:8080/home</a> with (login : airflow | password: airflow)</p>
+<h3 id="41-add-env-variables">4.1 Add env variables :</h3>
+<p>In your previous terminal run these commands :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Airflow User Credentials</span>
+<span class="nb">export</span> <span class="nv">PASSWORDAIRFLOW</span><span class="o">=</span><span class="s2">&quot;airflow&quot;</span>
+<span class="nb">export</span> <span class="nv">USERAIRFLOW</span><span class="o">=</span><span class="s2">&quot;airflow&quot;</span>
+
+<span class="c1"># Add variables</span>
+curl -u <span class="nv">$USERAIRFLOW</span>:<span class="nv">$PASSWORDAIRFLOW</span> -X POST <span class="s2">&quot;http://localhost:8080/api/v1/variables&quot;</span> -H  <span class="s2">&quot;accept: application/json&quot;</span> -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;key\&quot;:\&quot;env\&quot;,\&quot;value\&quot;:\&quot;dev\&quot;}&quot;</span>
+curl -u <span class="nv">$USERAIRFLOW</span>:<span class="nv">$PASSWORDAIRFLOW</span> -X POST <span class="s2">&quot;http://localhost:8080/api/v1/variables&quot;</span> -H  <span class="s2">&quot;accept: application/json&quot;</span> -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;key\&quot;:\&quot;namespace\&quot;,\&quot;value\&quot;:\&quot;default\&quot;}&quot;</span>
+curl -u <span class="nv">$USERAIRFLOW</span>:<span class="nv">$PASSWORDAIRFLOW</span> -X POST <span class="s2">&quot;http://localhost:8080/api/v1/variables&quot;</span> -H  <span class="s2">&quot;accept: application/json&quot;</span> -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;key\&quot;:\&quot;nexus_password\&quot;,\&quot;value\&quot;:\&quot;</span><span class="nv">$PASSWORDNEXUS</span><span class="s2">\&quot;}&quot;</span>
+curl -u <span class="nv">$USERAIRFLOW</span>:<span class="nv">$PASSWORDAIRFLOW</span> -X POST <span class="s2">&quot;http://localhost:8080/api/v1/variables&quot;</span> -H  <span class="s2">&quot;accept: application/json&quot;</span> -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{\&quot;key\&quot;:\&quot;nexus_user\&quot;,\&quot;value\&quot;:\&quot;</span><span class="nv">$USERNEXUS</span><span class="s2">\&quot;}&quot;</span>
+</code></pre></div>
+<p>They will create all the airflow environment variables in order for our DAG to run.</p>
+<h3 id="42-enable-the-dag">4.2 Enable the dag :</h3>
+<p>Toggle the dag :
+<img alt="airflow-dag.png" src="../airflow-dag.png" /></p>
+<hr />
+<h2 id="5-run-the-dag">5. Run the dag</h2>
+<hr />
+<h2 id="6-hdm-visualisation">6. HDM Visualisation</h2>
                 
               
               
