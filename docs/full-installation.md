@@ -1,6 +1,6 @@
 # HDM Full Installation
 
-This Tutorial guides you on How to install install full stack on your local machine.
+This Tutorial guides you on How to install hdm full stack on your local machine.
 
 **⚠️	 REQUIREMENTS ⚠️**
 
