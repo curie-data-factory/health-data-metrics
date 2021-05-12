@@ -263,6 +263,7 @@ They will create all the airflow environment variables in order for our DAG to r
 ### 4.2 Enable the dag :
 
 Toggle the dag :
+
 ![airflow-dag.png](airflow-dag.png)
 ___
 
