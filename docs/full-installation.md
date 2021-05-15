@@ -180,6 +180,7 @@ export PATHARTIFACT="./packs/hdm-rule-packs/"
 export ROOTNEXUSURL="http://localhost:8081/service/rest/v1/components?repository="
 
 python ./tutorials/full-installation/upload-to-nexus-*.py
+rm ./packs/hdm-rule-packs/basic/basic_$verScript.zip
 
 # Zip & Upload
 verScript=`egrep -o "([0-9]{1,}\.)+[0-9]{1,}" ./packs/hdm-metric-packs/basic/properties.json`
@@ -190,7 +191,7 @@ export JOBTOUPLOAD="http://localhost:8081/repository/hdm-snapshots/hdm/metricpac
 export PATHARTIFACT="./packs/hdm-metric-packs/"
 
 python ./tutorials/full-installation/upload-to-nexus-*.py
-
+rm ./packs/hdm-metric-packs/basic/basic_$verScript.zip
 ```
 
 This script will create a Maven2 Repository on Nexus named : **hdm-snapshots**
@@ -226,7 +227,7 @@ We edit our metric pack configuration to add :
   "limit_enabled": true,
   "search_results_limit": 2000000,
   "rootResultFolder": "../results/",
-  "esHost": "elasticsearch",
+  "esHost": "127.0.0.1",
   "esPort": 9200,
   "esSSL": false
 }
@@ -272,7 +273,7 @@ Copy python files :
 
 ```bash
 mkdir dags/packs
-cp packs/* dags/packs/
+cp -r packs/* dags/packs/
 ```
 
 Trigger the dag :
@@ -286,3 +287,23 @@ You can check it's execution :
 ___
 
 ## 6. HDM Visualisation
+
+### 6.1 Import kibana dashboard
+
+Run the following comandline to import all the dashboards from the Basic Metric Pack into kibana.
+
+```bash
+curl -X POST http://localhost:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf: true" --form file=@packs/hdm-metric-packs/basic/kibana-dashboard/export.ndjson
+```
+
+### 6.2 Explorer Dashboard
+
+You can explore the different metric pack dashboards from the Explorer.
+
+[http://localhost/explorer/wrapper.php](http://localhost/explorer/wrapper.php)
+
+### 6.3 Alert Dashboard
+
+You can check all the alerts emmitted by the different rule packs from the Alert dashboard :
+
+[http://localhost/alert/alert.php](http://localhost/alert/alert.php)

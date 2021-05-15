@@ -40,18 +40,14 @@ with DAG('hdm-pipeline',
 
     with TaskGroup("hdm-"+env) as hdm:
         mpbasic = BashOperator(task_id="mp_basic",
-                               bash_command='python /home/airflow/airflow/dags/packs/hdm-metric-packs/basic/process/metric_basic.py',
+                               bash_command='cd /opt/airflow/dags/hdm-metric-packs/basic && bash bootstrap-script.sh',
                                dag=dag)
 
-        rpbasicrg = BashOperator(task_id="rp_basic_rule_generator",
-                               bash_command='python /home/airflow/airflow/dags/packs/hdm-rule-packs/basic/process/rule_generator.py',
-                               dag=dag)
-
-        rpbasicri = BashOperator(task_id="rp_basic_rule_interpreter",
-                               bash_command='python /home/airflow/airflow/dags/packs/hdm-rule-packs/basic/process/rule_basic.py',
+        rpbasic = BashOperator(task_id="rp_basic",
+                               bash_command='cd /opt/airflow/dags/hdm-rule-packs/basic && bash bootstrap-script.sh',
                                dag=dag)
 
         ## Enchainement des tâches dans le groupe
-        mpbasic >> rpbasicrg >> rpbasicri
+        mpbasic >> rpbasic
     ## Enchainement des tâches du DAG
     start >> hdm >> end
