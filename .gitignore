@@ -6,3 +6,4 @@ logs/
 *.csv
 *.pyc
 dags/packs/
+.env

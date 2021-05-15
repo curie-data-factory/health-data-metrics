@@ -63,6 +63,7 @@ We are going to run the `docker-compose` files :
 
 ```bash
 docker-compose -f docker-compose.yml up -d
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 docker-compose -f docker-compose-airflow.yaml up -d
 ```
 
