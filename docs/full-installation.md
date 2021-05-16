@@ -62,17 +62,7 @@ We are going to run the `docker-compose` files :
 - `docker-compose-airflow.yml` (Airflow Stack) More INFO [Here](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#)
 
 ```bash
-# pull & run hdm docker container stack
-docker-compose -f docker-compose.yml up -d
-
-# get current user to have same user in airflow container workers.
-echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
-
-# pull & run airflow docker container stack
-docker-compose -f docker-compose-airflow.yaml up -d
-
-# fetch hdm application composer dependencies
-docker exec -ti hdm sh -c "composer install --no-dev --optimize-autoloader"
+bash tutorials/full-installation/launch-stack.sh
 ```
 
 When the installation is complete, you should check the different application endpoints :
@@ -119,25 +109,12 @@ Test with : ` kaggle datasets list`
 kaggle datasets download rashikrahmanpritom/heart-attack-analysis-prediction-dataset -p ./datasets --unzip
 ```
 
-### 2.4 Run Python Ingestion Script
+### 2.4 Run Ingestion Script
 
 We are now going to ingest our Kaggle dataset to our MySQL database.
 
-Requirements installation
-
-* MySQL Client Driver
 ```bash
-sudo apt-get update && sudo apt-get install -y libmysqlclient-dev
-```
-
-* Python Package dependencies
-```bash
-python -m pip install -r tutorials/full-installation/requirements.txt
-```
-* Ingestion Script :
-
-```bash
-python ./tutorials/full-installation/ingest-data.py
+bash tutorials/full-installation/ingest-data.sh
 ```
 
 Data is ingested ! Check it out on **mysql://127.0.0.1:3306/heart-attack**
@@ -170,36 +147,12 @@ This will give you the **admin** password for [Nexus](http://localhost:8081/)
 # Nexus User Credentials
 export PASSWORDNEXUS="123qwe"
 export USERNEXUS="admin"
+```
 
-# Prerequis :
-# ZIP
-sudo apt update && sudo apt install -y zip
+And run the script :
 
-# Create repo
-curl -u $USERNEXUS:$PASSWORDNEXUS -X POST "http://localhost:8081/service/rest/v1/repositories/maven/hosted" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"name\": \"hdm-snapshots\", \"online\": true, \"storage\": { \"blobStoreName\": \"default\", \"strictContentTypeValidation\": false, \"writePolicy\": \"allow\" }, \"cleanup\": { \"policyNames\": [ \"string\" ] }, \"component\": { \"proprietaryComponents\": true }, \"maven\": { \"versionPolicy\": \"MIXED\", \"layoutPolicy\": \"PERMISSIVE\" }}"
-
-# Zip & Upload
-verScript=`egrep -o "([0-9]{1,}\.)+[0-9]{1,}" ./packs/hdm-rule-packs/basic/properties.json`
-cd ./packs/hdm-rule-packs/basic/ && zip -r ../basic_$verScript.zip . && cd ../../../
-
-# create
-export JOBTOUPLOAD="http://localhost:8081/repository/hdm-snapshots/hdm/rulepacks/basic/$verScript/basic_$verScript.zip"
-export PATHARTIFACT="./packs/hdm-rule-packs/"
-export ROOTNEXUSURL="http://localhost:8081/service/rest/v1/components?repository="
-
-python ./tutorials/full-installation/upload-to-nexus-*.py
-rm ./packs/hdm-rule-packs/basic/basic_$verScript.zip
-
-# Zip & Upload
-verScript=`egrep -o "([0-9]{1,}\.)+[0-9]{1,}" ./packs/hdm-metric-packs/basic/properties.json`
-cd ./packs/hdm-metric-packs/basic/ && zip -r ../basic_$verScript.zip . && cd ../../../
-
-# create
-export JOBTOUPLOAD="http://localhost:8081/repository/hdm-snapshots/hdm/metricpacks/basic/$verScript/basic_$verScript.zip"
-export PATHARTIFACT="./packs/hdm-metric-packs/"
-
-python ./tutorials/full-installation/upload-to-nexus-*.py
-rm ./packs/hdm-metric-packs/basic/basic_$verScript.zip
+```bash
+bash tutorials/full-installation/mp-rp-nexus-register.sh
 ```
 
 This script will create a Maven2 Repository on Nexus named : **hdm-snapshots**
@@ -210,9 +163,23 @@ Check if it's ok : [http://localhost:8081/#browse/browse:hdm-snapshots](http://l
 
 ___
 
-### 3.3. Metric Pack & Rule Pack Configuration
+### 3.3. HDM DB Initialization
 
-#### 3.3.1 Enabling Metric Pack / Rule Pack
+We now have to initialize the hdm core db
+Go to the [Databases] Admin Tab [http://localhost/admin.php?tab=databases](http://localhost/admin.php?tab=databases)
+
+Then click in this order on :
+
+1. [Launch db hdm script creator]
+2. [Sync db-config File to HDM's Table [Database List]]
+
+![db init](db-init.png)
+
+___
+
+### 3.4. Metric Pack & Rule Pack Configuration
+
+#### 3.4.1 Enabling Metric Pack / Rule Pack
 
 We Then have to activate our mp & rp on :
 
@@ -222,7 +189,7 @@ We Then have to activate our mp & rp on :
 ![metric pack configuration page](metrickpacks_conf_1.png)
 ![Rule pack configuration page](rulepacks_conf_1.png)
 
-#### 3.3.2 Edit Configuration Metric Pack / Rule Pack
+#### 3.4.2 Edit Configuration Metric Pack / Rule Pack
 
 ![metric pack configuration page](metrickpacks_conf_2.png)
 
@@ -269,6 +236,13 @@ curl -u $USERAIRFLOW:$PASSWORDAIRFLOW -X POST "http://localhost:8080/api/v1/vari
 
 They will create all the airflow environment variables in order for our DAG to run.
 
+And then Copy python files :
+
+```bash
+mkdir dags/packs
+cp -r packs/* dags/packs/
+```
+
 ### 4.2 Enable the dag :
 
 Toggle the dag :
@@ -277,13 +251,6 @@ Toggle the dag :
 ___
 
 ## 5. Run the dag
-
-Copy python files :
-
-```bash
-mkdir dags/packs
-cp -r packs/* dags/packs/
-```
 
 Trigger the dag :
 
@@ -316,3 +283,13 @@ You can explore the different metric pack dashboards from the Explorer.
 You can check all the alerts emmitted by the different rule packs from the Alert dashboard :
 
 [http://localhost/alert/alert.php](http://localhost/alert/alert.php)
+
+## 7. Stopping HDM Stack :
+
+To stop the stack :
+
+```bash
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose-airflow.yaml down -v
+docker-compose down -v
+```

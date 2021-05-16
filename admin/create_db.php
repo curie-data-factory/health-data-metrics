@@ -1,11 +1,10 @@
 <?php 
 
-/* loading json */ 
+/* LOAD CONF */ 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
-$json = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);	
+$json = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
 
-/* Connexion à une base MySQL avec l'invocation de pilote */
-
+/* CONNEXION AU SERVEUR DE BASE DE DONNEES */
 $dsn = 'mysql:host='.$json["hdm-core-database"]['host'].':'.$json["hdm-core-database"]['port'];
 $user = $json["hdm-core-database"]['user'];
 $password = $json["hdm-core-database"]['password'];
@@ -23,14 +22,26 @@ try {
     <?php
 }
 
-/* Connexion normal */
-include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
+/* CONNEXION A LA BASE DE DONNEE */
+$dsn = 'mysql:dbname='.$json["hdm-core-database"]["database"].';host='.$json["hdm-core-database"]['host'].':'.$json["hdm-core-database"]['port'];
+$user = $json["hdm-core-database"]['user'];
+$password = $json["hdm-core-database"]['password'];
 
 try {
-	/* CREATION DES TABLES TECHNIQUES */
+    $conn = new PDO($dsn, $user, $password);
+} catch (PDOException $e) {
+   echo $e->getMessage();
+}
+
+/* CREATION DES TABLES TECHNIQUES */
+try {
 	$sql = file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CREATE_SCRIPT_PATH'],true);
-	$query = $conn->prepare($sql);
-	$query->execute();
+	try{
+		$conn->query($sql);
+	} catch(PDOException $e) {
+    	echo $e->getMessage();
+	}
+
 } catch (PDOException $e) {
 	?>
 	<div class="alert alert-danger mb-0 p-2" role="alert">
@@ -39,6 +50,7 @@ try {
     <?php
 }
 
+/* RESULT */
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 if ($res == array()) {
 	echo "Database HDM Script Complete";

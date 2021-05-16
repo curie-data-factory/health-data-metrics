@@ -158,7 +158,7 @@ if (isset($_POST['runCreateDb'])) {
 							<td><?php echo($db['user']) ?></td>
 							<td><?php echo($db['ssl']) ?></td>
 							<td>
-								<form metdod="post" action="?tab=databases">
+								<form metdod="post" action="?tab=databases" style="display: inline-block;">
 									<button type="submit" class="btn btn-primary">
 										<i class="fas fa-pen"></i>
 									</button>
@@ -168,7 +168,7 @@ if (isset($_POST['runCreateDb'])) {
 									<input type="hidden" name="dbSsl" value="<?php echo($db['ssl']) ?>">
 									<input type="hidden" name="editDatabase" value="True">
 								</form>
-								<form metdod="post" action="?tab=databases">
+								<form metdod="post" action="?tab=databases" style="display: inline-block;">
 									<button type="submit" class="btn btn-danger">
 										<i class="fas fa-trash-alt"></i>
 									</button>

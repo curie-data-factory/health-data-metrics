@@ -53,80 +53,13 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 ### Application Configuration File
 
-`/var/www/html/conf/appli/conf-appli.json` :
+`/var/www/html/conf/appli/conf-appli.json`
 
-```json
-{
-    "AUTH": {
-        "AUTH_MODE": "none",
-        "AUTH_LDAP_CONF_PATH": "\/conf\/ldap\/conf-ldap.json"
-    },
-    "DB": {
-        "DB_CONF_PATH": "\/conf\/db\/conf-db.json",
-        "DB_CREATE_SCRIPT_PATH": "\/conf\/db\/create_tables.sql"
-    },
-    "EXPLORER": {
-        "KIBANA_URL": "http:\/\/localhost:5601\/",
-        "KIBANA_NAMESPACE": "default",
-        "KIBANA_HOME_DASHBOARD": "",
-        "KIBANA_EXPLORATOR_DASHBOARD": "",
-        "KIBANA_EXPLORATOR_INDEX": ""
-    },
-    "PACK": {
-        "NEXUS_URL": "http:\/\/nexus:8081\/",
-        "NEXUS_API_URL": "http:\/\/nexus:8081\/service\/rest\/v1\/",
-        "NEXUS_PACKS_ROOT_REPOSITORY": "hdm-snapshots"
-    },
-    "PIPELINE": {
-        "PIPELINE_RUNNING_MODE": "airflow",
-        "AIRFLOW_URL": "http:\/\/localhost:8080\/"
-    }
-}
-```
+See default file : [conf/appli/conf-appli.json](conf/appli/conf-appli.json)
 
 `/var/www/html/conf/db/conf-db.json` :
 
-```json
-{
-  "hdm-nexus-creds": {
-      "user": "",
-      "password": ""
-  },
-  "hdm-core-database": {
-      "user": "hdm",
-      "password": "password",
-      "host": "mysql",
-      "port": "3306",
-      "database": "dbhdm",
-      "ssl": "false"
-  },
-  "hdm-nosql-database": {
-      "user": "",
-      "password": "",
-      "host": "elasticsearch",
-      "namespace": "default",
-      "port": "9200",
-      "ssl": "false"
-  },
-  "hdm-sql-database": {
-      "user": "hdm",
-      "password": "password",
-      "host": "mysql",
-      "port": "3306",
-      "database": "dbhdm",
-      "ssl": "false"
-  },
-  "hdm-scanned-database": [
-    {
-        "user":"hdm",
-        "host":"mysql",
-        "port":"3306",
-        "database":"dbtoscan",
-        "ssl": "false"
-    }
-    ]
-}
-```
+See default file : [conf/db/conf-db.json](conf/db/conf-db.json)
 
 ## Run it !
 
