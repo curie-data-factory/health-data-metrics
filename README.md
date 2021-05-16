@@ -53,7 +53,7 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 ### Application Configuration File
 
-`/var/www/html/conf/appli/conf-appli.php` :
+`/var/www/html/conf/appli/conf-appli.json` :
 
 ```json
 {
@@ -73,18 +73,18 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
         "KIBANA_EXPLORATOR_INDEX": ""
     },
     "PACK": {
-        "NEXUS_URL": "http:\/\/localhost:8081\/",
-        "NEXUS_API_URL": "http:\/\/localhost:8081\/service\/rest\/v1\/",
-        "NEXUS_PACKS_ROOT_REPOSITORY": ""
+        "NEXUS_URL": "http:\/\/nexus:8081\/",
+        "NEXUS_API_URL": "http:\/\/nexus:8081\/service\/rest\/v1\/",
+        "NEXUS_PACKS_ROOT_REPOSITORY": "hdm-snapshots"
     },
     "PIPELINE": {
         "PIPELINE_RUNNING_MODE": "airflow",
-        "AIRFLOW_URL": "http:\/\/localhost:8080/"
+        "AIRFLOW_URL": "http:\/\/localhost:8080\/"
     }
 }
 ```
 
-`/var/www/html/conf/db/conf-db.php` :
+`/var/www/html/conf/db/conf-db.json` :
 
 ```json
 {
@@ -180,16 +180,10 @@ docker-compose up -d
 * [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint
   > (host: 127.0.0.1 Port: 3306 User: hdm Password: password Database: dbhdm)
 
-5. Exec into the docker image
+5. Resolve composer package dependencies. See [Here](https://getcomposer.org/doc/00-intro.md) for installing and using composer.
 
 ```bash
-docker exec -it hdm /bin/bash
-```
-
-6. Resolve composer package dependencies. See [Here](https://getcomposer.org/doc/00-intro.md) for installing and using composer.
-
-```bash
-composer install --no-dev --optimize-autoloader
+docker exec -ti hdm sh -c "composer install --no-dev --optimize-autoloader"
 ```
 
 ### Going deeper
