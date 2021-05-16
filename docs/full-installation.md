@@ -202,7 +202,7 @@ We edit our metric pack configuration to add :
   "limit_enabled": true,
   "search_results_limit": 2000000,
   "rootResultFolder": "../results/",
-  "esHost": "127.0.0.1",
+  "esHost": "elasticsearch",
   "esPort": 9200,
   "esSSL": false
 }
