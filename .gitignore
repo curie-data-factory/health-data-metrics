@@ -5,3 +5,6 @@ logs/
 *.pyc
 dags/packs/
 .env
+__pycache__
+logs
+plugins

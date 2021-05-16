@@ -47,3 +47,19 @@ CREATE TABLE IF NOT EXISTS `hdm_core_table_corr_db_rp` (
 )
 COMMENT='TABLE qui fait la correspondance entre les bases de données et les rule packs.'
 ENGINE=InnoDB;
+
+
+CREATE TABLE `hdm_alerts` (
+  `database` TEXT(65535) NULL DEFAULT NULL,
+  `dbversion` TEXT(65535) NULL DEFAULT NULL,
+  `table` TEXT(65535) NULL DEFAULT NULL,
+  `column` TEXT(65535) NULL DEFAULT NULL,
+  `date` DATE NULL DEFAULT NULL,
+  `alert_level` TEXT(65535) NULL DEFAULT NULL,
+  `alert_message` TEXT(65535) NULL DEFAULT NULL,
+  `alert_class` TEXT(65535) NULL DEFAULT NULL,
+  `alert_scope` TEXT(65535) NULL DEFAULT NULL,
+  `rule_id` BIGINT(20) NULL DEFAULT NULL
+)
+COMMENT='TABLE qui contient les alertes.'
+ENGINE=InnoDB;
