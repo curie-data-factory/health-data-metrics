@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 $dataConfDb = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
@@ -9,7 +9,7 @@ $dbNOSQLMetrics = $dataConfDb['hdm-nosql-database'];
 
 # Ajout des données dans le fichier de configuration.
 if (isset($_POST['addDatabase'])
-	AND isset($_POST['host']) 
+	AND isset($_POST['host'])
 	AND isset($_POST['port'])
 	AND isset($_POST['user'])
 	AND isset($_POST['password'])
@@ -52,7 +52,10 @@ if (isset($_POST['addDatabase'])
 		</div>
 		<?php
 	}
+} elseif (isset($_POST['dropDatabase'])) {
+	var_dump($_POST);
 }
+
 
 $dataConfDb = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
 $dbTarget = $dataConfDb['hdm-scanned-database'];
@@ -73,9 +76,9 @@ if(isset($_POST['runSyncFileToDb'])){
 if (isset($_POST['runCreateDb'])) {
 	?>
 	<div class="alert alert-success" role="alert">
-	<?php 
+	<?php
 		include $_SERVER['DOCUMENT_ROOT']."/admin/create_db.php";
-	 ?>	
+	 ?>
 	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	  </button>
@@ -94,10 +97,10 @@ if (isset($_POST['runCreateDb'])) {
 		<div class="col-lg-4">
 			<form method="post" action="?tab=databases">
 				<input type="submit" name="runCreateDb" value="Launch db hdm script creator" class="btn btn-primary">
-			</form>
+			</form><br/>
 			<fieldset class="border p-3 mb-4">
-				<legend class="w-auto">HDM Core database : 
-					<a href="#" data-toggle="tooltip" title="Notice : The Core database is the database containing sensitive & essential configurations & data."><i class="fas fa-question-circle"></i></a></legend> 
+				<legend class="w-auto">HDM Core database :
+					<a href="#" data-toggle="tooltip" title="Notice : The Core database is the database containing sensitive & essential configurations & data."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php echo($dbCore['database']) ?></b><br>
 						Host: <b><?php echo($dbCore['host']) ?></b><br>
 						Port: <b><?php echo($dbCore['port']) ?></b><br>
@@ -105,8 +108,8 @@ if (isset($_POST['runCreateDb'])) {
 						SSL: <b><?php echo($dbCore['ssl']) ?></b></p>
 			</fieldset>
 			<fieldset class="border p-3 mb-4">
-				<legend class="w-auto">HDM Metric NO-SQL database : 
-					<a href="#" data-toggle="tooltip" title="Notice : The NO-SQL Metric database is the database containing metrics & dashboards & analytics views."><i class="fas fa-question-circle"></i></a></legend> 
+				<legend class="w-auto">HDM Metric NO-SQL database :
+					<a href="#" data-toggle="tooltip" title="Notice : The NO-SQL Metric database is the database containing metrics & dashboards & analytics views."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php // echo($dbNOSQLMetrics['database']) ?></b><br>
 						Host: <b><?php echo($dbNOSQLMetrics['host']) ?></b><br>
 						Port: <b><?php echo($dbNOSQLMetrics['port']) ?></b><br>
@@ -114,7 +117,7 @@ if (isset($_POST['runCreateDb'])) {
 						SSL: <b><?php echo($dbNOSQLMetrics['ssl']) ?></b></p>
 			</fieldset>
 			<fieldset class="border p-3 mb-4">
-				<legend class="w-auto">HDM Metric SQL database : 
+				<legend class="w-auto">HDM Metric SQL database :
 					<a href="#" data-toggle="tooltip" title="Notice : The SQL Metric database is the database containing metrics/rules/alerts & more data. By default it is the same as the core database but it can be decoupled, for security and/or volumetric reasons."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php echo($dbSQLMetrics['database']) ?></b><br>
 						Host: <b><?php echo($dbSQLMetrics['host']) ?></b><br>
@@ -125,7 +128,7 @@ if (isset($_POST['runCreateDb'])) {
 			<a href="<?php echo($_SERVER['DOCUMENT_ROOT'].'/admin/create') ?>"></a>
 		</div>
 		<div class="col-lg-8">
-			<legend class="w-auto">Scanned databases : 
+			<legend class="w-auto">Scanned databases :
 				<a href="#" data-toggle="tooltip" title="Notice : Scanned databases are the databases that can be scanned from the different Metric-Packs. If you want to edit specific Metric-Packs configurations, go to the [Metric Packs] Admin tab."><i class="fas fa-question-circle"></i></a></legend>
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adddatabase">
 				<i class="fas fa-plus"></i> Add database
@@ -145,7 +148,7 @@ if (isset($_POST['runCreateDb'])) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
+					<?php
 					foreach ($dbTarget as $db) {
 						?>
 						<tr>
@@ -156,16 +159,89 @@ if (isset($_POST['runCreateDb'])) {
 							<td><?php echo($db['ssl']) ?></td>
 							<td>
 								<form metdod="post" action="?tab=databases">
-									<a class="btn btn-primary" href="?tab=databases">
+									<button type="submit" class="btn btn-primary">
 										<i class="fas fa-pen"></i>
-									</a>
-									<a class="btn btn-danger" href="?tab=databases">
+									</button>
+									<input type="hidden" name="dbHost" value="<?php echo($db['host']) ?>">
+									<input type="hidden" name="dbPort" value="<?php echo($db['port']) ?>">
+									<input type="hidden" name="dbUser" value="<?php echo($db['user']) ?>">
+									<input type="hidden" name="dbSsl" value="<?php echo($db['ssl']) ?>">
+									<input type="hidden" name="editDatabase" value="True">
+								</form>
+								<form metdod="post" action="?tab=databases">
+									<button type="submit" class="btn btn-danger">
 										<i class="fas fa-trash-alt"></i>
-									</a>
+									</button>
+									<input type="hidden" name="dbHost" value="<?php echo($db['host']) ?>">
+									<input type="hidden" name="dbPort" value="<?php echo($db['port']) ?>">
+									<input type="hidden" name="dbUser" value="<?php echo($db['user']) ?>">
+									<input type="hidden" name="dbSsl" value="<?php echo($db['ssl']) ?>">
+									<input type="hidden" name="dropDatabase" value="True">
 								</form>
 							</td>
 						</tr>
 						<?php
+
+						// ajout du modal de modification
+
+						?>
+						<form method="post" action="?tab=databases">
+							<div class="modal" id="editDatabase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edit Database</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="form-group row">
+												<label for="host" class="col-lg-4 col-form-label"><b>Host</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="host" name="host" placeholder="mysql.host.ip">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="port" class="col-lg-4 col-form-label"><b>Port</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="port" name="port" placeholder="3306">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="user" class="col-lg-4 col-form-label"><b>User</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="user" name="user" placeholder="hdm_user">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="password" class="col-lg-4 col-form-label"><b>Password</b></label>
+												<div class="col-lg-8">
+													<input type="password" required class="form-control" id="password" name="password" placeholder="******">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="database" class="col-lg-4 col-form-label"><b>Database</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="database" name="database" placeholder="database name">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="ssl" class="col-lg-4 col-form-label"><b>SSL</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="ssl" name="ssl" placeholder="true/false">
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<input type="submit" class="btn btn-primary" name="addDatabase" value="Add">
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					<?php
 					}
 					?>
 				</tbody>
