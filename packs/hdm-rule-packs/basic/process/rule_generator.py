@@ -1,5 +1,5 @@
 ##################################################
-# Credits Institut Curie 
+# Credits Institut Curie
 # Ce Script est un générateur procédural de règles pour HDM
 
 # Armand Leopold
@@ -10,10 +10,10 @@
 # coding: utf-8
 
 # # Rule Generator Basic :
-# * Author : Armand LEOPOLD 
+# * Author : Armand LEOPOLD
 # * Date : 18/01/2021
-# 
-# > Le role de rule generator est de pouvoir générer de façon systemique des règles afin 
+#
+# > Le role de rule generator est de pouvoir générer de façon systemique des règles afin
 # de générer des alertes bas niveau (colonne / données) sans avoir à ecrire toutes les règles à la main.
 
 import pandas as pd
@@ -32,11 +32,11 @@ rootConfFolder = "."
 now = datetime.now()
 now = now.strftime("%Y-%m-%d")
 
-# Connexion à la base de donnée et récupération de la liste des tables : 
+# Connexion à la base de donnée et récupération de la liste des tables :
 conf = None
-with open(rootConfFolder+'/conf.json', 'r') as confFile:  
+with open(rootConfFolder+'/conf.json', 'r') as confFile:
     conf = json.load(confFile)
-    
+
 print("[INFO] Recovering environnment variables.")
 try:
     env = os.environ['ENV']
@@ -72,8 +72,8 @@ dbList = pd.DataFrame(dbList).merge(pd.DataFrame(conf['databases']),on=['databas
 dbList = json.loads(dbList)
 
 
-# ## #1 Cas d'usage : Détecter les doublons dans les clés primaires/étrangères 
-# 
+# ## #1 Cas d'usage : Détecter les doublons dans les clés primaires/étrangères
+#
 # Afin de détecter les doublons, il est nécéssaire de récupérer le schéma de la base de donnée et de créer une règle sur le nombre de valeurs uniques ou non à partir des métriques.
 
 ### Connexion à la base de donnée
@@ -98,12 +98,12 @@ for schema in databaseSchemas:
     for elem in schema.iterrows():
         dictElem = {"rule_name":"doublons_ids","rule_type":"conditionnelle","alert_level":"Haut","alert_class":"METRIQUE","alert_message":"Doublons dans la clé Primaire","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem[1]["CONSTRAINT_SCHEMA"],"table":elem[1]["TABLE_NAME"],"column":elem[1]["COLUMN_NAME"],"rule_content":'{"metric":"highest_frequency","condition":">","conditionValue":"1","conditionTrigger":"returnTrue"}'}
         ruleList.append(dictElem)
-        
+
 rulesDf = pd.DataFrame(ruleList,columns=["rule_name","rule_type","alert_level","alert_class","alert_message","alert_scope","condition_trigger","condition_scope","database","table","column","rule_content"])
 
-#### Put new rules to rule tables : 
+#### Put new rules to rule tables :
 try:
-    # Publishing metrics to MySQL : 
+    # Publishing metrics to MySQL :
     print("[Info] Put rules to database MySQL")
     metricsDB = create_engine('mysql://'+dbUser+':'+dbPassword+'@'+dbHost+':'+dbPort+'/'+dbName).connect()
     rulesDf.to_sql(con=metricsDB, name='rule_basic', if_exists='append',index=False)
@@ -112,12 +112,11 @@ except:
     raise
 
 
-# ## #2 Cas d'usage : Détecter les colonnes vides 
-# 
-# Afin de détecter les doublons, il est nécéssaire de récupérer le schéma de la base de donnée et de créer une règle sur le nombre de valeurs uniques ou non à partir des métriques.
+# ## #2 Cas d'usage : Détecter les colonnes vides
+#
 
 metricsDB = create_engine('mysql://'+dbUser+':'+dbPassword+'@'+dbHost+':'+dbPort+'/'+dbName).connect()
-query = "SELECT * FROM `metric_basic` WHERE `date` IN ('2021-02-01')"
+query = "SELECT * FROM `metric_basic` WHERE `date` IN ('"+now+"')"
 print("[Info] "+query)
 dfMetrics = pd.read_sql(con=metricsDB,sql=query)
 metricsDB.close()
@@ -126,12 +125,12 @@ ruleList = []
 for index, elem in dfMetrics[['database','table','column']].iterrows():
     dictElem = {"rule_name":"100% missing values","rule_type":"conditionnelle","alert_level":"Haut","alert_class":"METRIQUE","alert_message":"La colonne est vide.","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem["database"],"table":elem["table"],"column":elem["column"],"rule_content":'{"metric":"percent_na_values","condition":"==","conditionValue":"100","conditionTrigger":"returnTrue"}'}
     ruleList.append(dictElem)
-        
+
 rulesDf = pd.DataFrame(ruleList,columns=["rule_name","rule_type","alert_level","alert_class","alert_message","alert_scope","condition_trigger","condition_scope","database","table","column","rule_content"])
 
-#### Put new rules to rule tables : 
+#### Put new rules to rule tables :
 try:
-    # Publishing metrics to MySQL : 
+    # Publishing metrics to MySQL :
     print("[Info] Put rules to database MySQL")
     metricsDB = create_engine('mysql://'+dbUser+':'+dbPassword+'@'+dbHost+':'+dbPort+'/'+dbName).connect()
     rulesDf.to_sql(con=metricsDB, name='rule_basic', if_exists='append',index=False)
@@ -140,7 +139,7 @@ except:
     raise
 
 
-# # Dropping doublons dans les règles 
+# # Dropping doublons dans les règles
 
 try:
     print("[Info] Dé-duplication des règles.")

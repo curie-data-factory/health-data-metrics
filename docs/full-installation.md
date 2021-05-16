@@ -72,7 +72,6 @@ When the installation is complete, you should check the different application en
 * [http://localhost:80](http://localhost:80) HDM
 * [http://localhost:8081](http://localhost:8081) Nexus
 * [http://localhost:5601](http://localhost:5601) Kibana
-* [http://localhost:9200](http://localhost:9200) Elasticsearch
 * [http://localhost:8080](http://localhost:8080) Airflow (User: airflow | Password: airflow)
 * [tcp://127.0.0.1:3306](tcp://127.0.0.1:3306) MySQL Endpoint
   > **host**: 127.0.0.1 | **Port**: 3306 | **User**: hdm | **Password**: password | **Database**: dbhdm

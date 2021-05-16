@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `rule_basic` (
 	`alert_message` VARCHAR(150) NOT NULL,
 	`alert_scope` VARCHAR(150) NOT NULL,
 	`condition_trigger` VARCHAR(150) NOT NULL,
+	`condition_scope` VARCHAR(150) NOT NULL,
 	`database` VARCHAR(255) NOT NULL,
 	`table` VARCHAR(255) NOT NULL,
 	`column` VARCHAR(255) NOT NULL,
