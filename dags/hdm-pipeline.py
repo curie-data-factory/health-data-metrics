@@ -39,11 +39,11 @@ with DAG('hdm-pipeline',
 
     with TaskGroup("hdm-"+env) as hdm:
         mpbasic = BashOperator(task_id="mp_basic",
-                               bash_command='cd /opt/airflow/dags/packs/hdm-metric-packs/basic && bash bootstrap-script.sh ',
+                               bash_command='cd /packs/hdm-metric-packs/basic && bash bootstrap-script.sh ',
                                dag=dag)
 
         rpbasic = BashOperator(task_id="rp_basic",
-                               bash_command='cd /opt/airflow/dags/packs/hdm-rule-packs/basic && bash bootstrap-script.sh ',
+                               bash_command='cd /packs/hdm-rule-packs/basic && bash bootstrap-script.sh ',
                                dag=dag)
 
         ## Enchainement des tâches dans le groupe

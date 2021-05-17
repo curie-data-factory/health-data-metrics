@@ -294,8 +294,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-run-python-ingestion-script" class="md-nav__link">
-    2.4 Run Python Ingestion Script
+  <a href="#24-run-ingestion-script" class="md-nav__link">
+    2.4 Run Ingestion Script
   </a>
   
 </li>
@@ -328,23 +328,30 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-metric-pack-rule-pack-configuration" class="md-nav__link">
-    3.3. Metric Pack &amp; Rule Pack Configuration
-  </a>
-  
-    <nav class="md-nav" aria-label="3.3. Metric Pack &amp; Rule Pack Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#331-enabling-metric-pack-rule-pack" class="md-nav__link">
-    3.3.1 Enabling Metric Pack / Rule Pack
+  <a href="#33-hdm-db-initialization" class="md-nav__link">
+    3.3. HDM DB Initialization
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#332-edit-configuration-metric-pack-rule-pack" class="md-nav__link">
-    3.3.2 Edit Configuration Metric Pack / Rule Pack
+  <a href="#34-metric-pack-rule-pack-configuration" class="md-nav__link">
+    3.4. Metric Pack &amp; Rule Pack Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4. Metric Pack &amp; Rule Pack Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-enabling-metric-pack-rule-pack" class="md-nav__link">
+    3.4.1 Enabling Metric Pack / Rule Pack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342-edit-configuration-metric-pack-rule-pack" class="md-nav__link">
+    3.4.2 Edit Configuration Metric Pack / Rule Pack
   </a>
   
 </li>
@@ -408,8 +415,29 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#62-explorer-dashboard" class="md-nav__link">
+    6.2 Explorer Dashboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-alert-dashboard" class="md-nav__link">
+    6.3 Alert Dashboard
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-stopping-hdm-stack" class="md-nav__link">
+    7. Stopping HDM Stack :
+  </a>
   
 </li>
       
@@ -435,7 +463,7 @@
                 
                 
                 <h1 id="hdm-full-installation">HDM Full Installation</h1>
-<p>This Tutorial guides you on How to install install full stack on your local machine.</p>
+<p>This Tutorial guides you on How to install hdm full stack on your local machine.</p>
 <p><strong>⚠️     REQUIREMENTS ⚠️</strong></p>
 <p>Software :</p>
 <ul>
@@ -487,15 +515,13 @@
 <p>We are going to run the <code>docker-compose</code> files :
 - <code>docker-compose.yml</code> (HDM primary Stack)
 - <code>docker-compose-airflow.yml</code> (Airflow Stack) More INFO <a href="https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#">Here</a></p>
-<div class="highlight"><pre><span></span><code>docker-compose -f docker-compose.yml up -d
-docker-compose -f docker-compose-airflow.yaml up -d
+<div class="highlight"><pre><span></span><code>bash tutorials/full-installation/launch-stack.sh
 </code></pre></div>
 <p>When the installation is complete, you should check the different application endpoints :</p>
 <ul>
 <li><a href="http://localhost:80">http://localhost:80</a> HDM</li>
 <li><a href="http://localhost:8081">http://localhost:8081</a> Nexus</li>
 <li><a href="http://localhost:5601">http://localhost:5601</a> Kibana</li>
-<li><a href="http://localhost:9200">http://localhost:9200</a> Elasticsearch</li>
 <li><a href="http://localhost:8080">http://localhost:8080</a> Airflow (User: airflow | Password: airflow)</li>
 <li><a href="tcp://127.0.0.1:3306">tcp://127.0.0.1:3306</a> MySQL Endpoint<blockquote>
 <p><strong>host</strong>: 127.0.0.1 | <strong>Port</strong>: 3306 | <strong>User</strong>: hdm | <strong>Password</strong>: password | <strong>Database</strong>: dbhdm</p>
@@ -525,23 +551,9 @@ docker-compose -f docker-compose-airflow.yaml up -d
 <h3 id="23-download-heart-attack-dataset">2.3 Download Heart Attack Dataset</h3>
 <div class="highlight"><pre><span></span><code>kaggle datasets download rashikrahmanpritom/heart-attack-analysis-prediction-dataset -p ./datasets --unzip
 </code></pre></div>
-<h3 id="24-run-python-ingestion-script">2.4 Run Python Ingestion Script</h3>
+<h3 id="24-run-ingestion-script">2.4 Run Ingestion Script</h3>
 <p>We are now going to ingest our Kaggle dataset to our MySQL database.</p>
-<p>Requirements installation</p>
-<ul>
-<li>
-<p>MySQL Client Driver
-<div class="highlight"><pre><span></span><code>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install -y libmysqlclient-dev
-</code></pre></div></p>
-</li>
-<li>
-<p>Python Package dependencies
-<div class="highlight"><pre><span></span><code>python -m pip install -r tutorials/full-installation/requirements.txt
-</code></pre></div></p>
-</li>
-<li>Ingestion Script :</li>
-</ul>
-<div class="highlight"><pre><span></span><code>python ./tutorials/full-installation/ingest-data.py
+<div class="highlight"><pre><span></span><code>bash tutorials/full-installation/ingest-data.sh
 </code></pre></div>
 <p>Data is ingested ! Check it out on <strong>mysql://127.0.0.1:3306/heart-attack</strong></p>
 <hr />
@@ -567,41 +579,26 @@ docker-compose -f docker-compose-airflow.yaml up -d
 <div class="highlight"><pre><span></span><code><span class="c1"># Nexus User Credentials</span>
 <span class="nb">export</span> <span class="nv">PASSWORDNEXUS</span><span class="o">=</span><span class="s2">&quot;123qwe&quot;</span>
 <span class="nb">export</span> <span class="nv">USERNEXUS</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span>
-
-<span class="c1"># Prerequis :</span>
-<span class="c1"># ZIP</span>
-sudo apt update <span class="o">&amp;&amp;</span> sudo apt install -y zip
-
-<span class="c1"># Create repo</span>
-curl -u <span class="nv">$USERNEXUS</span>:<span class="nv">$PASSWORDNEXUS</span> -X POST <span class="s2">&quot;http://localhost:8081/service/rest/v1/repositories/maven/hosted&quot;</span> -H <span class="s2">&quot;accept: application/json&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s2">&quot;{ \&quot;name\&quot;: \&quot;hdm-snapshots\&quot;, \&quot;online\&quot;: true, \&quot;storage\&quot;: { \&quot;blobStoreName\&quot;: \&quot;default\&quot;, \&quot;strictContentTypeValidation\&quot;: false, \&quot;writePolicy\&quot;: \&quot;allow\&quot; }, \&quot;cleanup\&quot;: { \&quot;policyNames\&quot;: [ \&quot;string\&quot; ] }, \&quot;component\&quot;: { \&quot;proprietaryComponents\&quot;: true }, \&quot;maven\&quot;: { \&quot;versionPolicy\&quot;: \&quot;MIXED\&quot;, \&quot;layoutPolicy\&quot;: \&quot;PERMISSIVE\&quot; }}&quot;</span>
-
-<span class="c1"># Zip &amp; Upload</span>
-<span class="nv">verScript</span><span class="o">=</span><span class="sb">`</span>egrep -o <span class="s2">&quot;([0-9]{1,}\.)+[0-9]{1,}&quot;</span> ./packs/hdm-rule-packs/basic/properties.json<span class="sb">`</span>
-<span class="nb">cd</span> ./packs/hdm-rule-packs/basic/ <span class="o">&amp;&amp;</span> zip -r ../basic_<span class="nv">$verScript</span>.zip . <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ../../../
-
-<span class="c1"># create</span>
-<span class="nb">export</span> <span class="nv">JOBTOUPLOAD</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/repository/hdm-snapshots/hdm/rulepacks/basic/</span><span class="nv">$verScript</span><span class="s2">/basic_</span><span class="nv">$verScript</span><span class="s2">.zip&quot;</span>
-<span class="nb">export</span> <span class="nv">PATHARTIFACT</span><span class="o">=</span><span class="s2">&quot;./packs/hdm-rule-packs/&quot;</span>
-<span class="nb">export</span> <span class="nv">ROOTNEXUSURL</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/service/rest/v1/components?repository=&quot;</span>
-
-python ./tutorials/full-installation/upload-to-nexus-*.py
-
-<span class="c1"># Zip &amp; Upload</span>
-<span class="nv">verScript</span><span class="o">=</span><span class="sb">`</span>egrep -o <span class="s2">&quot;([0-9]{1,}\.)+[0-9]{1,}&quot;</span> ./packs/hdm-metric-packs/basic/properties.json<span class="sb">`</span>
-<span class="nb">cd</span> ./packs/hdm-metric-packs/basic/ <span class="o">&amp;&amp;</span> zip -r ../basic_<span class="nv">$verScript</span>.zip . <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ../../../
-
-<span class="c1"># create</span>
-<span class="nb">export</span> <span class="nv">JOBTOUPLOAD</span><span class="o">=</span><span class="s2">&quot;http://localhost:8081/repository/hdm-snapshots/hdm/metricpacks/basic/</span><span class="nv">$verScript</span><span class="s2">/basic_</span><span class="nv">$verScript</span><span class="s2">.zip&quot;</span>
-<span class="nb">export</span> <span class="nv">PATHARTIFACT</span><span class="o">=</span><span class="s2">&quot;./packs/hdm-metric-packs/&quot;</span>
-
-python ./tutorials/full-installation/upload-to-nexus-*.py
+</code></pre></div>
+<p>And run the script :</p>
+<div class="highlight"><pre><span></span><code>bash tutorials/full-installation/mp-rp-nexus-register.sh
 </code></pre></div>
 <p>This script will create a Maven2 Repository on Nexus named : <strong>hdm-snapshots</strong></p>
 <p>The script then packages into zip files the metric pack &amp; rule pack basic and upload them into the maven repository.</p>
 <p>Check if it's ok : <a href="http://localhost:8081/#browse/browse:hdm-snapshots">http://localhost:8081/#browse/browse:hdm-snapshots</a></p>
 <hr />
-<h3 id="33-metric-pack-rule-pack-configuration">3.3. Metric Pack &amp; Rule Pack Configuration</h3>
-<h4 id="331-enabling-metric-pack-rule-pack">3.3.1 Enabling Metric Pack / Rule Pack</h4>
+<h3 id="33-hdm-db-initialization">3.3. HDM DB Initialization</h3>
+<p>We now have to initialize the hdm core db
+Go to the [Databases] Admin Tab <a href="http://localhost/admin.php?tab=databases">http://localhost/admin.php?tab=databases</a></p>
+<p>Then click in this order on :</p>
+<ol>
+<li>[Launch db hdm script creator]</li>
+<li>[Sync db-config File to HDM's Table [Database List]]</li>
+</ol>
+<p><img alt="db init" src="../db-init.png" /></p>
+<hr />
+<h3 id="34-metric-pack-rule-pack-configuration">3.4. Metric Pack &amp; Rule Pack Configuration</h3>
+<h4 id="341-enabling-metric-pack-rule-pack">3.4.1 Enabling Metric Pack / Rule Pack</h4>
 <p>We Then have to activate our mp &amp; rp on :</p>
 <ul>
 <li>http://localhost/admin.php?tab=metricpacks</li>
@@ -609,7 +606,7 @@ python ./tutorials/full-installation/upload-to-nexus-*.py
 </ul>
 <p><img alt="metric pack configuration page" src="../metrickpacks_conf_1.png" />
 <img alt="Rule pack configuration page" src="../rulepacks_conf_1.png" /></p>
-<h4 id="332-edit-configuration-metric-pack-rule-pack">3.3.2 Edit Configuration Metric Pack / Rule Pack</h4>
+<h4 id="342-edit-configuration-metric-pack-rule-pack">3.4.2 Edit Configuration Metric Pack / Rule Pack</h4>
 <p><img alt="metric pack configuration page" src="../metrickpacks_conf_2.png" /></p>
 <p>We edit our metric pack configuration to add :</p>
 <p><div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -641,14 +638,10 @@ curl -u <span class="nv">$USERAIRFLOW</span>:<span class="nv">$PASSWORDAIRFLOW</
 </code></pre></div>
 <p>They will create all the airflow environment variables in order for our DAG to run.</p>
 <h3 id="42-enable-the-dag">4.2 Enable the dag :</h3>
-<p>Toggle the dag :
-<img alt="airflow-dag.png" src="../airflow-dag.png" /></p>
+<p>Toggle the dag :</p>
+<p><img alt="airflow-dag.png" src="../airflow-dag.png" /></p>
 <hr />
 <h2 id="5-run-the-dag">5. Run the dag</h2>
-<p>Copy python files :</p>
-<div class="highlight"><pre><span></span><code>mkdir dags/packs
-cp packs/* dags/packs/
-</code></pre></div>
 <p>Trigger the dag :</p>
 <p><img alt="dag_trigger.png" src="../dag_trigger.png" /></p>
 <p>You can check it's execution :</p>
@@ -656,6 +649,21 @@ cp packs/* dags/packs/
 <hr />
 <h2 id="6-hdm-visualisation">6. HDM Visualisation</h2>
 <h3 id="61-import-kibana-dashboard">6.1 Import kibana dashboard</h3>
+<p>Run the following comandline to import all the dashboards from the Basic Metric Pack into kibana.</p>
+<div class="highlight"><pre><span></span><code>curl -X POST http://localhost:5601/api/saved_objects/_import?overwrite<span class="o">=</span><span class="nb">true</span> -H <span class="s2">&quot;kbn-xsrf: true&quot;</span> --form <span class="nv">file</span><span class="o">=</span>@packs/hdm-metric-packs/basic/kibana-dashboard/export.ndjson
+</code></pre></div>
+<h3 id="62-explorer-dashboard">6.2 Explorer Dashboard</h3>
+<p>You can explore the different metric pack dashboards from the Explorer.</p>
+<p><a href="http://localhost/explorer/wrapper.php">http://localhost/explorer/wrapper.php</a></p>
+<h3 id="63-alert-dashboard">6.3 Alert Dashboard</h3>
+<p>You can check all the alerts emmitted by the different rule packs from the Alert dashboard :</p>
+<p><a href="http://localhost/alert/alert.php">http://localhost/alert/alert.php</a></p>
+<h2 id="7-stopping-hdm-stack">7. Stopping HDM Stack :</h2>
+<p>To stop the stack :</p>
+<div class="highlight"><pre><span></span><code>docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose-airflow.yaml down -v
+docker-compose down -v
+</code></pre></div>
                 
               
               

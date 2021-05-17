@@ -53,6 +53,7 @@ x-airflow-common:
     ENV: 'dev'
   volumes:
     - ./dags:/opt/airflow/dags
+    - ./packs:/packs
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"

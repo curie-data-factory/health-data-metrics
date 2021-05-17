@@ -236,13 +236,6 @@ curl -u $USERAIRFLOW:$PASSWORDAIRFLOW -X POST "http://localhost:8080/api/v1/vari
 
 They will create all the airflow environment variables in order for our DAG to run.
 
-And then Copy python files :
-
-```bash
-mkdir dags/packs
-cp -r packs/* dags/packs/
-```
-
 ### 4.2 Enable the dag :
 
 Toggle the dag :
