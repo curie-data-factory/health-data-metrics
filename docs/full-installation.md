@@ -96,6 +96,8 @@ pip install kaggle --upgrade
 ### 2.2 Kaggle cli login
 Type `kaggle` to check if kaggle is installed.
 
+Setup API credentials :  [https://github.com/Kaggle/kaggle-api#api-credentials](https://github.com/Kaggle/kaggle-api#api-credentials)
+
 Run the commandline if needed :
 
 >
