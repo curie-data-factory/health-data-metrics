@@ -8,3 +8,4 @@ dags/packs/
 __pycache__
 logs
 plugins
+.env

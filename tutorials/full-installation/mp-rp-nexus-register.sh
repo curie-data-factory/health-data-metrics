@@ -1,3 +1,4 @@
+#!/bin/sh
 # Prerequis :
 # ZIP
 sudo apt update && sudo apt install -y zip
