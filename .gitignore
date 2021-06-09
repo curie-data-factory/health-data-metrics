@@ -9,3 +9,6 @@ __pycache__
 logs
 plugins
 .env
+docker-compose.yml
+conf/db/conf-db.json
+tutorials/full-installation/conf-db.json
