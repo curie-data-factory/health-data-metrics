@@ -70,6 +70,7 @@ if(isset($_GET['database']) || isset($_POST['database'])){
 
 	if (isset($_GET['database'])) {
 		$database = $_GET['database'];
+		$_SESSION['alertScope'] = "database";
 	} elseif (isset($_POST['database'])) {
 		$database = $_POST['database'];
 	}
@@ -90,8 +91,11 @@ if(isset($_GET['table']) || isset($_POST['table'])){
 	}
 
 	if (isset($_GET['table'])) {
-		if($_GET['table'] == "Select a Table") {$table = "";} 
-		else {$table = $_GET['table'];}
+		if(($_GET['table'] == "Select a Table") | ($_GET['table'] == "")) {$table = "";} 
+		else {
+			$table = $_GET['table'];
+			$_SESSION['alertScope'] = "table";
+		}
 	} elseif (isset($_POST['table'])) {
 		$table = $_POST['table'];
 	}
@@ -119,7 +123,11 @@ if(isset($_GET['column']) || isset($_POST['column'])){
 	}
 
 	if (isset($_GET['column'])) {
-		$column = $_GET['column'];
+		if(($_GET['column'] == "Select a Column") | ($_GET['column'] == "")) {$column = "";} 
+		else {
+			$column = $_GET['column'];
+			$_SESSION['alertScope'] = "column";
+		}
 	} elseif (isset($_POST['column'])) {
 		$column = $_POST['column'];
 	}
@@ -141,6 +149,7 @@ if(isset($_GET['column']) || isset($_POST['column'])){
 		'column' => $column));
 	$res3 = $sth->fetchAll(PDO::FETCH_ASSOC);
 	@$_SESSION['metrics'] = array_filter($res3[0]);
+
 }
 
 $url_kibana = KIBANA_URL."/s/".KIBANA_NAMESPACE."/app/kibana#";
@@ -263,7 +272,7 @@ if(isset($_POST['saveRule'])){
 // récupération des règles :
 if (isset($_GET['database'])) {
 	if (isset($_GET['table']) && ($_GET['table'] != "Select a Table")) {
-		if (isset($_GET['column'])) {
+		if (isset($_GET['column']) && ($_GET['column'] != "Select a Column")) {
 			$sql = 'SELECT * FROM `rule_basic` WHERE `database`=:database AND `table`=:table AND `column`=:column ORDER BY `id_rule` DESC LIMIT 100;';
 			$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array('database'=>$_GET['database'],
