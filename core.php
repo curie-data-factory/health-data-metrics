@@ -4,13 +4,14 @@
 function SyncTable($conn,$dbTarget)	{
 
 	foreach ($dbTarget as $db) {
-		$query = $conn->prepare('INSERT INTO `hdm_core_dblist` ( `db_name`, `db_host`, `db_port`, `db_user`, `db_is_ssl`) VALUES (:dbname, :dbhost, :dbport, :dbuser, :dbisssl);');
+		$query = $conn->prepare('INSERT INTO `hdm_core_dblist` ( `db_name`, `db_type`, `db_host`, `db_port`, `db_user`, `db_is_ssl`) VALUES (:dbname, :dbtype, :dbhost, :dbport, :dbuser, :dbisssl);');
 
 		if ($db['ssl'] == NULL) {
 			$db['ssl'] = "false";
 		}
 		
 	    if (!$query->execute(array(':dbname' => $db['database'],
+	    				  ':dbtype' => $db['type'],
 						  ':dbhost' => $db['host'],
 						  ':dbport' => $db['port'],
 						  ':dbuser' => $db['user'],
@@ -27,6 +28,7 @@ function SyncTable($conn,$dbTarget)	{
 								       (SELECT MIN(id) AS id
 								        FROM hdm_core_dblist
 								        GROUP BY `db_name`,
+								                 `db_type`,
 								                 `db_host`,
 								                 `db_port`,
 								                 `db_user`,

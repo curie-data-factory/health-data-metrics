@@ -196,6 +196,7 @@ if($hdmRulePacks['items'] != NULL){
  				<thead>
  					<tr>
  						<th scope="col">Database</th>
+ 						<th scope="col">Type</th>
  						<th scope="col">Host</th>
  						<th scope="col">Port</th>
  						<th scope="col">User</th>
@@ -215,10 +216,11 @@ if($hdmRulePacks['items'] != NULL){
  					<?php 
  					foreach ($hdmDbList as $db) {
 
-						$dbkey = $db['db_name'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
+						$dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
 	 					 ?>
 		 					<tr>
 		 						<td scope="col"><?php echo($db['db_name']) ?></td>
+		 						<td scope="col"><?php echo($db['db_type']) ?></td>
 		 						<td scope="col"><?php echo($db['db_host']) ?></td>
 		 						<td scope="col"><?php echo($db['db_port']) ?></td>
 		 						<td scope="col"><?php echo($db['db_user']) ?></td>

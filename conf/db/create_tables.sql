@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `hdm_core_dblist` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `db_name` VARCHAR(255) NOT NULL,
+  `db_type` VARCHAR(255) NOT NULL,
   `db_host` VARCHAR(255) NOT NULL,
   `db_port` VARCHAR(255) NOT NULL,
   `db_user` VARCHAR(255) NOT NULL,

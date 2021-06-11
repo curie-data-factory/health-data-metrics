@@ -9,6 +9,7 @@ $dbNOSQLMetrics = $dataConfDb['hdm-nosql-database'];
 
 # Ajout des données dans le fichier de configuration.
 if (isset($_POST['addDatabase'])
+	AND isset($_POST['type'])
 	AND isset($_POST['host'])
 	AND isset($_POST['port'])
 	AND isset($_POST['user'])
@@ -17,6 +18,7 @@ if (isset($_POST['addDatabase'])
 	AND isset($_POST['ssl'])) {
 
 	if(($_POST['host'] != "")
+		AND ($_POST['type'] != "")
 		AND ($_POST['port'] != "")
 		AND ($_POST['user'] != "")
 		AND ($_POST['password'] != "")
@@ -25,6 +27,7 @@ if (isset($_POST['addDatabase'])
 
 		$tempArr = array("user" => $_POST['user'],
 			"password" => $_POST['password'],
+			"type" => $_POST['type'],
 			"host" => $_POST['host'],
 			"port" => $_POST['port'],
 			"database" => $_POST['database'],
@@ -102,6 +105,7 @@ if (isset($_POST['runCreateDb'])) {
 				<legend class="w-auto">HDM Core database :
 					<a href="#" data-toggle="tooltip" title="Notice : The Core database is the database containing sensitive & essential configurations & data."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php echo($dbCore['database']) ?></b><br>
+						Type: <b><?php echo($dbCore['type']) ?></b><br>
 						Host: <b><?php echo($dbCore['host']) ?></b><br>
 						Port: <b><?php echo($dbCore['port']) ?></b><br>
 						User: <b><?php echo($dbCore['user']) ?></b><br>
@@ -111,6 +115,7 @@ if (isset($_POST['runCreateDb'])) {
 				<legend class="w-auto">HDM Metric NO-SQL database :
 					<a href="#" data-toggle="tooltip" title="Notice : The NO-SQL Metric database is the database containing metrics & dashboards & analytics views."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php // echo($dbNOSQLMetrics['database']) ?></b><br>
+						Type: <b><?php echo($dbNOSQLMetrics['type']) ?></b><br>
 						Host: <b><?php echo($dbNOSQLMetrics['host']) ?></b><br>
 						Port: <b><?php echo($dbNOSQLMetrics['port']) ?></b><br>
 						User: <b><?php echo($dbNOSQLMetrics['user']) ?></b><br>
@@ -120,6 +125,7 @@ if (isset($_POST['runCreateDb'])) {
 				<legend class="w-auto">HDM Metric SQL database :
 					<a href="#" data-toggle="tooltip" title="Notice : The SQL Metric database is the database containing metrics/rules/alerts & more data. By default it is the same as the core database but it can be decoupled, for security and/or volumetric reasons."><i class="fas fa-question-circle"></i></a></legend>
 					<p>Database: <b><?php echo($dbSQLMetrics['database']) ?></b><br>
+						Type: <b><?php echo($dbSQLMetrics['type']) ?></b><br>
 						Host: <b><?php echo($dbSQLMetrics['host']) ?></b><br>
 						Port: <b><?php echo($dbSQLMetrics['port']) ?></b><br>
 						User: <b><?php echo($dbSQLMetrics['user']) ?></b><br>
@@ -140,6 +146,7 @@ if (isset($_POST['runCreateDb'])) {
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">Database</th>
+						<th scope="col">Type</th>
 						<th scope="col">Host</th>
 						<th scope="col">Port</th>
 						<th scope="col">User</th>
@@ -153,6 +160,7 @@ if (isset($_POST['runCreateDb'])) {
 						?>
 						<tr>
 							<td scope="row"><?php echo($db['database']) ?></td>
+							<td><?php echo($db['type']) ?></td>
 							<td><?php echo($db['host']) ?></td>
 							<td><?php echo($db['port']) ?></td>
 							<td><?php echo($db['user']) ?></td>
@@ -162,6 +170,7 @@ if (isset($_POST['runCreateDb'])) {
 									<button type="submit" class="btn btn-primary">
 										<i class="fas fa-pen"></i>
 									</button>
+									<input type="hidden" name="dbType" value="<?php echo($db['type']) ?>">
 									<input type="hidden" name="dbHost" value="<?php echo($db['host']) ?>">
 									<input type="hidden" name="dbPort" value="<?php echo($db['port']) ?>">
 									<input type="hidden" name="dbUser" value="<?php echo($db['user']) ?>">
@@ -172,6 +181,7 @@ if (isset($_POST['runCreateDb'])) {
 									<button type="submit" class="btn btn-danger">
 										<i class="fas fa-trash-alt"></i>
 									</button>
+									<input type="hidden" name="dbType" value="<?php echo($db['type']) ?>">
 									<input type="hidden" name="dbHost" value="<?php echo($db['host']) ?>">
 									<input type="hidden" name="dbPort" value="<?php echo($db['port']) ?>">
 									<input type="hidden" name="dbUser" value="<?php echo($db['user']) ?>">
@@ -196,6 +206,12 @@ if (isset($_POST['runCreateDb'])) {
 											</button>
 										</div>
 										<div class="modal-body">
+											<div class="form-group row">
+												<label for="type" class="col-lg-4 col-form-label"><b>Type</b></label>
+												<div class="col-lg-8">
+													<input type="text" required class="form-control" id="type" name="type" placeholder="mysql">
+												</div>
+											</div>
 											<div class="form-group row">
 												<label for="host" class="col-lg-4 col-form-label"><b>Host</b></label>
 												<div class="col-lg-8">
@@ -262,6 +278,12 @@ if (isset($_POST['runCreateDb'])) {
 					</button>
 				</div>
 				<div class="modal-body">
+					<div class="form-group row">
+						<label for="type" class="col-lg-4 col-form-label"><b>Type</b></label>
+						<div class="col-lg-8">
+							<input type="text" required class="form-control" id="type" name="type" placeholder="mysql">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label for="host" class="col-lg-4 col-form-label"><b>Host</b></label>
 						<div class="col-lg-8">
