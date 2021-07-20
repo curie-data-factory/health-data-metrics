@@ -223,7 +223,7 @@ ___
 
 Login to Airflow [http://localhost:8080/home](http://localhost:8080/home) with (login : airflow | password: airflow)
 
-### 4.1 Add env variables :
+### 4.1 Add env variables
 
 In your previous terminal run these commands :
 
@@ -238,7 +238,7 @@ curl -u $USERAIRFLOW:$PASSWORDAIRFLOW -X POST "http://localhost:8080/api/v1/vari
 
 They will create all the airflow environment variables in order for our DAG to run.
 
-### 4.2 Enable the dag :
+### 4.2 Enable the dag
 
 Toggle the dag :
 
@@ -279,7 +279,7 @@ You can check all the alerts emmitted by the different rule packs from the Alert
 
 [http://localhost/alert/alert.php](http://localhost/alert/alert.php)
 
-## 7. Stopping HDM Stack :
+## 7. Stopping HDM Stack
 
 To stop the stack :
 

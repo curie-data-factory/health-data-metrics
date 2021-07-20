@@ -205,8 +205,8 @@ function writeRow($row)
 		echo "<td class=\"col-lg-3 col-sm-3\">".  $row['column'] . "</td>\n";
 		echo "<td class=\"col-lg-2 col-sm-3\">".  $row['alert_message'] . "</td>\n";
 		echo "<td class=\"col-lg-1 col-sm-1\">
-		<a href=\"".$linkKibana."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0px;\"><i class=\"fas fa-search\"></i></a>
-		<a href=\"".$linkRule."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0px;\"><i class=\"fas fa-pencil-alt\"></i></i></a> 
+		<a href=\"".$linkKibana."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0;\"><i class=\"fas fa-search\"></i></a>
+		<a href=\"".$linkRule."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0;\"><i class=\"fas fa-pencil-alt\"></i></i></a> 
 		</td>\n";
 		echo('</tr>');
 	}

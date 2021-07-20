@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `hdm_core_table_corr_db_rp` (
 COMMENT='TABLE qui fait la correspondance entre les bases de données et les rule packs.'
 ENGINE=InnoDB;
 
-
 CREATE TABLE `hdm_alerts` (
   `database` TEXT(65535) NULL DEFAULT NULL,
   `dbversion` TEXT(65535) NULL DEFAULT NULL,

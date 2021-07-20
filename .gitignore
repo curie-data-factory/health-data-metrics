@@ -12,3 +12,4 @@ plugins
 docker-compose.yml
 conf/db/conf-db.json
 tutorials/full-installation/conf-db.json
+.idea/

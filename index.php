@@ -12,4 +12,3 @@ if (isset($_SESSION['connected'])) {
 	include 'login.php';
 }
 
-?>
