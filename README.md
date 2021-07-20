@@ -63,7 +63,7 @@ See default file : [conf/db/conf-db.json](conf/db/conf-db.json)
 
 ## Run it !
 
-You can run job orchestrator from 3 different ways :
+You can run HDM from 3 different ways :
 
 ### Docker Image
 
