@@ -263,9 +263,93 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          HDM Packs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="packs.html" class="md-nav__link md-nav__link--active">
         HDM Packs
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#arborescence" class="md-nav__link">
+    Arborescence
+  </a>
+  
+    <nav class="md-nav" aria-label="Arborescence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#propertiesjson" class="md-nav__link">
+    Properties.json
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-scriptsh" class="md-nav__link">
+    Bootstrap-script.sh
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-la-configuration" class="md-nav__link">
+    Gestion de la configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestion de la configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-liste-des-points-de-terminaisons-cibles" class="md-nav__link">
+    1. Liste des points de terminaisons cibles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-configuration-des-pts-de-terminaisons-et-configuration-externe-des-pack" class="md-nav__link">
+    2./3. Configuration des pts de terminaisons et configuration externe des pack
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#orchestration-des-packs" class="md-nav__link">
+    Orchestration des packs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -291,6 +375,136 @@
 <li>Les métriques (Rule Packs)</li>
 </ul>
 <p>Il n'existe que deux types de packs HDM pour le moment.</p>
+<h2 id="arborescence">Arborescence</h2>
+<p>L'arborescence des packs doit répondre à une norme afin de pouvoir élaborer des systèmes et services automatisés dans le futur.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Readme.md</td>
+<td>Permet d'expliquer le fonctionnement du pack</td>
+</tr>
+<tr>
+<td>requirements.txt</td>
+<td>dépendances logiciels du pack</td>
+</tr>
+<tr>
+<td>properties.json</td>
+<td><a href="#propertiesjson">Properties.json</a></td>
+</tr>
+<tr>
+<td>bootstrap-script.sh</td>
+<td><a href="#bootstrap-scriptsh">bootstrap-script.sh</a></td>
+</tr>
+<tr>
+<td>/process</td>
+<td>Le dossier process contient le programme en tant que tel</td>
+</tr>
+<tr>
+<td>/process/conf.json</td>
+<td>le fichier de conf.json contient la configuration locale minimal à l'execution du pack</td>
+</tr>
+<tr>
+<td>/process/code.(py,jar,etc...)</td>
+<td>le Code du programme sous n'importe quel format (par de contraintes)</td>
+</tr>
+<tr>
+<td>/kibana-dashboard</td>
+<td>Si besoin (pour les metric packs) ce dossier contiendra les fichiers kibana/elasticsearch pour installer les visualisations du pack</td>
+</tr>
+<tr>
+<td>/kibana-dashboard/export.ndjson</td>
+<td>le fichier de visualisations kibana</td>
+</tr>
+<tr>
+<td>/create-table</td>
+<td>Le dossier qui contient le ou les scripts SQL necéssaire au fonctionnement du pack</td>
+</tr>
+<tr>
+<td>/create-table/create.sql</td>
+<td>fichier sql</td>
+</tr>
+</tbody>
+</table>
+<h3 id="propertiesjson">Properties.json</h3>
+<p>Le fichier properties.json du pack doit contenir les informations de base pour permettre de le répertorier dans le futur.</p>
+<ul>
+<li>name : Name of the pack</li>
+<li>version : Version of the pack</li>
+<li>author : author</li>
+<li>description : One line description</li>
+<li>mainscript : main, but can be in the <code>.sh</code> also</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="s2">&quot;0.3.7&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;armand leopold&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Ce pack contient des métriques de base ainsi que l&#39;analyse du delta d&#39;un jour a l&#39;autre des mêmes metriques, et ajoute un coefficient de leur variation.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;mainscript&quot;</span><span class="p">:</span><span class="s2">&quot;metrics.py&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="bootstrap-scriptsh">Bootstrap-script.sh</h3>
+<p>Le fichier de bootstrap script est un fichier necéssaire qui sert de point d'entrée au programme qui va être executé. 
+Si besoin, on incluera l'installation des dépendances et binaires requis pour la bonne execution du programme. 
+Finalement on incluera la commande de lancement du ou des programmes du pack.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># This script will be executed first at the installation of the pack</span>
+<span class="c1"># Put Here everything that needs to be installed in order for the metric script to run properly</span>
+
+pip install --upgrade pip 
+pip install -r requirements.txt
+<span class="nb">cd</span> process
+python metric_basic.py
+</code></pre></div>
+<h2 id="gestion-de-la-configuration">Gestion de la configuration</h2>
+<p>La gestion de la configuration est laissé libre à l'auteur du pack dans sa très grande majorité, excepté les cas suivants : </p>
+<ol>
+<li>La récupération de la liste des points de terminaisons sur lesquels le pack doit s'executer.</li>
+<li>La configuration spécifique à chaque point de terminaison</li>
+<li>La configuration externe du pack (hors credentials) ammené à changer régulièrement.</li>
+</ol>
+<h3 id="1-liste-des-points-de-terminaisons-cibles">1. Liste des points de terminaisons cibles</h3>
+<p>Ce que l'on entend pas "points de terminaisons cibles" sont l'ensemble des chaines de connexions ou URL auxquel le Pack accède ponctuellement pour effectuer sont travail et contre lesquels il lit et récupère des informations.</p>
+<p>Cette liste de points de terminaisons est géré de façon centralisée par HDM afin d'avoir une vue d'ensemble en un coup d'oeil depuis l'interface, des différentes actions des packs.</p>
+<p>La liste de ces points de terminaisons est modifiable via l'interface d'administration en cliquant sur les cases dans la matrice d'activation :</p>
+<p><img alt="matrice" src="matrice-activation_1.png" /></p>
+<p>A chaque activation d'un point de terminaison, une ligne est rajouté dans la table :</p>
+<ul>
+<li><code>hdm_core_table_corr_db_mp</code> Pour les Metric Packs</li>
+<li><code>hdm_core_table_corr_db_rp</code> Pour les Rule Packs</li>
+</ul>
+<p>Contenant le <strong>slug</strong> de la chaine de connexion dans le champs <code>db_key</code> ainsi que le nom du pack dans : <code>mp_key</code> ou <code>rp_key</code> pour un metric pack ou un rule pack.</p>
+<p>Chaque pack doit pouvoir se connecter à la base HDM pour récupérer cette configuration.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Attention, le slug de la chaine <strong>ne contient pas de credentials</strong>. Vous devrez trouver une autre manière de récuperer le mot de passe de la chaine de connexion. En utilisant un <strong>online credentials store</strong> comme <a href="https://www.vaultproject.io/">Vault</a> ou <a href="https://www.keycloak.org/">Keycloack</a>.
+Vous pouvez également stocker les credentials dans la configuration locale du pack en dernier recours et seulement pour des comptes en "readonly".</p>
+</div>
+<h3 id="23-configuration-des-pts-de-terminaisons-et-configuration-externe-des-pack">2./3. Configuration des pts de terminaisons et configuration externe des pack</h3>
+<p>HDM donne également la possibilitée de centraliser la configuration spécifique à chaque points de terminaisons pour chaque pack.</p>
+<p>Dans l'interface, la configuration se situe également dans la matrice d'activation (voir image ci-dessus) à la droite du boutton d'activation.</p>
+<p>La configuration est ensuite encodé en <strong>base64</strong> et stocké dans la table : </p>
+<ul>
+<li><code>hdm_pack_metric_conf</code> Pour les Metric Packs </li>
+<li><code>hdm_pack_rule_conf</code> Pour les Rule Packs</li>
+</ul>
+<p>Ces tables contiennent également <code>la configuration externe du pack</code> la subtilité est la suivante : </p>
+<p>L'<code>id_config</code> contient soit : </p>
+<ul>
+<li>L'id du pack + version : <strong>pack:version</strong> si c'est une configuration externe.</li>
+<li>L'id du pack + le slug de la chaine de connexion : <strong>pack:slug</strong> si c'est une configuration lié à un point de terminaison.</li>
+</ul>
+<p>Cette table est également à requêter par le pack pour récupérer sa configuration et les configurations des points de terminaisons.</p>
+<h2 id="orchestration-des-packs">Orchestration des packs</h2>
+<p><img alt="dag-hdm.png" src="dag-hdm.png" /></p>
+<p>Pour l'orchestration des packs, la solution proposée est d'utiliser un DAG Airflow.
+Le dag airflow permet de centraliser l'execution des packs comme des "tâches", de configurer un rythme d'execution, de monitorer les tâches executés et le bon fonctionnement des enchainements de tâches.</p>
+<p>En effet, les packs fonctionnant indépendament les un des autres peuvent néamoins necéssiter des ressources d'autres packs pour fonctionner. Par exemple, les rule packs ont besoin des metric packs pour executer leur règles. Airflow, de part son "graph" d'execution permet d'assurer un juste enchainement des packs les uns après les autres dans un ordre défini, il permet d'éviter toute corruption dans les analyses et prévient l'émission de fausses alertes.</p>
                 
               
               
