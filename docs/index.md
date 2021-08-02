@@ -1,46 +1,45 @@
 
 ![logo-hdm.PNG](logo-hdm.PNG)
 
-# Qu'est-ce que HDM ?
+# What is HDM?
 
-Health data metrics (HDM) est un outil développé par la **Data Factory** de **l'Institut Curie**. 
+Health data metrics (HDM) is a tool developed by the **Data Factory** of **Institut Curie**.
 
-## Le but
+## The goal
 
-Son but est de pouvoir calculer des métriques de qualité sur de la donnée médicale et son stockage dans les entrepôts de données.
+Its goal is to be able to calculate quality metrics on medical data and its storage in data warehouses.
 
-1. Le but premier est de pouvoir **améliorer** et **monitorer** la **qualité des données** de nos entrepôts de donnée de santé.
+1. The primary goal is to be able to **improve** and **monitor** the **data quality** of our health data warehouses.
 
-Pour ce faire nous avons développé les fonctionnalités suivantes :
+To do this we have developed the following features:
 
-* Calculer des **métriques** sur les données de nos entrepôts.
-* Mettre en place des **règles** pour pouvoir appliquer des **contraintes opérationnelles/métiers** sur les bases de données en lien avec les métriques calculées.
-* **Détecter** les ruptures et régressions dans la structure de la base de données ou dans les données elles-mêmes **en générant des alertes** grâce à des règles métiers.
-* Permettre de **centraliser les contraintes** et créer un HUB unifié pour gérer la qualité de la donnée afin de livrer des données de la meilleure qualité possible aux médecins et chercheurs.
-* **Créer des dashboards** sur les métriques pour pouvoir les **visualiser** et les **explorer**.
-
+* Calculate **metrics** on the data from our warehouses.
+* Set up **rules** to be able to apply **operational / business constraints** on the databases in connection with the calculated metrics.
+* **Detect** breaks and regressions in the database structure or in the data itself **by generating alerts** using business rules.
+* Allow to **centralize the constraints** and create a unified HUB to manage the quality of the data in order to deliver the best possible quality data to doctors and researchers.
+* **Create dashboards** on metrics to be able to **visualize** and **explore** them.
 ___
 
-## Les principes de base
+## The basic principles
 
 ![fonctionnement-haut-niveau.svg](fonctionnement-haut-niveau.svg)
 
-Il existe une relation hiérarchique dans la façon dont HDM fonctionne :
+There is a hierarchical relationship in the way HDM works:
 
-- Premièrement, nous avons **des bases de données** à sur lesquelles nous allons calculer **des métriques**
+- First, we have **databases** on which we will calculate **metrics**
 
-Ces métriques peuvent servir différents buts et sont calculées grâce à des **Métriques Packs** qui sont des mini programmes autonomes qui vont se charger de les calculer puis de les insérer dans une **base de données de métrique**.
+These metrics can serve different purposes and are calculated using **Metrics Packs** which are self-contained mini programs that will calculate them and then insert them into a **metrics database**.
 
 
-- Ensuite nous avons les **Rules Packs** dont le but est de pouvoir exploiter les métriques calculées précédemment afin de générer des **alertes** que l'utilisateur pourra consulter.
+- Then we have the **Rules Packs** whose goal is to be able to use the metrics calculated previously in order to generate **alerts** that the user can consult.
 
-De la même manière que pour les métriques Packs, les Rule Packs fonctionnent également comme des mini programmes autonomes qui vont se charger cette fois de **générer des règles basées sur les métriques** et de **générer des alertes** si jamais ces règles **ne sont pas respectées**.
+In the same way as for the metric Packs, the Rule Packs also work as autonomous mini programs which will take charge this time of **generating rules based on the metrics** and of **generating alerts** if ever these rules **are not respected**.
 
-## L'architecture Fonctionnelle
+## Functional architecture
 
 ![architecture-hdm-detailed.svg](architecture-hdm-detailed.svg)
 
-HDM fonctionne en articulation de plusieurs outils et technologies que nous allons voir dans la suite : 
+HDM works in conjunction with several tools and technologies that we will see below :
 
 Logiciel | Containerized | Version | Usage | url
 ------------ | ------------- | ------------- | ------------- | -------------
@@ -53,124 +52,128 @@ Airflow | Yes | 2.1.0 | Orchestrateur de Tâches. | [https://airflow.apache.org/
 
 ___
 
-## Les composants
+## The components
 
-### Bases de données
+### Data base
 
-Cet outil intègre 3 bases de données :
+This tool integrates 3 databases:
 
-- Une base MySQL pour stocker les métriques sous format SQL.
-- Une base MySQL pour stocker les données applicatives. (conf , paramètres, logs etc...)
-- Une base Elasticsearch pour stocker les métriques sous format NO-SQL.
+- A MySQL database to store metrics in SQL format.
+- A MySQL database to store application data. (conf, parameters, logs etc ...)
+- An Elasticsearch database to store metrics in NO-SQL format.
 
-### Modules Front-end
+### Front-end modules
 
-L'outil de front-end fonctionne de façon modulaire, il existe les modules suivants :
+The front-end tool works in a modular way, there are the following modules:
 
-- Explorer (Dashboarding pour explorer les métriques)
-- Rule editor (Permet d'éditer les règles de cohérence directement dans l'interface sans lignes de codes)
-- Alerts (Permet d'afficher les alertes remontés par les Rule Packs)
-- Admin (Permet de gérer l'administration des MP/RP et leur configuration)
+- Explore (Dashboarding to explore metrics)
+- Rule editor (Allows you to edit consistency rules directly in the interface without code lines)
+- Alerts (Allows you to display the alerts sent by the Rule Packs)
+- Admin (Used to manage the administration of MP / RP and their configuration)
 
 ### Dashboards
 
-Cet outil peut être utilisé avec les outils suivants :
+This tool can be used with the following tools:
 
-- Kibana qui permet de créer des vues à partir des documents dans les bases NO-SQL Elasticsearch.
-- Redash qui permet de créer des vues à partir des tables de métriques SQL MySQL.
+- Kibana which allows you to create views from documents in the NO-SQL Elasticsearch databases.
+- Redash which allows you to create views from SQL MySQL metric tables.
 
-### Orchestrateur & Jobs
+### Orchestrator & Jobs
 
-Afin de monitorer l'exécution des tâches de calcul de métriques, de règles et d'alertes, nous utilisons Airflow, à travers la définition d'un DAG appelé : `hdm-pipeline`.
+In order to monitor the execution of metrics, rules and alerts calculation tasks, we use Airflow, through the definition of a DAG called: `hdm-pipeline`.
 
 ___
 
-## Métriques et règles
+## Metrics and rules
 
-Comment sont défini et calculés les modules de métriques et de règles ?
+How are metrics and rules modules defined and calculated?
 
-Dans HDM il existe ce qu'on appelle des "PACK", les packs sont des mini-modules qui se chargent de calculer soit des métriques, soit des règles de cohérences de données.
-
-
-Dans la version actuelle de HDM il n'existe qu'un seul pack de métriques mais il est possible d'en rajouter d'autres par la suite sans avoir à modifier l'applicatif.
-
-### Fonctionnement des "MetricPacks" (MP)
-
-Les métriques packs contiennent un fichier `.sh` qui contient la ligne d'exécution du MP, il est à la charge du programmeur du MP de faire toutes les vérifications de dépendances logicielles avant d'exécuter son programme.
+In HDM there are what are called "PACKs", the packs are mini-modules which are responsible for calculating either metrics or data consistency rules.
 
 
-Le metricPack peut également contenir un fichier `.ndjson` contenant les visualisation & dashboards Kibana qui sont liés aux données de métriques que produisent son MP.
+In the current version of HDM there is only one metric pack but it is possible to add others later without having to modify the application.
 
-### Fonctionnement des "RulePacks" (RP)
+### Operation of "MetricPacks" (MP)
 
-Les rules packs contiennent un fichier `.sh` qui contient la ligne d'exécution du RP, il est à la charge du programmeur du MP de faire toutes les vérifications de dépendances logicielles avant d'exécuter son programme.
+The metric packs contain a `.sh` file which contains the execution line of the MP, it is the responsibility of the MP programmer to do all the software dependency checks before running his program.
 
 
-Les rules packs s'exécutent sur les données des MP et ajoutes des alertes dans la table d'alerte de HDM.
+The metricPack can also contain an `.ndjson` file containing the Kibana visualizations & dashboards which are linked to the metrics data that its PM produces.
+
+### How RulePacks (RP) work
+
+The rules packs contain a `.sh` file which contains the line of execution of the RP, it is the responsibility of the programmer of the MP to do all the software dependency checks before running his program.
+
+
+The rule packs are executed on the data of the PMs and add alerts in the alert table of HDM.
 
 ## Configuration & Orchestration
 
-La configuration de l'applicatif HDM est interne à l'applicatif lui-même, il existe les configurations suivantes : 
+The configuration of the HDM application is internal to the application itself, there are the following configurations:
 
-- Configuration LDAP : Permet de se connecter au serveur LDAP, gère l'authentification des utilisateurs et la gestion de leurs droits
-- Configuration Application : Quels dashboards Kibana afficher dans quels modules etc...
-- Configuration Packs : Connexion au répertoire de Packs (Nexus) Configuration générale des packs
-
-
-Chaque MetricPack & RulePack peux posséder sa configuration propre. Elle est stockée en base64 dans la base de données applicative.
-Chaque MP & RP peut également posséder sa configuration propre par base de données scannée et peut donc adapter son fonctionnement à la base de données cible si besoin. Si cette configuration existe, elle sera chargée en lieu et place de la configuration du MP/RP parente.
+- LDAP configuration: Used to connect to the LDAP server, manage user authentication and manage their rights
+- Application configuration: Which Kibana dashboards to display in which modules etc ...
+- Packs configuration: Connection to the Packs directory (Nexus) General configuration of the packs
 
 
-L'orchestration est effectuée par un DAG (Directed Acyclic Graph) Airflow qui se chargera de charger les MP/RP puis, de charger leur configuration, et enfin les exécutera sur chaque base de données.
+Each MetricPack & RulePack can have its own configuration. It is stored in base64 in the application database.
+Each MP & RP can also have its own configuration per scanned database and can therefore adapt its operation to the target database if necessary. If this configuration exists, it will be loaded instead of the configuration of the parent MP / RP.
+
+
+The orchestration is performed by a DAG (Directed Acyclic Graph) Airflow which will load the MP / RP then load their configuration, and finally run them on each database.
 
 ___
 
-## Les métriques de qualités de la donnée
+## Data quality metrics
 
-### Les niveaux de métriques
+### Metric levels
 
-Afin d'évaluer de façon correcte la qualité des données, il est bon de définir des périmètres de calcul de ces métriques.
-Nous avons défini 6 niveaux hiérarchiques de métriques; Il est important de ne pas mélanger les niveaux de métriques, et de comparer les métriques entres-elles sur le même niveau.
+In order to correctly assess the quality of the data, it is good to define the calculation scopes of these metrics.
+We have defined 6 hierarchical levels of metrics; It is important not to mix the metric levels, and to compare the metrics on the same level.
 
-- Le niveau 0 : 
-> Le niveau 0 permet de calculer des métriques à l'échelle de toutes les versions d'une base de données.
-- Le niveau 1 : 
-> Le niveau 1 permet de calculer des métriques à l'échelle d'une version donnée d'une base de données.
-- Le niveau 2 : 
-> Le niveau 2 permet de calculer des métriques à l'échelle d'une table, d'une version donnée, d'une base de données.
-- Le niveau 3 : 
-> Le niveau 3 permet de calculer des métriques à l'échelle d'une colonne indépendamment de son type (exemple : nombres de valeurs manquantes/valeurs NULL).
-- Le niveau 4 : 
-> Le niveau 4 permet de calculer des métriques à l'échelle d'une colonne en prenant en compte son type de donnée (Numérique, textuelle, catégorique, continue, date, id etc. ...).
-- Le niveau 5 : 
-> Le niveau 5 permet de calculer des métriques à l'échelle de variables catégoriques : (fréquence, valeur)
+- Level 0:
+> Level 0 is used to calculate metrics at the scale of all the versions of a database.
+- Level 1:
+> Level 1 is used to calculate metrics at the scale of a given version of a database.
+- Level 2:
+> Level 2 is used to calculate metrics at the scale of a table, a given version, or a database.
+- Level 3:
+> Level 3 is used to calculate metrics at the scale of a column regardless of its type (example: number of missing values ​​/ NULL values).
+- Level 4:
+> Level 4 is used to calculate metrics at the scale of a column by taking into account its type of data (Numeric, textual, categorical, continuous, date, id etc. ...).
+- Level 5:
+> Level 5 is used to calculate metrics on the scale of categorical variables: (frequency, value)
 
 ![arborescence_deep_metrics.png](arborescence_deep_metrics.png)
 
-> *Schéma de représentation des différents niveaux de calcul de métriques possible.*
+> *Diagram showing the different levels of metric calculation possible.*
 
 ___
-## Les règles & alertes 
-### Les règles 
 
-Basé sur les métriques calculées périodiquement, l'application permet d'assurer un suivi passif (sans intervention humaine) et dynamique (s'adapte aux changements) de la qualité de la donnée, à l'aide de l'outil d'implémentation de règles d'alertes afin de remonter le plus efficacement les anomalies dans la base de données.
+## Rules & alerts
+
+### The rules
+
+Based on the metrics calculated periodically, the application makes it possible to ensure passive (without human intervention) and dynamic (adapts to changes) monitoring of the quality of the data, using the implementation tool of alert rules in order to report anomalies in the database as efficiently as possible.
 
 ![editeur_regle_1.png](editeur_regle_1.png)
 
-> *Affichage de l'interface graphique de l'éditeur de règles.*
+> *Display of the rule editor graphical interface.*
 
-### Les Alertes
-Les alertes seront présentés sous forme de liste simple et organisés par base de données, table ou colonnes.
+### Alerts
+
+Alerts will be presented as a simple list and organized by database, table or columns.
 
 ![alert_display.png](alert_display.png)
 
-> *Affichage de la table des alertes.* 
+> *Display of the alerts table.*
+
 ___
-## La visualisation et l'exploration
 
+## Visualization and exploration
 
-La visualisation des métriques et leur exploration est une phase importante afin de construire les règles les plus pertinentes possibles. Un outil est à disposition appelé Kibana, basé sur la base de données Elasticsearch. Les dashboard permettrons de visualiser et d'interagir simplement avec les métriques afin de pouvoir détecter les valeurs aberrantes facilement, et de pouvoir faire remonter ces anomalies en alerte grâce à l'éditeur de règles.
+The visualization of metrics and their exploration is an important phase in order to build the most relevant rules possible. A tool is available called Kibana, which is based on the Elasticsearch database. The dashboards will make it possible to visualize and simply interact with the metrics in order to be able to easily detect outliers, and to be able to raise these anomalies in alert thanks to the rule editor.
 
 ![kibana_dashboard.png](kibana_dashboard.png)
 
-> *Affichage de l'interface graphique de dashboard kibana.*
+> *Display of the kibana dashboard graphical interface.*
