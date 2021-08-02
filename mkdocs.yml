@@ -28,7 +28,5 @@ theme:
   name: material
   features:
     - navigation.instant
-    - navigation.tabs
-    - toc.integrate
 extra_css:
   - css/style.css

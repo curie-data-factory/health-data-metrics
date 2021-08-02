@@ -50,11 +50,12 @@ if (isset($_POST['editAuthConfig'])) {
 						Notice : Table mode is not yet supported
 					</div>
 					<div class="form-group">
-						<label for="sqlRequestValue">Select an authentication mode : </label>
-						<select class="form-control" name="authMode">
-							<option>LDAP</option>
-							<option>Table</option>
-						</select>
+						<label for="sqlRequestValue">Select an authentication mode :
+                            <select class="form-control" name="authMode">
+                                <option>LDAP</option>
+                                <option>Table</option>
+                            </select>
+                        </label>
 					</div>
 				</fieldset>
 				<input type="submit" name="editAuthConfig" value="Save Changes" class="btn btn-primary col-sm-12 col-lg-12">

@@ -11,6 +11,7 @@ $password = $json["hdm-core-database"]['password'];
 
 /* CREATION DE LA BASE DE DONNEE IF NOT EXISTS */
 $conn = new PDO($dsn, $user, $password);
+$query = "";
 try {
     $query = $conn->prepare("CREATE DATABASE IF NOT EXISTS `".$json['hdm-core-database']['database']."` /*!40100 */;", array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$query->execute();

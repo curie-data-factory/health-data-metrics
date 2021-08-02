@@ -6,7 +6,7 @@ $confFile = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$confFilePat
 # On réécrit les valeurs si elles ont été modifiées.
 if (isset($_POST['editApplicationConfiguration'])) {
 	foreach ($confFile as $key => $value) {
-		foreach ($confFile[$key] as $subkey => $subvalue) {
+		foreach ($value as $subkey => $subvalue) {
 			$confFile[$key][$subkey] = $_POST[$subkey];
 		}
 	}
@@ -44,7 +44,7 @@ if (isset($_POST['editApplicationConfiguration'])) {
 							echo('
 							<div class="alert alert-primary" role="alert">
 								Notice : 
-								<br> - KIBANA_URL : Url to Explorer UI (ex : http://kibana-url:5601).
+								<br> - KIBANA_URL : Url to Explorer UI (ex : https://kibana-url:5601).
 								<br> - KIBANA_NAMESPACE : Kibana Namespace containing dashboards & data.
 								<br> - KIBANA_HOME_DASHBOARD : Kibana dashboard for MP-basic field descriptions
 								<br> - KIBANA_EXPLORATOR_DASHBOARD : Kibana dashboard for MP-basic Data overviews
@@ -90,7 +90,7 @@ if (isset($_POST['editApplicationConfiguration'])) {
 								break;
 						}
 
-						foreach ($confFile[$key] as $subkey => $subvalue) {
+						foreach ($value as $subkey => $subvalue) {
 							switch ($subkey) {
 								case 'NEXUS_PASSWORD':
 								echo('

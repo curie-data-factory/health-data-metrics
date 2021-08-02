@@ -1,38 +1,226 @@
 {
     "hdm-nexus-creds": {
-        "user": "admin",
-        "password": "123qwe"
+        "user": "usr_data",
+        "password": "Yzf4Gd8opkw2pwPgPVXE"
     },
     "hdm-core-database": {
         "user": "hdm",
-        "password": "password",
-        "host": "mysql",
-        "port": "3306",
-        "database": "dbhdm",
+        "password": "lyUueWopRBSvGgqmKrpV",
+        "host": "dev-mysql-data.curie.net",
+        "type":"mysql",
+        "port": "2051",
+        "database": "hdm-dev",
         "ssl": "false"
     },
     "hdm-nosql-database": {
         "user": "",
         "password": "",
-        "host": "elasticsearch",
-        "namespace": "default",
-        "port": "9200",
+        "host": "dev-hdm-elastic-data.curie.net",
+        "type": "elasticsearch",
+        "namespace": "hdm",
+        "port": "443",
         "ssl": "false"
     },
     "hdm-sql-database": {
         "user": "hdm",
-        "password": "password",
-        "host": "mysql",
-        "port": "3306",
-        "database": "dbhdm",
+        "password": "lyUueWopRBSvGgqmKrpV",
+        "host": "dev-mysql-data.curie.net",
+        "type":"mysql",
+        "port": "2051",
+        "database": "hdm-dev",
         "ssl": "false"
     },
     "hdm-scanned-database": [
       {
-          "user":"hdm",
-          "host":"mysql",
+          "user":"usr_biomedics",
+          "host":"skogar.curie.net",
           "port":"3306",
-          "database":"heart-attack",
+          "database":"biomedics",
+          "type":"mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"usr_biomedics_r",
+          "host":"skogar.curie.net",
+          "port":"3306",
+          "database":"ref_biomedics",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"usr_biomedics_r",
+          "host":"skogar01.curie.net",
+          "port":"3307",
+          "database":"preprod_biomedics",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"usr_biomedics_r",
+          "host":"skogar01.curie.net",
+          "port":"3307",
+          "database":"dev_biomedics",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"ref-mysql-data.curie.net",
+          "port":"2080",
+          "database":"biomedics-ref",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"ref-mysql-data.curie.net",
+          "port":"2081",
+          "database":"basesein-ref",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"preprod-mysql-data.curie.net",
+          "port":"2070",
+          "database":"biomedics-preprod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"preprod-mysql-data.curie.net",
+          "port":"2071",
+          "database":"basesein-preprod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2155",
+          "database":"basesein-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2154",
+          "database":"biomedics-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2150",
+          "database":"dataservices-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2156",
+          "database":"decesinsee-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2153",
+          "database":"doccano-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2151",
+          "database":"hdm-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2152",
+          "database":"redash-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"prod-mysql-data.curie.net",
+          "port":"2157",
+          "database":"sandbox-prod",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2055",
+          "database":"basesein-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2054",
+          "database":"biomedics-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2050",
+          "database":"dataservices-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2056",
+          "database":"decesinsee-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2053",
+          "database":"doccano-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2051",
+          "database":"hdm-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2052",
+          "database":"redash-dev",
+          "type": "mysql",
+          "ssl": "false"
+      },
+      {
+          "user":"reader",
+          "host":"dev-mysql-data.curie.net",
+          "port":"2057",
+          "database":"sandbox-dev",
+          "type": "mysql",
           "ssl": "false"
       }
       ]
