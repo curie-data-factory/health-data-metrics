@@ -1,33 +1,33 @@
 # HDM Packs
 
-Les Packs dans HDM sont des micro programmes autonomes qui permettent d'effectuer des traitements sur : 
+Packs in HDM are autonomous micro programs which allow processing on :
 
-* Les bases de données (Metric Packs)
-* Les métriques (Rule Packs)
+* Databases (Metric Packs)
+* Metrics (Rule Packs)
 
-Il n'existe que deux types de packs HDM pour le moment.
+There are only two types of HDM packs at the moment.
 
-## Arborescence
+## Tree structure
 
-L'arborescence des packs doit répondre à une norme afin de pouvoir élaborer des systèmes et services automatisés dans le futur.
+The package tree must meet a standard in order to be able to build automated systems and services in the future.
 
 | File | Description |
 |------|-------------|
-| Readme.md | Permet d'expliquer le fonctionnement du pack |
-| requirements.txt | dépendances logiciels du pack |
+| Readme.md | Used to explain how the pack works  |
+| requirements.txt | package software dependencies |
 | properties.json | [Properties.json](#propertiesjson) |
 | bootstrap-script.sh | [bootstrap-script.sh](#bootstrap-scriptsh) |
-| /process | Le dossier process contient le programme en tant que tel |
-| /process/conf.json | le fichier de conf.json contient la configuration locale minimal à l'execution du pack |
-| /process/code.(py,jar,etc...) | le Code du programme sous n'importe quel format (par de contraintes) |
-| /kibana-dashboard | Si besoin (pour les metric packs) ce dossier contiendra les fichiers kibana/elasticsearch pour installer les visualisations du pack |
-| /kibana-dashboard/export.ndjson | le fichier de visualisations kibana |
-| /create-table | Le dossier qui contient le ou les scripts SQL necéssaire au fonctionnement du pack |
-| /create-table/create.sql | fichier sql |
+| /process | The process folder contains the program as such |
+| /process/conf.json | the conf.json file contains the minimum local configuration when the pack is run |
+| /process/code.(py,jar,etc...) | the program code in any format (no constraints) |
+| /kibana-dashboard | If necessary (for metric packs) this folder will contain the kibana / elasticsearch files to install the visualizations/dashboards of the pack |
+| /kibana-dashboard/export.ndjson | the kibana visualizations file |
+| /create-table | The folder which contains the SQL script (s) necessary for the operation of the pack |
+| /create-table/create.sql | sql file |
 
 ### Properties.json
 
-Le fichier properties.json du pack doit contenir les informations de base pour permettre de le répertorier dans le futur.
+The package properties.json file should contain basic information to allow listing in the future.
 
 * name : Name of the pack
 * version : Version of the pack
@@ -47,9 +47,9 @@ Le fichier properties.json du pack doit contenir les informations de base pour p
 
 ### Bootstrap-script.sh 
 
-Le fichier de bootstrap script est un fichier necéssaire qui sert de point d'entrée au programme qui va être executé. 
-Si besoin, on incluera l'installation des dépendances et binaires requis pour la bonne execution du programme. 
-Finalement on incluera la commande de lancement du ou des programmes du pack.
+The bootstrap script file is a necessary file that serves as an entry point for the program that is going to be executed.
+If necessary, we will include the installation of dependencies and binaries required for the proper execution of the program.
+Finally, we will include the command to launch the program (s) of the pack.
 
 ```bash
 #!/bin/bash
@@ -62,62 +62,62 @@ cd process
 python metric_basic.py
 ```
 
-## Gestion de la configuration
+## Configuration management
 
-La gestion de la configuration est laissé libre à l'auteur du pack dans sa très grande majorité, excepté les cas suivants : 
+The configuration management is left free to the author of the pack for the most part, except in the following cases:
 
-1. La récupération de la liste des points de terminaisons sur lesquels le pack doit s'executer.
-2. La configuration spécifique à chaque point de terminaison
-3. La configuration externe du pack (hors credentials) ammené à changer régulièrement.
+1. Retrieving the list of endpoints on which the pack must run.
+2. The specific configuration for each endpoint
+3. The external configuration of the pack (excluding credentials) will change regularly.
 
-### 1. Liste des points de terminaisons cibles
+### 1. List of target endpoints
 
-Ce que l'on entend pas "points de terminaisons cibles" sont l'ensemble des chaines de connexions ou URL auxquel le Pack accède ponctuellement pour effectuer sont travail et contre lesquels il lit et récupère des informations.
+What is not meant by "target endpoints" are the set of connection chains or URLs which the Pack accesses occasionally to perform its work and against which it reads and retrieves information.
 
-Cette liste de points de terminaisons est géré de façon centralisée par HDM afin d'avoir une vue d'ensemble en un coup d'oeil depuis l'interface, des différentes actions des packs.
+This list of endpoints is managed centrally by HDM in order to have an overview at a glance from the interface, of the different actions of the packs.
 
-La liste de ces points de terminaisons est modifiable via l'interface d'administration en cliquant sur les cases dans la matrice d'activation :
+The list of these endpoints can be modified via the administration interface by clicking on the boxes in the activation matrix:
 
 ![matrice](matrice-activation_1.png)
 
-A chaque activation d'un point de terminaison, une ligne est rajouté dans la table :
+Each time an endpoint is activated, a row is added to the table :
 
--  `hdm_core_table_corr_db_mp` Pour les Metric Packs
--  `hdm_core_table_corr_db_rp` Pour les Rule Packs
+-  `hdm_core_table_corr_db_mp` for Metric Packs
+-  `hdm_core_table_corr_db_rp` for Rule Packs
 
-Contenant le **slug** de la chaine de connexion dans le champs `db_key` ainsi que le nom du pack dans : `mp_key` ou `rp_key` pour un metric pack ou un rule pack.
+Containing the **slug** of the connection string in the `db_key` field as well as the name of the pack in:` mp_key` or `rp_key` for a metric pack or a rule pack.
 
-Chaque pack doit pouvoir se connecter à la base HDM pour récupérer cette configuration.
+Each pack must be able to connect to the HDM base to retrieve this configuration.
 
 !!! Warning 
-	Attention, le slug de la chaine **ne contient pas de credentials**. Vous devrez trouver une autre manière de récuperer le mot de passe de la chaine de connexion. En utilisant un **online credentials store** comme [Vault](https://www.vaultproject.io/) ou [Keycloack](https://www.keycloak.org/).
-	Vous pouvez également stocker les credentials dans la configuration locale du pack en dernier recours et seulement pour des comptes en "readonly".
+	Please note, the chain slug **does not contain credentials**. You will need to find another way to retrieve the connection string password. By using an **online credentials store** like [Vault](https://www.vaultproject.io/) or [Keycloack](https://www.keycloak.org/).
+	You can also store credentials in the local pack configuration as a last resort and only for "readonly" accounts.
 
-### 2./3. Configuration des pts de terminaisons et configuration externe des pack
+### 2./3. Configuration of termination points and external configuration of packs
 
-HDM donne également la possibilitée de centraliser la configuration spécifique à chaque points de terminaisons pour chaque pack.
+HDM also gives the possibility of centralizing the configuration specific to each endpoint for each pack.
 
-Dans l'interface, la configuration se situe également dans la matrice d'activation (voir image ci-dessus) à la droite du boutton d'activation.
+In the interface, the configuration is also located in the activation matrix (see image above) to the right of the activation button.
 
-La configuration est ensuite encodé en **base64** et stocké dans la table : 
+The configuration is then encoded in **base64** and stored in the table:
 
-- `hdm_pack_metric_conf` Pour les Metric Packs 
-- `hdm_pack_rule_conf` Pour les Rule Packs
+- `hdm_pack_metric_conf` for Metric Packs
+- `hdm_pack_rule_conf` for Rule Packs
 
-Ces tables contiennent également `la configuration externe du pack` la subtilité est la suivante : 
+These tables also contain `the external configuration of the pack` the subtlety is as follows:
 
-L'`id_config` contient soit : 
+The `config_id` contains either:
 
-- L'id du pack + version : **pack:version** si c'est une configuration externe.
-- L'id du pack + le slug de la chaine de connexion : **pack:slug** si c'est une configuration lié à un point de terminaison.
+- The pack id + version: **pack: version** if it is an external configuration.
+- The pack id + the connection string slug: **pack: slug** if it is a configuration linked to an endpoint.
 
-Cette table est également à requêter par le pack pour récupérer sa configuration et les configurations des points de terminaisons.
+This table is also to be requested by the pack to retrieve its configuration and the endpoint configurations.
 
-## Orchestration des packs
+## Pack orchestration
 
 ![dag-hdm.png](dag-hdm.png)
 
-Pour l'orchestration des packs, la solution proposée est d'utiliser un DAG Airflow.
-Le dag airflow permet de centraliser l'execution des packs comme des "tâches", de configurer un rythme d'execution, de monitorer les tâches executés et le bon fonctionnement des enchainements de tâches.
+For pack orchestration, the proposed solution is to use an Airflow DAG.
+The dag airflow makes it possible to centralize the execution of packs as "tasks", to configure an execution rate, to monitor the tasks executed and the correct functioning of the sequences of tasks.
 
-En effet, les packs fonctionnant indépendament les un des autres peuvent néamoins necéssiter des ressources d'autres packs pour fonctionner. Par exemple, les rule packs ont besoin des metric packs pour executer leur règles. Airflow, de part son "graph" d'execution permet d'assurer un juste enchainement des packs les uns après les autres dans un ordre défini, il permet d'éviter toute corruption dans les analyses et prévient l'émission de fausses alertes.
+Indeed, the packs functioning independently of one another may nevertheless require resources from other packs to function. For example, rule packs need metric packs to execute their rules. Airflow, because of its execution graph allows to ensure a correct sequence of packs one after the other in a defined order, it allows to avoid any corruption in the analyzes and prevents the emission of false alerts.
