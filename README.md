@@ -126,9 +126,9 @@ To see how : go [Here](./docs/full-installation.md)
 
 # Screenshots & User Guide
 
-![home](img/capture-hdm1.PNG)
-![explorator](img/capture-hdm2.PNG)
-![rule-editor](img/capture-hdm3.PNG)
+![home](docs/capture-hdm1.PNG)
+![explorator](docs/capture-hdm2.PNG)
+![rule-editor](docs/capture-hdm3.PNG)
 
 # Build Doc
 
