@@ -185,7 +185,7 @@ if($hdmRulePacks['items'] != NULL){
 
 	<!-- 
 	################################################################################
-	Matrice de correspondance Metric Pack / Databases : 
+	Matrice de correspondance Rule Pack / Databases :
 	 -->
  	<div class="row">
 	 	<div class="col-lg-8 mb-2 alert alert-primary" role="alert">

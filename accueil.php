@@ -38,9 +38,9 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
 					<a href="/alert/alert.php" class="btn btn-primary">> Alerts</a>
 				</div>
 				<div class="card-body">
-					<h5 class="card-title"><i class="fas fa-wave-square"></i> DB Compare</a></h5>
-					<p class="card-text">Comparez deux bases de données ou deux version d'une base de donnée, à travers les métriques qui y sont calculés.</p>
-					<a href="/db-compare/compare.php" class="btn btn-primary">> DB Compare</a>
+					<h5 class="card-title"><i class="far fa-envelope"></i> Mail</a></h5>
+					<p class="card-text">Gérez vos souscriptions aux alertes.</p>
+					<a href="/mail/mail.php" class="btn btn-primary">> Mail</a>
 				</div>
 			</div>
 		</div>

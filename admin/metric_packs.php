@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 $dataConfDb = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
@@ -242,9 +242,7 @@ if($hdmMetricPacks['items'] != NULL){
  									?>
  									<td>
 										<form method="POST" action="<?php echo($_SERVER['DOCUMENT_ROOT']) ?>/admin.php?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
-                                            <label>
-                                                <input type="checkbox" name="checkbox"  class="double" <?php if($checked) { echo "checked"; } ?> onChange="this.form.submit()">
-                                            </label>
+                                            <input type="checkbox" name="checkbox"  class="double" <?php if($checked) { echo "checked"; } ?> onChange="this.form.submit()">
                                             <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
 		 									<input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
 										</form>
