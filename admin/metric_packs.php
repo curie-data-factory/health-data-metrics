@@ -19,7 +19,7 @@ if (isset($_POST['mpconfigsubmit'])) {
 	
 	$query = $conn->prepare('INSERT INTO `hdm_pack_metric_conf` ( `id_config`, `pack_name`, `pack_version`,`pack_config` ) VALUES (:idconfig, :metricpack, :version, :configcontent) ON DUPLICATE KEY UPDATE pack_config = :configcontent;');
 
-	// si il s'agit d'une configuration spécifique à un mp + base on ajoute dans la table de corespondance
+	// s'il s'agit d'une configuration spécifique à un mp + base on ajoute dans la table de correspondance
 	if($_POST['dbkey'] != "" && $_POST['mpkey'] != ""){
 	    if (!$query->execute(array(':idconfig' => $_POST["mpkey"].':'.$_POST["dbkey"],
 	    						   ':metricpack' => $_POST["mpkey"],
@@ -51,7 +51,7 @@ if (isset($_POST['mpconfigsubmit'])) {
 
 	$query = $conn->prepare('SELECT * FROM `hdm_pack_metric_conf` WHERE `id_config` = :idconfig;');
 
-	// si il s'agit d'une configuration spécifique à un mp + base
+	// s'il s'agit d'une configuration spécifique à un mp + base
 	if(isset($_POST['dbkey']) && isset($_POST['mpkey'])){
 
 	    if (!$query->execute(array(':idconfig' => $_POST["mpkey"].':'.$_POST["dbkey"]))) {
@@ -84,7 +84,7 @@ if(isset($_POST["mpkey"])
 	AND !isset($_POST["mpconfig"])
 	AND !isset($_POST["mpconfigsubmit"])){
 
-	// Si on a check la box alors qu'elle est déjà check, cela signifie que l'on veut décocher la case ( supprimer la ligne de la table )
+	// Si on a check la box alors qu'elle est déjà check, cela signifie que l'on veut décocher la case (supprimer la ligne de la table)
 	$checked = false;
 
 	// Si la clé est déjà présente en base on uncheck la box
@@ -99,21 +99,16 @@ if(isset($_POST["mpkey"])
 		$query = $conn->prepare('DELETE FROM `hdm_core_table_corr_db_mp` 
 			WHERE `mp_key` = :mpkey 
 			AND `db_key` = :dbkey;');
-	    if (!$query->execute(array(':mpkey' => $_POST["mpkey"],
-						  ':dbkey' => $_POST["dbkey"]))) {
-			print_r($query->errorInfo());
-		}
-	} else {	
+    } else {
 		$query = $conn->prepare('INSERT INTO `hdm_core_table_corr_db_mp` ( `mp_key`, `db_key` ) VALUES (:mpkey, :dbkey);');
 
-	    if (!$query->execute(array(':mpkey' => $_POST["mpkey"],
-						  ':dbkey' => $_POST["dbkey"]))) {
-			print_r($query->errorInfo());
-		}
-	}
+    }
+    if (!$query->execute(array(':mpkey' => $_POST["mpkey"],
+                      ':dbkey' => $_POST["dbkey"]))) {
+        print_r($query->errorInfo());
+    }
 
-
-	#dropping duplicates :
+    #dropping duplicates :
 	$query = $conn->prepare('DELETE
 							FROM hdm_core_table_corr_db_mp
 							WHERE id NOT IN
@@ -132,7 +127,7 @@ $hdmMetricPacks = getNexusContent("hdm.metricpacks");
 $hdmDbList = getDbList($conn);
 $hdmCorrList = getDbMpCorrList($conn);
 
-// on va modifer la structure des données pour pouvoir agréger les affichages
+// on va modifier la structure des données pour pouvoir agréger les affichages
 $dataReMap = array();
 if($hdmMetricPacks['items'] != NULL){
 	foreach ($hdmMetricPacks['items'] as $value) {
@@ -158,7 +153,7 @@ if($hdmMetricPacks['items'] != NULL){
  			?>
  			<div class="card">
  				<div class="card-body">
- 					<!-- On affice l'entête des ressources à partir du nom et du groupe -->
+ 					<!-- On affiche l'entête des ressources à partir du nom et du groupe -->
  					<h6 class="card-title"><?php echo($value[array_key_first($value)]['name']); ?></h6>
  					<h6 class="card-subtitle mb-2 text-muted"><?php echo($value[array_key_first($value)]['group']); ?></h6>
 
@@ -196,7 +191,7 @@ if($hdmMetricPacks['items'] != NULL){
 	 -->
  	<div class="row">
 	 	<div class="col-lg-8 mb-2 alert alert-primary" role="alert">
-			Notice : Selectionnez le(s) MP qui doivent s'executer avec quelle base de donnée.
+			Notice : Sélectionnez le(s) MP qui doivent s'éxecuter avec quelle base de donnée.
 		</div>
  		<div class="col-12">
  			<table class="table table-bordered">
@@ -226,12 +221,12 @@ if($hdmMetricPacks['items'] != NULL){
 						$dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
 	 					 ?>
 		 					<tr>
-		 						<td scope="col"><?php echo($db['db_name']) ?></td>
-		 						<td scope="col"><?php echo($db['db_type']) ?></td>
-		 						<td scope="col"><?php echo($db['db_host']) ?></td>
-		 						<td scope="col"><?php echo($db['db_port']) ?></td>
-		 						<td scope="col"><?php echo($db['db_user']) ?></td>
-		 						<td scope="col"><?php echo($db['db_is_ssl']) ?></td>
+		 						<td><?php echo($db['db_name']) ?></td>
+		 						<td><?php echo($db['db_type']) ?></td>
+		 						<td><?php echo($db['db_host']) ?></td>
+		 						<td><?php echo($db['db_port']) ?></td>
+		 						<td><?php echo($db['db_user']) ?></td>
+		 						<td><?php echo($db['db_is_ssl']) ?></td>
 		 						<?php
 		 						foreach ($dataReMap as $key => $value) {
 
@@ -246,9 +241,11 @@ if($hdmMetricPacks['items'] != NULL){
 	 								
  									?>
  									<td>
-										<form method="POST" action="admin.php?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
-	 										<input type="checkbox" name="checkbox"  class="double" <?php if($checked) { echo "checked"; } ?> onChange="this.form.submit()">
-		 									<input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+										<form method="POST" action="<?php echo($_SERVER['DOCUMENT_ROOT']) ?>/admin.php?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
+                                            <label>
+                                                <input type="checkbox" name="checkbox"  class="double" <?php if($checked) { echo "checked"; } ?> onChange="this.form.submit()">
+                                            </label>
+                                            <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
 		 									<input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
 										</form>
 		 								<form method="post" action="?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
@@ -277,7 +274,7 @@ if($hdmMetricPacks['items'] != NULL){
 //////////////////////////////////////////////////////////
 // Modal de modification de la configuration des metricpacks
 // C'est un modal générique qui récupère les variables en post pour récupérer la conf en base, la décoder et l'afficher dans une textarea dans le modal.
-// Si cette configuration est modifié elle sera récupérée en post à l'envoit du formulaire, puis le contenus sera encodé en base64 pour être inséré en base avec la clé du metric pack correspondant.
+// Si cette configuration est modifiée elle sera récupérée en post à l'envoit du formulaire, puis le contenu sera encodé en base64 pour être inséré en base avec la clé du metric pack correspondant.
 
 if(isset($_POST['mpconfig'])) { ?>
 
@@ -292,7 +289,7 @@ if(isset($_POST['mpconfig'])) { ?>
 						</button>
 					</div>
 					<div class="form-group">
-						<form method="POST" action="admin.php?tab=metricpacks">
+						<form method="POST" action="<?php echo $_SERVER['DOCUMENT_ROOT'] ?>/admin.php?tab=metricpacks">
 							<div class="modal-body">
 								<span class="badge badge-success"><?php if(isset($_POST['metricpack'])) { echo($_POST['metricpack']); } ?></span>
 								<span class="badge badge-success"><?php if(isset($_POST['mpkey'])) { echo($_POST['mpkey']); } ?></span>

@@ -21,7 +21,7 @@
 </head>
 
 <body class="bg-light">
-	<nav  class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top first-row" style="font-size: 1rem;padding: 5px 13px 4px 13px;"><img src="/img/favicon.ico"  width="30" height="30" class="d-inline-block align-top"/> <h3 class="m-0 mr-2 ml-2 navbar-brand">Health Data Metrics</h3>
+	<nav  class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top first-row" style="font-size: 1rem;padding: 5px 13px 4px 13px;"><img src="/img/favicon.ico"  width="30" height="30" class="d-inline-block align-top" alt="icon"/> <h3 class="m-0 mr-2 ml-2 navbar-brand">Health Data Metrics</h3>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -47,9 +47,6 @@
 				</li>
 				<li class="nav-item">
 					<a class='nav-link <?php if($_SESSION["page"] == "alert"){echo("active");} ?>' href="/alert/alert.php"><i class="fas fa-exclamation-circle"></i> Alerts</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link <?php if($_SESSION["page"] == "compare"){echo("active");} ?>' href="/db-compare/compare.php"><i class="fas fa-wave-square"></i> DB Compare</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-1 mr-2">

@@ -4,6 +4,7 @@
 		"adldap2/adldap2": ">=10.2.0",
       	"ext-pdo": "*",
 		"ext-json": "*",
-		"ext-curl": "*"
+		"ext-curl": "*",
+      "ext-apache": "*"
     }
 }

@@ -1,6 +1,6 @@
 <?php 
 
-# Cete fonction synchronise la table dblist avec le fichier de conf de base de données
+# Cette fonction synchronise la table dblist avec le fichier de conf de base de données
 function SyncTable($conn,$dbTarget)	{
 
 	foreach ($dbTarget as $db) {
@@ -56,7 +56,7 @@ function getSSLPage($url) {
 	return $result;
 }
 
-# Fonction qui récupère le contenus sur Nexus
+# Fonction qui récupère le contenu sur Nexus
 function getNexusContent($query="") {
 
 	# on récupère l'url du répo à requêter
@@ -68,14 +68,12 @@ function getNexusContent($query="") {
 	    $_SESSION['nexusRepository'] = NEXUS_DEFAULT_REPOSITORY;
 	}
 
-	// Affichage par défaut des datas
-	$default = True;
+	// Affichage par défaut des data
 
-	# On redémare la liste 
+    # On redémarre la liste
 	if(isset($_POST['resetList'])) {
 	    unset($_SESSION['continuationToken']);
-	    $default = False;
-	}
+    }
 
 	# requête pour récup les metric packs du répo NEXUS : HARDCODED : hdm.metricpacks
 	$url = $_SESSION['nexusUrl']."search?q=".$query."&repository=".$_SESSION['nexusRepository'];
@@ -85,6 +83,7 @@ function getNexusContent($query="") {
 	$contents =  getSSLPage($url);
 
 	# Si il y a du contenu
+    $data = "{}";
 	if($contents !== false){
 
 	    # On décode le json
@@ -100,9 +99,7 @@ function getDbList($conn) {
 	$sql = 'SELECT * FROM hdm_core_dblist';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
-	$res = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-	return $res;
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
 # Fonction qui récupère la liste de correspondance entre les bases et les metricpacks
@@ -111,9 +108,7 @@ function getDbMpCorrList($conn) {
 	$sql = 'SELECT * FROM hdm_core_table_corr_db_mp';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
-	$res = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-	return $res;
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
 # Fonction qui récupère la liste de correspondance entre les bases et les metricpacks
@@ -122,22 +117,19 @@ function getDbRpCorrList($conn) {
 	$sql = 'SELECT * FROM hdm_core_table_corr_db_rp';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
-	$res = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-	return $res;
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheur de filtre de niveau d'alerte
+// alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheurs de filtre de niveau d'alerte
 function writeRow($row)
 {
+    $linkRule = "";
 	switch ($row['alert_scope']) {
-		case 'all':
+        case 'database':
+        case 'all':
 			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&newFilter=#";
 			break;
-		case 'database':
-			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&newFilter=#";
-			break;
-		case 'table':
+        case 'table':
 			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&table=".$row['table']."&newFilter=#";
 			break;
 		case 'column':
@@ -166,6 +158,8 @@ function writeRow($row)
 		$display = FALSE;
 	}
 
+	$messageClass = "";
+
 	switch ($row['alert_class']) {
 		case 'METRICCOMPARE':
 			$messageClass = '<span class="badge badge-secondary">METRIQUECOMPARE</span>';
@@ -193,7 +187,7 @@ function writeRow($row)
 			break;
 	}
 
-	#creation du lien parametre pour le explorer kibana : 
+	# creation du lien paramètre pour l'explorer kibana :
 	$linkKibana = "/explorer/wrapper.php?filtered=true&database=".$row['database']."&version=".$row['dbversion']."&table=".$row['table']."&column=".$row['column'];
 
 	if($display){
@@ -215,7 +209,7 @@ function writeRow($row)
 // alert table function
 function printBadge($array,$selector,$scope){
 	if(!empty($array)) {
-		foreach ($array as $key => $value) {
+		foreach ($array as $value) {
 			if ($value[$scope] == $selector) {
 				$i = 0;
 				foreach ($value as $indice => $count) {
@@ -266,7 +260,7 @@ function printHeader($value='',$display=False)
 	echo($tableHeader);
 }
 
-// fonction qui permet de détruire toutes les variables de session des formulaires d'ajout des regles
+// fonction qui permet de détruire toutes les variables de session des formulaires d'ajout des règles
 function unsetFormRule()
 {
 	unset($_SESSION['form-step']);

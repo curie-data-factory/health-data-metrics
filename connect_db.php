@@ -15,6 +15,7 @@ if (isset($_SESSION['connected'])) {
 	$user = $json["hdm-core-database"]['user'];
 	$password = $json["hdm-core-database"]['password'];
 
+    $conn = NULL;
 	try {
 	    $conn = new PDO($dsn, $user, $password);
 	} catch (PDOException $e) {

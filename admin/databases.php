@@ -159,14 +159,14 @@ if (isset($_POST['runCreateDb'])) {
 					foreach ($dbTarget as $db) {
 						?>
 						<tr>
-							<td scope="row"><?php echo($db['database']) ?></td>
+							<td><?php echo($db['database']) ?></td>
 							<td><?php echo($db['type']) ?></td>
 							<td><?php echo($db['host']) ?></td>
 							<td><?php echo($db['port']) ?></td>
 							<td><?php echo($db['user']) ?></td>
 							<td><?php echo($db['ssl']) ?></td>
 							<td>
-								<form metdod="post" action="?tab=databases" style="display: inline-block;">
+								<form method="post" action="?tab=databases" style="display: inline-block;">
 									<button type="submit" class="btn btn-primary">
 										<i class="fas fa-pen"></i>
 									</button>
@@ -177,7 +177,7 @@ if (isset($_POST['runCreateDb'])) {
 									<input type="hidden" name="dbSsl" value="<?php echo($db['ssl']) ?>">
 									<input type="hidden" name="editDatabase" value="True">
 								</form>
-								<form metdod="post" action="?tab=databases" style="display: inline-block;">
+								<form method="post" action="?tab=databases" style="display: inline-block;">
 									<button type="submit" class="btn btn-danger">
 										<i class="fas fa-trash-alt"></i>
 									</button>

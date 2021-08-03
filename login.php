@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 session_start();
 
@@ -17,58 +17,67 @@ $ad = new \Adldap\Adldap();
 
 $config = $ldap_conf['config'][0];
 $ad->addProvider($config);
-$provider = $ad->getDefaultProvider();
-$failed = false;
+        try {
+            $provider = $ad->getDefaultProvider();
+        } catch (\Adldap\AdldapException $e) {
+        }
+        $failed = false;
+$failed_message = "";
 
 if(isset($_POST['login']) AND isset($_POST['password'])) {
 	$username = $_POST['login'];
 	$password = $_POST['password'];
 
 	try {
-	    if ($provider->auth()->attempt($username, $password,$bindAsUser = true)) {
+        try {
+            if ($provider->auth()->attempt($username, $password, $bindAsUser = true)) {
 
-	        // Retriving data
-	        $search = $provider->search();
-			try {
+                // Retrieving data
+                $search = $provider->search();
+                try {
 
-			    $record = $search->findByOrFail('samaccountname', $username);
-				
-				$mail=null;
-				if($record->mail[0]){
-				$mail=$record->mail[0];
-				}else{
-					$mail=$record->userprincipalname[0];
-				}
-				
-	        	$_SESSION['user_ids'] = array('displayname' => $record->displayname[0],
-	        								  'samaccountname' => $record->samaccountname[0],
-	        								  'mail' => $mail,
-	        								  'memberof' => $record->memberof);
-			} catch (Adldap\Models\ModelNotFoundException $e) {
-			    // Record wasn't found!
-			}
+                    $record = $search->findByOrFail('samaccountname', $username);
 
-			// On check les crédentials du User :
-			foreach ($_SESSION['user_ids']['memberof'] as $key => $value) {
-               
-				// Si on arrive à matcher une des authorizations avec celle du user on valide la connexion
-				if (strpos($service_ldap_authorization_domain, $value) !== false ) {
-			    	// Authentification succeded
-			        $_SESSION['connected'] = true;
-	        		header('location:/index.php');	
-				}
-			}
+                    $mail = null;
+                    if ($record->mail[0]) {
+                        $mail = $record->mail[0];
+                    } else {
+                        $mail = $record->userprincipalname[0];
+                    }
 
-			// Si on a parcouru toutes les credentials du User et qu'on a rien matché, alors on renvoit un refus de crédentials :
-	        $failed = true;
-	        $failed_message = "You don't have enough rights.";
+                    $_SESSION['user_ids'] = array('displayname' => $record->displayname[0],
+                        'samaccountname' => $record->samaccountname[0],
+                        'mail' => $mail,
+                        'memberof' => $record->memberof);
+                } catch (Adldap\Models\ModelNotFoundException $e) {
+                    // Record wasn't found!
+                }
 
-	    } else {
-	        // Failed.
-	        $failed = true;
-	        $failed_message = "Wrong Login or Password.";
-	    }
-	} catch (Adldap\Auth\UsernameRequiredException $e) {
+                // On check les credentials du User :
+                foreach ($_SESSION['user_ids']['memberof'] as $key => $value) {
+
+                    // Si on arrive à matcher une des authorizations avec celle du user on valide la connexion
+                    if (strpos($service_ldap_authorization_domain, $value) !== false) {
+                        // Authentification succeeded
+                        $_SESSION['connected'] = true;
+                        header('location:/index.php');
+                    }
+                }
+
+                // Si on a parcouru toutes les credentials du User et qu'on a rien matché, alors on renvoie un refus de credentials :
+                $failed = true;
+                $failed_message = "You don't have enough rights.";
+
+            } else {
+                // Failed.
+                $failed = true;
+                $failed_message = "Wrong Login or Password.";
+            }
+        } catch (\Adldap\Auth\BindException $e) {
+        } catch (\Adldap\Auth\PasswordRequiredException $e) {
+        } catch (\Adldap\Auth\UsernameRequiredException $e) {
+        }
+    } catch (Adldap\Auth\UsernameRequiredException $e) {
 	    // The user didn't supply a username.
 	} catch (Adldap\Auth\PasswordRequiredException $e) {
 	    // The user didn't supply a password.
@@ -77,7 +86,7 @@ if(isset($_POST['login']) AND isset($_POST['password'])) {
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Health Data Metrics</title>
 	<link rel="icon" href="/img/favicon.ico"/>
@@ -93,7 +102,7 @@ if(isset($_POST['login']) AND isset($_POST['password'])) {
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-12 text-center mt-4 mb-4">
-				<h1 id="title">Health Data Metrics</h1><p><img src="/img/favicon.ico" style="width: 70px;"></p>
+				<h1 id="title">Health Data Metrics</h1><p><img src="/img/favicon.ico" style="width: 70px;" alt="icon"></p>
 				<p style="max-width: 500px;margin: auto;background-color: #f7f7f7;padding: 20px;">Helps Monitor Data Quality.</p>
 			</div>
 			<div class="row">
@@ -109,12 +118,10 @@ if(isset($_POST['login']) AND isset($_POST['password'])) {
 							} ?>
 							<form class="form" role="form" method="POST">
 								<div class="form-group">
-									<label for="uname1">Login : </label>
-									<input type="text" class="form-control form-control-lg rounded-0" name="login" id="login" placeholder="login" required>
+                                    <label for="login">Login : </label><input type="text" class="form-control form-control-lg rounded-0" name="login" id="login" placeholder="login" required>
 								</div>
 								<div class="form-group">
-									<label>Password :</label>
-									<input type="password" class="form-control form-control-lg rounded-0" name="password" id="password"  placeholder="password"  required>
+                                    <label for="password">Password :</label><input type="password" class="form-control form-control-lg rounded-0" name="password" id="password" placeholder="password" required>
 								</div>
 								<div>
 									<label class="custom-control custom-checkbox">
@@ -178,19 +185,19 @@ if(isset($_POST['login']) AND isset($_POST['password'])) {
 	$(document).ready(function(){
 		$("#register-form").hide();
 		$("#forgot-form").hide();	
-		$(".register-form-link").click(function(e){
+		$(".register-form-link").click(function(){
 			$("#login-form").slideUp(0);
 			$("#forgot-form").slideUp(0)	
 			$("#register-form").fadeIn(300);	
 		});
 
-		$(".login-form-link").click(function(e){
+		$(".login-form-link").click(function(){
 			$("#register-form").slideUp(0);
 			$("#forgot-form").slideUp(0);	
 			$("#login-form").fadeIn(300);	
 		});
 
-		$(".forgot-form-link").click(function(e){
+		$(".forgot-form-link").click(function(){
 			$("#login-form").slideUp(0);	
 			$("#forgot-form").fadeIn(300);	
 		});

@@ -38,7 +38,7 @@ if (isset($_POST['editApplicationConfiguration'])) {
 			<fieldset class="border p-3 mb-4">
 				<legend class="w-auto"><?php echo $key ?> : </legend>
 					<?php 
-						// Zone d'information, adds informations to specific configurations.
+						// Zone d'information, adds information to specific configurations.
 						switch ($key) {
 							case 'EXPLORER':
 							echo('

@@ -15,7 +15,7 @@
 				Version PHP : <span class="badge badge-primary"><?php echo($phpversion); ?></span> recommended : 7.4.4 or more<br>
 			</div>
 
-			<?php 
+			<?php
 
 			# Getting MySQL Metrics database version
 			$sql = 'SELECT VERSION()';

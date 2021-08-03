@@ -14,35 +14,33 @@ if (!isset($_SESSION['form-step'])) {
 	$_SESSION['alertClass'] = "Conditionnelle";
 	$_SESSION['alertLevel'] = "Haut";
 	$_SESSION['alertMessage'] = "";
-	$_SESSION['alertScope'] = $scope;
+    $scope = "";
+    $_SESSION['alertScope'] = $scope;
 }
 
 if((isset($_POST['newConditionColumn']) || isset($_SESSION['form-step'])) && (isset($_SESSION['metrics']))) {
 	switch ($_SESSION['metrics']['infered_data_type']) {
 		case 'string':
-		switch (@$_SESSION['metrics']['is_categorical']) {
-			case 1:
-			$varType = "Catégorique";
-			break;
-			default:
-			$varType = "Texte Non Catégorique";
-			break;
-		}
+            switch (@$_SESSION['metrics']['is_categorical']) {
+                case 1:
+                $varType = "Catégorique";
+                break;
+                default:
+                $varType = "Texte Non Catégorique";
+                break;
+            }
 		break;
 		case 'date':
-		$varType = "Date";
-		break;
-		case 'string':
-		$varType = "Texte";
+		    $varType = "Date";
 		break;
 		case 'floating':
-		$varType = "Numérique décimale";
+		    $varType = "Numérique décimale";
 		break;
 		case 'integer':
-		$varType = "Numérique Entier";
+		    $varType = "Numérique Entier";
 		break;
 		case 'empty':
-		$varType = "NULL";
+		    $varType = "NULL";
 		break;
 	}
 }
@@ -103,7 +101,7 @@ if (isset($_POST['nextConditionnalQuery'])) {
 ?>
 <!-- VUE -->
 <form action="#" method="post" class="form-inline pb-1 mb-3"><input type="submit" name="cancelRule" value="Annuler" class="btn btn-danger">
-	<div class="alert alert-primary p-1 ml-2 mb-0" role="alert">Perimetre de la règle : <?php echo $_SESSION['alertScope']; ?></div>
+	<div class="alert alert-primary p-1 ml-2 mb-0" role="alert">Périmètre de la règle : <?php echo $_SESSION['alertScope']; ?></div>
 	<?php if(isset($_GET['column']) && (isset($_POST['newConditionColumn']) || isset($_SESSION['form-step'])))
 	{
 		echo ('<div class="alert alert-secondary p-1 ml-2 mb-0" role="alert">Type de variable : '.$varType.'</div>');
@@ -115,13 +113,13 @@ if (isset($_POST['nextConditionnalQuery'])) {
 			<legend  class="w-auto">1. Definition de la règle qui déclenche l'alerte : </legend>
 			<div class="form-group">
 				<label for="alertMessage">Nom de la règle :</label>
-				<textarea required class="form-control" id="ruleName" name="ruleName" rows="1"><?php echo @$_SESSION['ruleName']; ?></textarea>
+                <label for="ruleName"></label><textarea required class="form-control" id="ruleName" name="ruleName" rows="1"><?php echo @$_SESSION['ruleName']; ?></textarea>
 				<div class="invalid-tooltip">
 					Please provide a valid zip.
 				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" name="sqlRequest" value="Regle par Requète SQL" class="btn btn-primary">
+				<input type="submit" name="sqlRequest" value="Règle par Requête SQL" class="btn btn-primary">
 				<input type="submit" name="conditionRequest" value="Regle Conditionnelle" class="btn btn-primary">
 			</div>
 		</fieldset>
@@ -136,7 +134,7 @@ if (isset($_POST['nextConditionnalQuery'])) {
 					<div class="form-group">
 						<?php @include 'conditionnelle.php'; ?>
 					</div>
-					<input type="submit" name="nextConditionnalQuery" value="Enregistrer la requète conditionnelle" class="btn btn-primary col-sm-12 col-lg-4"
+					<input type="submit" name="nextConditionnalQuery" value="Enregistrer la requête conditionnelle" class="btn btn-primary col-sm-12 col-lg-4"
 					<?php if(!isset($_SESSION['conditionScope'])) { echo "disabled";} ?>>
 				</fieldset>
 			</form>
@@ -147,10 +145,10 @@ if (isset($_POST['nextConditionnalQuery'])) {
 			<fieldset class="border p-3 mb-1">
 				<legend  class="w-auto">2. Construction : </legend>
 				<div class="form-group">
-					<label for="sqlRequestValue">Votre requète SQL : </label>
+					<label for="sqlRequestValue">Votre requête SQL : </label>
 					<textarea required class="form-control" id="sqlRequestValue" name="sqlRequestValue" rows="5"><?php echo @$_SESSION['sqlRequestValue']; ?></textarea>
 				</div>
-				<input type="submit" name="nextSQLConstruct" value="Enregistrer la requète SQL" class="btn btn-primary col-sm-12 col-lg-4">
+				<input type="submit" name="nextSQLConstruct" value="Enregistrer la requête SQL" class="btn btn-primary col-sm-12 col-lg-4">
 			</fieldset>
 		</form>
 	<?php }	
@@ -166,12 +164,12 @@ if (isset($_POST['nextConditionnalQuery'])) {
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="conditionTrigger" id="inlineRadio1" value="returnNone" <?php if (@!isset($_SESSION['conditionTrigger'])) {	echo ('checked');} if (@$_SESSION['conditionTrigger'] == "returnNone") {
 							echo ('checked');} ?>>
-						<label class="form-check-label" for="inlineRadio1">Si la requête ne renvoit rien</label>
+						<label class="form-check-label" for="inlineRadio1">Si la requête ne renvoie rien</label>
 					</div>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="conditionTrigger" id="inlineRadio2" value="returnNotNull" <?php if (@$_SESSION['conditionTrigger'] == "returnNotNull") {
 							echo ('checked');} ?>>
-						<label class="form-check-label" for="inlineRadio2">Si la requête renvoit quelquechose</label>
+						<label class="form-check-label" for="inlineRadio2">Si la requête renvoie quelque chose</label>
 					</div><br/>
 				<?php } 
 				elseif ($_SESSION['ruleType'] == "conditionnelle") {
@@ -202,21 +200,25 @@ if (isset($_POST['nextConditionnalQuery'])) {
 				<div class="form-group row">
 					<label for="alertClass" class="col-sm-2 col-form-label">Classe d'alerte: </label>
 					<div class="col-sm-4">
-						<select class="form-control" name="alertClass" onchange="this.form.submit()">
-							<option <?php if($_SESSION['alertClass'] == "SCHEMA"){ echo "selected";} ?>>SCHEMA</option>
-							<option <?php if($_SESSION['alertClass'] == "METRICCOMPARE"){ echo "selected";} ?>>METRICCOMPARE</option>
-							<option <?php if($_SESSION['alertClass'] == "METRIQUE"){ echo "selected";} ?>>METRIQUE</option>
-							<option <?php if($_SESSION['alertClass'] == "DATA"){ echo "selected";} ?>>DATA</option>
-						</select>
-					</div>
+                        <label>
+                            <select class="form-control" name="alertClass" onchange="this.form.submit()">
+                                <option <?php if($_SESSION['alertClass'] == "SCHEMA"){ echo "selected";} ?>>SCHEMA</option>
+                                <option <?php if($_SESSION['alertClass'] == "METRICCOMPARE"){ echo "selected";} ?>>METRICCOMPARE</option>
+                                <option <?php if($_SESSION['alertClass'] == "METRIQUE"){ echo "selected";} ?>>METRIQUE</option>
+                                <option <?php if($_SESSION['alertClass'] == "DATA"){ echo "selected";} ?>>DATA</option>
+                            </select>
+                        </label>
+                    </div>
 					<label for="alertLevel" class="col-sm-2 col-form-label">Niveau d'alerte: </label>
 					<div class="col-sm-4">
-						<select class="form-control" name="alertLevel" onchange="this.form.submit()">
-							<option <?php if($_SESSION['alertLevel'] == "Haut"){ echo "selected";} ?>>Haut</option>
-							<option <?php if($_SESSION['alertLevel'] == "Warning"){ echo "selected";} ?>>Warning</option>
-							<option <?php if($_SESSION['alertLevel'] == "Info"){ echo "selected";} ?>>Info</option>
-						</select>
-					</div>
+                        <label>
+                            <select class="form-control" name="alertLevel" onchange="this.form.submit()">
+                                <option <?php if($_SESSION['alertLevel'] == "Haut"){ echo "selected";} ?>>Haut</option>
+                                <option <?php if($_SESSION['alertLevel'] == "Warning"){ echo "selected";} ?>>Warning</option>
+                                <option <?php if($_SESSION['alertLevel'] == "Info"){ echo "selected";} ?>>Info</option>
+                            </select>
+                        </label>
+                    </div>
 				</div>
 				<div class="form-group">
 					<label for="alertMessage">Message d'alerte</label>

@@ -234,22 +234,22 @@ if(isset($_POST['kibana2'])) {
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM `hdm_alerts`)
 			ORDER BY `hdm_alerts`.database";
 			
-			// Requete pour récupérer les alertes
+			// Requête pour récupérer les alertes
 			$sql = "";
-			// requete pour récupérer le compte des alertes par niveau d'alerte
+			// requête pour récupérer le compte des alertes par niveau d'alerte
 			$sql1 ="";
 			if($_SESSION['split-display-database'] == "True" ){
 				$sql1 = "SELECT hdm_alerts.database, hdm_alerts.alert_level, COUNT(*) AS count
 			FROM hdm_alerts 
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM hdm_alerts)
 			GROUP BY hdm_alerts.database, hdm_alerts.alert_level
-			ORDER BY hdm_alerts.database ASC;";
+			ORDER BY hdm_alerts.database;";
 			
 			
 			$sql = "SELECT DISTINCT `hdm_alerts`.database 
 			FROM `hdm_alerts` 
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM `hdm_alerts`)
-			ORDER BY `hdm_alerts`.database asc;";
+			ORDER BY `hdm_alerts`.database;";
 			
 				
 			}
@@ -261,7 +261,7 @@ if(isset($_POST['kibana2'])) {
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM hdm_alerts)
 			and hdm_alerts.database='".$_SESSION['databaseName']."'
 			GROUP BY hdm_alerts.table, hdm_alerts.alert_level
-			ORDER BY hdm_alerts.table ASC;";
+			ORDER BY hdm_alerts.table;";
 			
 			$sql = "SELECT DISTINCT `hdm_alerts`.table 
 			FROM `hdm_alerts` 
@@ -275,7 +275,7 @@ if(isset($_POST['kibana2'])) {
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM hdm_alerts)
 			
 			GROUP BY hdm_alerts.table, hdm_alerts.alert_level
-			ORDER BY hdm_alerts.table ASC;";
+			ORDER BY hdm_alerts.table;";
 			
 			$sql = "SELECT DISTINCT `hdm_alerts`.table 
 			FROM `hdm_alerts` 
@@ -315,7 +315,7 @@ if(isset($_POST['kibana2'])) {
 					
 						<div class="col-lg-3">
 							
-							<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="max-height: 80vh;display: block;overflow: overlay;">
+							<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="max-height: 80vh;display: block;overflow: inherit;">
 																	<nav aria-label="breadcrumb" >
 									  <ol class="breadcrumb p-2" >
 										<li class="breadcrumb-item"><a href="#">
@@ -362,7 +362,7 @@ if(isset($_POST['kibana2'])) {
 						<div class="col-lg-12">
 							<div class="row">
 								<div class="col-lg-3">
-									<div class="affix nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="max-height: 80vh;display: block;overflow: overlay;">
+									<div class="affix nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="max-height: 80vh;display: block;overflow: inherit;">
 									<nav aria-label="breadcrumb" >
 									  <ol class="breadcrumb p-2" >
 										<li class="breadcrumb-item"><a href="#">
@@ -478,16 +478,18 @@ if(isset($_POST['kibana2'])) {
 <script type="text/javascript">
 $( document ).ready(function() {
     $( ".nav-link" ).click(function() {
-		var displayscope="<?php	echo $_SESSION['split-display-scope']; ?>";
-		//alert(isdatabasescope);
-		if(displayscope=="database"){
-		var databasename=this.id;
-		databasename=databasename.replace("v-pills-","").replace("-tab","");
-		$( "#databaseNameButton").val(databasename);
-		$( "#databaseNameButton").click();
-		}else if(displayscope=="table"){
-			var tablename=this.id;
-			tablename=tablename.replace("v-pills-","").replace("-tab","");
+
+        let displayscope = "<?php    echo $_SESSION['split-display-scope']; ?>";
+
+        if(displayscope==="database"){
+            let databasename = this.id;
+            databasename=databasename.replace("v-pills-","").replace("-tab","");
+            $( "#databaseNameButton").val(databasename);
+            $( "#databaseNameButton").click();
+		}
+		else if(displayscope==="table"){
+            let tablename = this.id;
+            tablename=tablename.replace("v-pills-","").replace("-tab","");
 			$( "#tableNameButton").val(tablename);
 			$( "#tableNameButton").click();
 		}

@@ -48,7 +48,7 @@ if (isset($_POST['editRule'])) {
 	$_SESSION['id_rule'] = $res['id_rule'];
 }
 
-// Supression d'une règle :
+// Suppression d'une règle :
 if (@isset($_POST['dropRule'.$_POST['id_rule']])) {
 	$sql = 'DELETE FROM `rule_basic` WHERE  `id_rule`=:id_rule;';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -65,7 +65,7 @@ if(isset($_GET['newFilter'])){
 	$databases = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// récupération des noms des tables  :	
+// récupération des noms des tables :
 if(isset($_GET['database']) || isset($_POST['database'])){
 
 	if (isset($_GET['database'])) {
@@ -106,7 +106,7 @@ if(isset($_GET['table']) || isset($_POST['table'])){
 	$colonnes = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// récupération des métriques de la colonne de la table selectionné :	
+// récupération des métriques de la colonne de la table sélectionnée :
 if(isset($_GET['column']) || isset($_POST['column'])){
 
 	if (isset($_GET['database'])) {
@@ -183,11 +183,7 @@ if(isset($_POST['saveRule'])){
 		$conditionTrigger = $_SESSION['conditionTrigger'];
 	}
 
-	if (isset($_POST['alertMessage'])) {
-		$alertMessage = $_POST['alertMessage'];
-	} else {
-		$alertMessage = $_SESSION['alertMessage'];
-	}
+    $alertMessage = $_POST['alertMessage'] ?? $_SESSION['alertMessage'];
 
 	$alertScope = $_SESSION['alertScope'];
 	$database = "";
@@ -278,28 +274,25 @@ if (isset($_GET['database'])) {
 			$sth->execute(array('database'=>$_GET['database'],
 								'table'=>$_GET['table'],
 								'column'=> $_GET['column']));
-			$rules = $sth->fetchAll(PDO::FETCH_ASSOC);
-		} else {
+        } else {
 			$sql = 'SELECT * FROM `rule_basic` WHERE `database`=:database AND `table`=:table ORDER BY `id_rule` DESC LIMIT 100;';
 			$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array('database'=>$_GET['database'],
 								'table'=>$_GET['table']));
-			$rules = $sth->fetchAll(PDO::FETCH_ASSOC);
-		}
-	} else {
+        }
+    } else {
 		$sql = 'SELECT * FROM `rule_basic` WHERE `database`=:database ORDER BY `id_rule` DESC LIMIT 100;';
 		$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array('database'=>$_GET['database']));
-			$rules = $sth->fetchAll(PDO::FETCH_ASSOC);
-	}
+    }
 } else {
 	$sql = 'SELECT * FROM `rule_basic` ORDER BY `id_rule` DESC LIMIT 100;';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
-	$rules = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
+    $rules = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_GET['newFilter'])) {
+    if (isset($_GET['newFilter'])) {
 	$filterPaneSize = 5;
 	$rulePaneSize = 7;	
 } else {
@@ -333,7 +326,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 					</form>
 				</div>
 				<?php 
-				// affichage du formulaire d'ajout de regles
+				// affichage du formulaire d'ajout de règles
 				if(isset($_GET['newFilter'])){ 
 					?>
 				<div class="col-lg-12 bg-white rounded shadow-sm p-3 mb-3">
@@ -342,22 +335,22 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 						<div class="form-group row">
 							<label for="staticEmail" class="col-sm-2 col-form-label">Database : </label>
 							<div class="col-sm-10">
-								<select  class="form-control" name='database' onchange='this.form.submit()'>
-									<option>Select a Database</option>
-									<?php 
-									if(isset($_GET['newFilter'])){
-										foreach ($databases as $key => $value) {
-											$var = $value["database"];
-											if($value["database"] == $_GET['database']){
-												$select = "selected";
-											} else {
-												$select = "";
-											}
-											echo("<option ".$select.">".$var."</option>");
-										}
-									}?>
-								</select>
-							</div>
+                                    <select  class="form-control" name='database' onchange='this.form.submit()'>
+                                        <option>Select a Database</option>
+                                        <?php
+                                        if(isset($_GET['newFilter'])){
+                                            foreach ($databases as $key => $value) {
+                                                $var = $value["database"];
+                                                if($value["database"] == $_GET['database']){
+                                                    $select = "selected";
+                                                } else {
+                                                    $select = "";
+                                                }
+                                                echo("<option ".$select.">".$var."</option>");
+                                            }
+                                        }?>
+                                    </select>
+                            </div>
 						</div>
 
 						<?php 
@@ -368,22 +361,22 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 						<div class="form-group row">
 							<label for="staticEmail" class="col-sm-2 col-form-label">Table : </label>
 							<div class="col-sm-10">
-								<select  class="form-control" name='table' onchange='this.form.submit()'>
-									<option>Select a Table</option>
-									<?php 
-									if(isset($_GET['newFilter'])){
-										foreach ($tables as $key => $value) {
-											$var = $value["table"];
-											if($value["table"] == $_GET['table']){
-												$select = "selected";
-											} else {
-												$select = "";
-											}
-											echo("<option ".$select.">".$var."</option>");
-										}
-									}?>
-								</select>
-							</div>
+                                    <select  class="form-control" name='table' onchange='this.form.submit()'>
+                                        <option>Select a Table</option>
+                                        <?php
+                                        if(isset($_GET['newFilter'])){
+                                            foreach ($tables as $key => $value) {
+                                                $var = $value["table"];
+                                                if($value["table"] == $_GET['table']){
+                                                    $select = "selected";
+                                                } else {
+                                                    $select = "";
+                                                }
+                                                echo("<option ".$select.">".$var."</option>");
+                                            }
+                                        }?>
+                                    </select>
+                            </div>
 						</div>
 
 						<?php 
@@ -394,21 +387,21 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 							<div class="form-group row">
 								<label for="staticEmail" class="col-sm-2 col-form-label">Colonne : </label>
 								<div class="col-sm-10">
-									<select  class="form-control" name='column' onchange='this.form.submit()'>
-										<option>Select a Column</option>
-										<?php 
-										foreach ($colonnes as $key => $value) {
-											$var = $value["column"];
-											if($value["column"] == $_GET['column']){
-												$select = "selected";
-											} else {
-												$select = "";
-											}
-											echo("<option ".$select.">".$var."</option>");
-										}
-										?>
-									</select>
-								</div>
+                                        <select  class="form-control" name='column' onchange='this.form.submit()'>
+                                            <option>Select a Column</option>
+                                            <?php
+                                            foreach ($colonnes as $key => $value) {
+                                                $var = $value["column"];
+                                                if($value["column"] == $_GET['column']){
+                                                    $select = "selected";
+                                                } else {
+                                                    $select = "";
+                                                }
+                                                echo("<option ".$select.">".$var."</option>");
+                                            }
+                                            ?>
+                                        </select>
+                                </div>
 							</div><?php 
 							if(!isset($_GET['column']) && ($_SESSION['kibana'] == "True")) { ?>
 
@@ -458,7 +451,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 			<div class="row">
 			<?php 
 
-			// VOLET DROIT EDITION DES REGLES 
+			// VOLET DROIT EDITION DES RÈGLES
 				if(isset($_POST['newConditionColumn']) || isset($_SESSION['form-step'])) {
 					$scope = "column";
 					include 'new_condition.php';
@@ -476,7 +469,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 							<form action="#" method="post">
 								<div class="form-group row">
 									<nav class="col-sm-12">
-										<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Veuillez selectionner une table et une colonne">
+										<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Veuillez sélectionner une table et une colonne">
 											<button type="submit" name="newConditionBase" class="btn btn-primary">Nouvelle Règle de Base</button>
 											<button type="submit" <?php if(!isset($_GET['table'])) { echo "disabled";} ?>  name="newConditionTable" class="btn btn-primary">Nouvelle Règle de Table</button>
 											<button type="submit" <?php if(!isset($_GET['column'])) { echo "disabled";} ?> name="newConditionColumn" class="btn btn-primary">Nouvelle Règle de colonne</button>
@@ -498,7 +491,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 
 								if (empty($rules)) { ?>
 									<div class="mt-3 mb-0">
-								        <h3 style="text-align: center;">Aucun resultats</h3>
+								        <h3 style="text-align: center;">Aucun résultats</h3>
 								      </div>
 								<?php }
 
@@ -541,7 +534,9 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 														</tr>
 														<tr class="row">
 															<th class="col-lg-2"  scope="row">Rule content : </th>
-															<td class="col-lg-10"><textarea disabled class="form-control"><?php echo $value['rule_content']; ?></textarea></td>
+															<td class="col-lg-10">
+                                                                    <textarea disabled class="form-control"><?php echo $value['rule_content']; ?></textarea>
+                                                                </td>
 														</tr>
 													</tbody>
 												</table>

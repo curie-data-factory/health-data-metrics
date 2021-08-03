@@ -7,12 +7,12 @@
 
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-apachelogs" role="tabpanel" aria-labelledby="nav-apachelogs-tab">
-  	<textarea id="apachelogs" class="log" disabled><?php 
+      <label for="apachelogs"></label><textarea id="apachelogs" class="log" disabled><?php
   		echo file_get_contents($_SERVER['DOCUMENT_ROOT']."/logs/access.log"); ?>
   	</textarea>
   </div>
   <div class="tab-pane fade" id="nav-apacheerrors" role="tabpanel" aria-labelledby="nav-apacheerrors-tab">
-  	<textarea id="apacheerrors" class="log" disabled><?php 
+      <label for="apacheerrors"></label><textarea id="apacheerrors" class="log" disabled><?php
   		echo file_get_contents($_SERVER['DOCUMENT_ROOT']."/logs/error.log"); ?>  	
   	</textarea>
   </div>

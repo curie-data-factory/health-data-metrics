@@ -17,7 +17,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
 		<div class="col-lg-4">
 			<div class="card p-3 bg-white rounded shadow-sm">
 				<h3 class="border-bottom border-gray">Home Page</h3>
-				<p>Cette page vous permet de voir en un coup d'oeil les fonctionnalités de Health Data Metrics et de pouvoir y accèder.</p>
+				<p>Cette page vous permet de voir en un coup d'oeil les fonctionnalités de Health Data Metrics et de pouvoir y accéder.</p>
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -29,7 +29,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
 				</div>
 				<div class="card-body">
 					<h5 class="card-title"><i class="fas fa-pencil-alt"></i> Rule Editor</a></h5>
-					<p class="card-text">Editez des règles pour pouvoir être alerté en cas de données de mauvaises qualités.</p>
+					<p class="card-text">Éditez des règles pour pouvoir être alerté en cas de données de mauvaises qualités.</p>
 					<a href="/rule-editor/rule.php" class="btn btn-primary">> Rule Editor</a>
 				</div>
 				<div class="card-body">

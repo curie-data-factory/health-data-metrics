@@ -30,7 +30,7 @@ if (isset($_SESSION['connected'])) {
 		array_push($metricsList, $value['COLUMN_NAME']);
 	}
 
-	// Fonction qui permet de gérer les selecteurs de façon automatique
+	// Fonction qui permet de gérer les sélecteurs de façon automatique
 	function generateSelector($name,$data)
 	{
 		if (isset($_POST[$name])) {
@@ -38,7 +38,7 @@ if (isset($_SESSION['connected'])) {
 		}
 
 		echo('<select class="form-control" name="'.$name.'" onchange="this.form.submit()">');
-		foreach ($data as $key => $value) {
+		foreach ($data as $value) {
 			$selected = "";
 			if ($_SESSION[$name] == $value) {
 				$selected = " selected";
@@ -77,7 +77,7 @@ if (isset($_SESSION['connected'])) {
 	}
 ?>
 <div class="mb-2">
-	<input type="submit" class="btn btn-primary" value="Sur les metriques" name="conditionOnMetrics">
+	<input type="submit" class="btn btn-primary" value="Sur les métriques" name="conditionOnMetrics">
 	<input type="submit" class="btn btn-primary" value="Sur les données" name="conditionOnValues">
 </div>
 <div class="alert alert-info" role="alert">
@@ -87,12 +87,16 @@ if (isset($_SESSION['connected'])) {
 
 <h4>Conditions sur les données : </h4>
 <div class="row">
-	<div class="col-lg-3"><input type="text" class="form-control" name="metric" value="<?php echo($_GET['table']."/".$_GET['column']); ?>" disabled>
-	</div>
+	<div class="col-lg-3"><label>
+            <input type="text" class="form-control" name="metric" value="<?php echo($_GET['table']."/".$_GET['column']); ?>" disabled>
+        </label>
+    </div>
 	<div class="col-lg-2"><?php generateSelector("condition",$conditionsListCat); ?></div>
 	<input type="hidden" name="table" value="<?php echo($_GET['table']); ?>">
 	<input type="hidden" name="column" value="<?php echo($_GET['column']); ?>">
-	<div class="col-lg-7"><input type="text" class="form-control" name="conditionValue" value="<?php echo $conditionValue ?>"></div>
+	<div class="col-lg-7"><label>
+            <input type="text" class="form-control" name="conditionValue" value="<?php echo $conditionValue ?>">
+        </label></div>
 </div>
 <?php } else if ($_SESSION['conditionScope'] == "metrics") {  ?>
 
@@ -100,7 +104,9 @@ if (isset($_SESSION['connected'])) {
 <div class="row">
 	<div class="col-lg-3"><?php generateSelector("metric",$metricsList); ?></div>
 	<div class="col-lg-2"><?php generateSelector("condition",$conditionsList); ?></div>
-	<div class="col-lg-7"><input type="text" class="form-control" name="conditionValue" value="<?php echo $conditionValue ?>"></div>
+	<div class="col-lg-7"><label>
+            <input type="text" class="form-control" name="conditionValue" value="<?php echo $conditionValue ?>">
+        </label></div>
 </div>
 <?php } 
 

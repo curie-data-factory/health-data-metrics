@@ -14,3 +14,4 @@ tutorials/full-installation/conf-db.json
 conf/ldap/conf-ldap.json
 conf/appli/conf-appli.json
 conf/db/conf-db.json
+site/
