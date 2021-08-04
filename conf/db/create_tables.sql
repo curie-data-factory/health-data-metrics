@@ -31,6 +31,18 @@ CREATE TABLE IF NOT EXISTS `hdm_pack_rule_conf` (
 COMMENT='TABLE qui contient la liste des bases de données.'
 ENGINE=InnoDB;
 
+CREATE TABLE `hdm_core_mail_list` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(50) NULL DEFAULT NULL,
+  `mail` VARCHAR(255) NULL DEFAULT NULL,
+  `key` VARCHAR(600) NULL DEFAULT NULL,
+  `db_key` VARCHAR(600) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+)
+COMMENT='TABLE qui contient la liste des souscriptions mails aux alertes et rapports.'
+ENGINE=InnoDB;
+
+
 CREATE TABLE IF NOT EXISTS `hdm_core_table_corr_db_mp` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `mp_key` VARCHAR(600) NULL DEFAULT NULL,

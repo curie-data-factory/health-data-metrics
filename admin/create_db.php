@@ -3,6 +3,10 @@
 /* LOAD CONF */ 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 $json = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
+$ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
+
+if (isset($_SESSION['connected'])
+    AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])) {
 
 /* CONNEXION AU SERVEUR DE BASE DE DONNEES */
 $dsn = 'mysql:host='.$json["hdm-core-database"]['host'].':'.$json["hdm-core-database"]['port'];
@@ -55,4 +59,8 @@ try {
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 if ($res == array()) {
 	echo "Database HDM Script Complete";
+}
+
+} else {
+    include $_SERVER['DOCUMENT_ROOT'].'/login.php';
 }

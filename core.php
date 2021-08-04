@@ -104,10 +104,19 @@ function getDbList($conn) {
 
 # Fonction qui récupère la liste de correspondance entre les bases et les metricpacks
 function getDbMpCorrList($conn) {
-	# Getting MySQL Metrics database version
-	$sql = 'SELECT * FROM hdm_core_table_corr_db_mp';
-	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-	$sth->execute();
+    # Getting MySQL Metrics database version
+    $sql = 'SELECT * FROM hdm_core_table_corr_db_mp';
+    $sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute();
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
+}
+
+# Fonction qui récupère la liste de correspondance entre les bases et les metricpacks
+function getMailList($conn,$mail) {
+    # Getting MySQL Metrics database version
+    $sql = 'SELECT * FROM hdm_core_mail_list WHERE mail = :mail';
+    $sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute(array(':mail' => $mail));
     return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 

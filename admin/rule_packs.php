@@ -2,6 +2,10 @@
 
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 $dataConfDb = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
+$ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
+
+if (isset($_SESSION['connected'])
+AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])) {
 
 $hdmRulePacks = getNexusContent("hdm.rulepacks");
 $hdmDbList = getDbList($conn);
@@ -219,12 +223,12 @@ if($hdmRulePacks['items'] != NULL){
 						$dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
 	 					 ?>
 		 					<tr>
-		 						<td scope="col"><?php echo($db['db_name']) ?></td>
-		 						<td scope="col"><?php echo($db['db_type']) ?></td>
-		 						<td scope="col"><?php echo($db['db_host']) ?></td>
-		 						<td scope="col"><?php echo($db['db_port']) ?></td>
-		 						<td scope="col"><?php echo($db['db_user']) ?></td>
-		 						<td scope="col"><?php echo($db['db_is_ssl']) ?></td>
+		 						<td><?php echo($db['db_name']) ?></td>
+		 						<td><?php echo($db['db_type']) ?></td>
+		 						<td><?php echo($db['db_host']) ?></td>
+		 						<td><?php echo($db['db_port']) ?></td>
+		 						<td><?php echo($db['db_user']) ?></td>
+		 						<td><?php echo($db['db_is_ssl']) ?></td>
 		 						<?php
 		 						foreach ($dataReMap as $key => $value) {
 
@@ -322,4 +326,7 @@ if(isset($_POST['rpconfig'])) { ?>
 			});
 		</script>
 	</div>
-<?php }  ?>
+<?php }
+} else {
+include $_SERVER['DOCUMENT_ROOT'].'/login.php';
+}

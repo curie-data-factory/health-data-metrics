@@ -53,11 +53,25 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-1 mr-2">
-				<li class="nav-item">
-					<a class='nav-link <?php if($_SESSION["page"] == "admin"){echo("active");} ?>' href="/admin.php"><i class="fas fa-cogs"></i> Admin</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link <?php if($_SESSION["page"] == "help"){echo("active");} ?>' href="/help.php"><i class="fas fa-question"></i> Help</a>
+                <?php
+                    $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
+
+                    switch ($conf['AUTH']['AUTH_MODE']) {
+                        case 'ldap':
+                            $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
+
+                            if (in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])){
+                                ?>
+                                <li class="nav-item" >
+                                    <a class='nav-link <?php if($_SESSION["page"] == "admin"){echo("active");} ?>' href = "/admin.php" ><i class="fas fa-cogs" ></i > Admin</a >
+                                </li >
+                                <?php
+                            }
+                        break;
+                    }
+                ?>
+                <li class="nav-item">
+                <a class='nav-link <?php if($_SESSION["page"] == "help"){echo("active");} ?>' href="/help.php"><i class="fas fa-question"></i> Help</a>
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">

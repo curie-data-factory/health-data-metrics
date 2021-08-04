@@ -1,7 +1,15 @@
-<?php 
+<?php
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 $confFilePath = "/conf/appli/conf-appli.json";
 $confFile = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$confFilePath), true);
+$ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $confFile['AUTH']['AUTH_LDAP_CONF_PATH']), true);
+
+if (isset($_SESSION['connected'])
+AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])) {
 
 # On réécrit les valeurs si elles ont été modifiées.
 if (isset($_POST['editApplicationConfiguration'])) {
@@ -122,3 +130,6 @@ if (isset($_POST['editApplicationConfiguration'])) {
 		</div>	
 	</div>
 </form>
+<?php } else {
+    include $_SERVER['DOCUMENT_ROOT'].'/login.php';
+}

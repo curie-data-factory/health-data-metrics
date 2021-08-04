@@ -1,3 +1,13 @@
+<?php
+
+/* LOAD CONF */
+$conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
+$ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
+
+if (isset($_SESSION['connected'])
+    AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])) {
+?>
+
 <a href="?tab=health" class="btn btn-primary">Refresh</a>
 <div class="container-fluid">
 	<div class="row">
@@ -54,4 +64,6 @@
 		</div>
 	</div>
 </div>
-
+<?php } else {
+    include $_SERVER['DOCUMENT_ROOT'].'/login.php';
+}
