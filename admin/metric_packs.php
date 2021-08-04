@@ -245,7 +245,7 @@ if($hdmMetricPacks['items'] != NULL){
 	 								
  									?>
  									<td>
-										<form method="POST" action="<?php echo($_SERVER['DOCUMENT_ROOT']) ?>/admin.php?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
+										<form method="POST" action="admin.php?tab=metricpacks" style="display: inline-block; vertical-align: middle;">
                                             <input type="checkbox" name="checkbox"  class="double" <?php if($checked) { echo "checked"; } ?> onChange="this.form.submit()">
                                             <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
 		 									<input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
@@ -291,7 +291,7 @@ if(isset($_POST['mpconfig'])) { ?>
 						</button>
 					</div>
 					<div class="form-group">
-						<form method="POST" action="<?php echo $_SERVER['DOCUMENT_ROOT'] ?>/admin.php?tab=metricpacks">
+						<form method="POST" action="admin.php?tab=metricpacks">
 							<div class="modal-body">
 								<span class="badge badge-success"><?php if(isset($_POST['metricpack'])) { echo($_POST['metricpack']); } ?></span>
 								<span class="badge badge-success"><?php if(isset($_POST['mpkey'])) { echo($_POST['mpkey']); } ?></span>
