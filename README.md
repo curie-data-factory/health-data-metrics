@@ -60,6 +60,12 @@ See default file : [conf/appli/conf-appli.json](conf/appli/conf-appli.json)
 
 See default file : [conf/db/conf-db.json](conf/db/conf-db.json)
 
+### Ldap Configuration File
+
+`/var/www/html/conf/ldap/conf-ldap.json` :
+
+See default file : [conf/ldap/conf-ldap.json](conf/ldap/conf-ldap.json)
+
 ## Run it !
 
 You can run HDM from 3 different ways :
