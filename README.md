@@ -6,7 +6,6 @@
 	* [Configuration](#configuration)
 		* [Application Configuration File](#application-configuration-file)
 		* [LDAP Configuration File](#ldap-configuration-file)
-		* [NFS Configuration File](#nfs-configuration-file)
 	* [Run it !](#run-it-)
 		* [Docker Image](#docker-image)
 		* [Helm Chart](#helm-chart)
