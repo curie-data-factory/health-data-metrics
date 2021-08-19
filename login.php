@@ -14,6 +14,7 @@ $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['AUTH
 $service_ldap_authorization_domain = $ldap_conf['service_ldap_authorization_domain'];
 
 $ad = new \Adldap\Adldap();
+$provider = null;
 
 $config = $ldap_conf['config'][0];
 $ad->addProvider($config);

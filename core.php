@@ -132,6 +132,7 @@ function getDbRpCorrList($conn) {
 // alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheurs de filtre de niveau d'alerte
 function writeRow($row)
 {
+    $row_print = "";
     $linkRule = "";
 	switch ($row['alert_scope']) {
         case 'database':
@@ -147,13 +148,13 @@ function writeRow($row)
 	}
 	$display = FALSE;
 	if(($_SESSION['alert-display-high'] == "True") && ($row['alert_level'] == "Haut")){
-		echo("<tr class=\"table-danger row\">");
+        $row_print .= "<tr class=\"table-danger row\">";
 		$display = TRUE;
 	} elseif(($_SESSION['alert-display-warn'] == "True") && ($row['alert_level'] == "Warning")){
-		echo("<tr class=\"table-warning row\">");
+        $row_print .= "<tr class=\"table-warning row\">";
 		$display = TRUE;
 	} elseif(($_SESSION['alert-display-info'] == "True") && ($row['alert_level'] == "Info")){
-		echo("<tr class=\"table-info row\">");
+        $row_print .= "<tr class=\"table-info row\">";
 		$display = TRUE;
 	}
 
@@ -201,18 +202,20 @@ function writeRow($row)
 
 	if($display){
 		
-		echo "<td class=\"col-lg-1 col-sm-1\">".  $messageClass . "</td>\n";
-		echo "<td class=\"col-lg-2 col-sm-2\">".  $row['database'] . "</td>\n";
-		echo "<td class=\"col-lg-1 col-sm-1\">".  $row['dbversion'] . "</td>\n";
-		echo "<td class=\"col-lg-2 col-sm-2\">".  $row['table'] . "</td>\n";
-		echo "<td class=\"col-lg-3 col-sm-3\">".  $row['column'] . "</td>\n";
-		echo "<td class=\"col-lg-2 col-sm-3\">".  $row['alert_message'] . "</td>\n";
-		echo "<td class=\"col-lg-1 col-sm-1\">
+		$row_print .= "<td class=\"col-lg-1 col-sm-1\">".  $messageClass . "</td>\n";
+		$row_print .= "<td class=\"col-lg-2 col-sm-2\">".  $row['database'] . "</td>\n";
+		$row_print .= "<td class=\"col-lg-1 col-sm-1\">".  $row['dbversion'] . "</td>\n";
+		$row_print .= "<td class=\"col-lg-2 col-sm-2\">".  $row['table'] . "</td>\n";
+		$row_print .= "<td class=\"col-lg-3 col-sm-3\">".  $row['column'] . "</td>\n";
+		$row_print .= "<td class=\"col-lg-2 col-sm-3\">".  $row['alert_message'] . "</td>\n";
+		$row_print .= "<td class=\"col-lg-1 col-sm-1\">
 		<a href=\"".$linkKibana."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0;\"><i class=\"fas fa-search\"></i></a>
 		<a href=\"".$linkRule."\" role=\"button\" class=\"btn btn-light\" style=\"padding:0;\"><i class=\"fas fa-pencil-alt\"></i></i></a> 
 		</td>\n";
-		echo('</tr>');
+        $row_print .= '</tr>';
 	}
+
+	return $row_print;
 }
 
 // alert table function
@@ -266,7 +269,7 @@ function printHeader($value='',$display=False)
 	</tr></thead>
 	<tbody>';
 
-	echo($tableHeader);
+	return $tableHeader;
 }
 
 // fonction qui permet de détruire toutes les variables de session des formulaires d'ajout des règles

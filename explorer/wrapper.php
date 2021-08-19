@@ -18,13 +18,9 @@ foreach ($conf['EXPLORER'] as $key => $value) {
 
 ?>
 
-<style type="text/css">
-.md-header {
-	background-color: hsl(209, 59%, 30%);
-}
+<style>
 
 body, html {width: 100%; height: 100%; margin: 0; padding: 0}
-.first-row {position: absolute;top: 0; left: 0; right: 0; height: 49px; background-color: white;}
 .second-row {position: absolute; top: 49px; left: 0; right: 0; bottom: 0; background-color: white }
 .second-row iframe {display: block; width: 100%; height: 100%; border: none;}
 
@@ -33,7 +29,7 @@ body, html {width: 100%; height: 100%; margin: 0; padding: 0}
 
 <?php 
 
-# cas ou on a cliqué sur le lien de l'accueil sur une alerte et on veut voir le scope de l'alerte dans le dashboard
+# cas ou on a cliqué sur le lien de l'accueil sur une alerte et on veut voir le scope de l'alerte dans le tableau de bord
 if (isset($_GET["filtered"])) {
 	if($_GET["filtered"] == "true") {
 

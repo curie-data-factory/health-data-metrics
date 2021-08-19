@@ -16,7 +16,7 @@ if (isset($_POST['rpconfigsubmit'])) {
 	
 	$query = $conn->prepare('INSERT INTO `hdm_pack_rule_conf` ( `id_config`, `pack_name`, `pack_version`,`pack_config` ) VALUES (:idconfig, :rulepack, :version, :configcontent) ON DUPLICATE KEY UPDATE pack_config = :configcontent;');
 
-	// si il s'agit d'une configuration spécifique à un rp + base on ajoute dans la table de corespondance
+	// s'il s'agit d'une configuration spécifique à un rp + base on ajoute dans la table de correspondance
 	if($_POST['dbkey'] != "" && $_POST['rpkey'] != ""){
 	    if (!$query->execute(array(':idconfig' => $_POST["rpkey"].':'.$_POST["dbkey"],
 	    						   ':rulepack' => $_POST["rpkey"],
@@ -48,7 +48,7 @@ if (isset($_POST['rpconfigsubmit'])) {
 
 	$query = $conn->prepare('SELECT * FROM `hdm_pack_rule_conf` WHERE `id_config` = :idconfig;');
 
-	// si il s'agit d'une configuration spécifique à un rp + base
+	// s'il s'agit d'une configuration spécifique à un rp + base
 	if(isset($_POST['dbkey']) && isset($_POST['rpkey'])){
 
 	    if (!$query->execute(array(':idconfig' => $_POST["rpkey"].':'.$_POST["dbkey"]))) {
@@ -81,7 +81,7 @@ if(isset($_POST["rpkey"])
 	AND !isset($_POST["rpconfig"])
 	AND !isset($_POST["rpconfigsubmit"])){
 
-	// Si on a check la box alors qu'elle est déjà check, cela signifie que l'on veut décocher la case ( supprimer la ligne de la table )
+	// Si on a check la box alors qu'elle est déjà check, cela signifie que l'on veut décocher la case (supprimer la ligne de la table)
 	$checked = false;
 
 	// Si la clé est déjà présente en base on uncheck la box
@@ -96,21 +96,17 @@ if(isset($_POST["rpkey"])
 		$query = $conn->prepare('DELETE FROM `hdm_core_table_corr_db_rp` 
 			WHERE `rp_key` = :rpkey 
 			AND `db_key` = :dbkey;');
-	    if (!$query->execute(array(':rpkey' => $_POST["rpkey"],
-						  ':dbkey' => $_POST["dbkey"]))) {
-			print_r($query->errorInfo());
-		}
-	} else {	
+    } else {
 		$query = $conn->prepare('INSERT INTO `hdm_core_table_corr_db_rp` ( `rp_key`, `db_key` ) VALUES (:rpkey, :dbkey);');
+    }
 
-	    if (!$query->execute(array(':rpkey' => $_POST["rpkey"],
-						  ':dbkey' => $_POST["dbkey"]))) {
-			print_r($query->errorInfo());
-		}
-	}
+    if (!$query->execute(array(':rpkey' => $_POST["rpkey"],
+                      ':dbkey' => $_POST["dbkey"]))) {
+        print_r($query->errorInfo());
+    }
 
 
-	#dropping duplicates :
+    #dropping duplicates :
 	$query = $conn->prepare('DELETE
 							FROM hdm_core_table_corr_db_rp
 							WHERE id NOT IN
@@ -129,7 +125,7 @@ $hdmRulePacks = getNexusContent("hdm.rulepacks");
 $hdmDbList = getDbList($conn);
 $hdmCorrList = getDbrpCorrList($conn);
 
-// on va modifer la structure des données pour pouvoir agréger les affichages
+// on va modifier la structure des données pour pouvoir agréger les affichages
 $dataReMap = array();
 if($hdmRulePacks['items'] != NULL){
 	foreach ($hdmRulePacks['items'] as $value) {
@@ -155,7 +151,7 @@ if($hdmRulePacks['items'] != NULL){
  			?>
  			<div class="card">
  				<div class="card-body">
- 					<!-- On affice l'entête des ressources à partir du nom et du groupe -->
+ 					<!-- On affiche l'entête des ressources à partir du nom et du groupe -->
  					<h6 class="card-title"><?php echo($value[array_key_first($value)]['name']); ?></h6>
  					<h6 class="card-subtitle mb-2 text-muted"><?php echo($value[array_key_first($value)]['group']); ?></h6>
 
@@ -193,7 +189,7 @@ if($hdmRulePacks['items'] != NULL){
 	 -->
  	<div class="row">
 	 	<div class="col-lg-8 mb-2 alert alert-primary" role="alert">
-			Notice : Selectionnez le(s) rp qui doivent s'executer avec quelle base de donnée.
+			Notice : Sélectionnez le(s) rp qui doivent s'executer avec quelle base de donnée.
 		</div>
  		<div class="col-12">
  			<table class="table table-bordered">
@@ -274,7 +270,7 @@ if($hdmRulePacks['items'] != NULL){
 //////////////////////////////////////////////////////////
 // Modal de modification de la configuration des rulepacks
 // C'est un modal générique qui récupère les variables en post pour récupérer la conf en base, la décoder et l'afficher dans une textarea dans le modal.
-// Si cette configuration est modifié elle sera récupérée en post à l'envoit du formulaire, puis le contenus sera encodé en base64 pour être inséré en base avec la clé du metric pack correspondant.
+// Si cette configuration est modifiée elle sera récupérée en post à l'envoit du formulaire, puis le contenu sera encodé en base64 pour être inséré en base avec la clé du metric pack correspondant.
 
 if(isset($_POST['rpconfig'])) { ?>
 

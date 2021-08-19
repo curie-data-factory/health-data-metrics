@@ -282,7 +282,6 @@ if(isset($_POST['kibana2'])) {
 			WHERE `date` = (SELECT MAX(`date`) AS maxdate FROM `hdm_alerts`)
 			";
 				}
-
 			}
 
 			$sth1 = $conn->prepare($sql1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -454,15 +453,15 @@ if(isset($_POST['kibana2'])) {
 
 												if(!isset($currentDatabase)) {
 													$currentDatabase = $row[$_SESSION['split-display-scope']];
-													printHeader($row[$_SESSION['split-display-scope']],True);
+													echo(printHeader($row[$_SESSION['split-display-scope']],True));
 													
 												} else if ($row[$_SESSION['split-display-scope']] != $currentDatabase) {
 													echo($tableFooter);
 													$currentDatabase = $row[$_SESSION['split-display-scope']];
-													printHeader($row[$_SESSION['split-display-scope']],True);
+													echo(printHeader($row[$_SESSION['split-display-scope']],True));
 												} 
 
-												writeRow($row);
+												echo(writeRow($row));
 												$i = $i + 1;
 											}
 										}
