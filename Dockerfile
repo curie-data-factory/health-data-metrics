@@ -16,12 +16,12 @@ RUN apt-get update && \
     rm -R /var/lib/apt/lists/*
     
 # Configuring LDAP
-RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu
-RUN docker-php-ext-install ldap
+RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
+&&  docker-php-ext-install ldap
 
 # Configuring ZIP
-RUN docker-php-ext-configure zip
-RUN docker-php-ext-install zip
+RUN docker-php-ext-configure zip \
+&& docker-php-ext-install zip
 
 # Configuring PDO/MySQL
 RUN docker-php-ext-install pdo pdo_mysql
@@ -29,13 +29,13 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Copy VHost
 COPY hdm.conf /etc/apache2/sites-enabled/hdm.conf
 
-# Copy SMTP config
-COPY msmtprc /etc/msmtprc
-
 WORKDIR /var/www/html/
 
 # Get Sources
 COPY . /var/www/html/
+
+# Copy SMTP config
+RUN ln -sv /var/www/html/msmtprc /etc/msmtprc
 
 # Add Version number
 RUN rm -rf /var/www/html/version && \
