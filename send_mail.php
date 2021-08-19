@@ -128,11 +128,10 @@ function sendAlertMessage($infos,$db_list,$conn) {
     $message .= '</div></div></div></main></body></html>';
 
     // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-    $headers[] = "From: NeoFit <no-reply-neofit@curie.fr>";
-    $headers[] = "Reply-To: no-reply-neofit@curie.fr";
+    $headers[] = "From: HDM <no-reply-hdm@".$_SERVER['SERVER_NAME'].">";
+    $headers[] = "Reply-To: no-reply-hdm@".$_SERVER['SERVER_NAME'];
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-type: text/html; charset=utf-8';
-    $headers[] = $infos['cc_email'];
 
 //    echo $message;
 
