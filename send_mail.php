@@ -61,7 +61,7 @@ function sendAlertMessage($infos,$db_list,$conn) {
     $subject = '[HDM] Alert Report';
 
     // message
-    $message = '<html>
+    $message = '<html lang="en">
     <head>
         <title>[HDM] Alert Report</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -101,7 +101,7 @@ function sendAlertMessage($infos,$db_list,$conn) {
       <div class="container-fluid">
       <div class="row">
           <div class="col-lg-12">
-              <img src="https://raw.githubusercontent.com/curie-data-factory/health-data-metrics/master/img/logo-hdm.png" width="105" height="67" style="float:right;">
+              <img alt="logo" src="https://raw.githubusercontent.com/curie-data-factory/health-data-metrics/master/img/logo-hdm.png" width="105" height="67" style="float:right;">
               <h3>HDM / Alert Report : '.date("Y-m-d").'</h3>
               <hr>
           </div>
