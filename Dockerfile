@@ -35,7 +35,7 @@ WORKDIR /var/www/html/
 COPY . /var/www/html/
 
 # Copy SMTP config
-RUN ln -sv /var/www/html/msmtprc /etc/msmtprc
+RUN ln -sv /var/www/html/conf/mail/msmtprc /etc/msmtprc
 
 # Add Version number
 RUN rm -rf /var/www/html/version && \
