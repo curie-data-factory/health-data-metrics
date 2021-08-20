@@ -13,7 +13,7 @@ services:
   hdm:
     container_name: hdm
     hostname: hdm
-    command: ["sh", "start.sh"]
+    command: ["/bin/bash", "start.sh"]
     build:
       context: .
       args:
