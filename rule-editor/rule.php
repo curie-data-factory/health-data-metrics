@@ -59,7 +59,7 @@ if (@isset($_POST['dropRule'.$_POST['id_rule']])) {
 // récupération des noms des bases de données :
 if(isset($_GET['newFilter'])){
 
-	$sql = 'SELECT DISTINCT `database` FROM `metric_basic`';
+	$sql = 'SELECT DISTINCT `db_name` FROM `hdm_core_dblist`';
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
 	$databases = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -70,7 +70,8 @@ if(isset($_GET['database']) || isset($_POST['database'])){
 
 	if (isset($_GET['database'])) {
 		$database = $_GET['database'];
-		$_SESSION['alertScope'] = "database";
+
+        $_SESSION['alertScope'] = "database";
 	} elseif (isset($_POST['database'])) {
 		$database = $_POST['database'];
 	}
@@ -336,12 +337,19 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 							<label for="staticEmail" class="col-sm-2 col-form-label">Database : </label>
 							<div class="col-sm-10">
                                     <select  class="form-control" name='database' onchange='this.form.submit()'>
-                                        <option>Select a Database</option>
                                         <?php
+
                                         if(isset($_GET['newFilter'])){
+
+                                            if(isset($_GET['database'])){
+                                                echo("<option selected >".$_GET['database']."</option>");
+                                            } else {
+                                                echo("<option selected >Select a Database</option>");
+                                            }
+
                                             foreach ($databases as $key => $value) {
-                                                $var = $value["database"];
-                                                if($value["database"] == $_GET['database']){
+                                                $var = $value["db_name"];
+                                                if($value["db_name"] == $_GET['database']){
                                                     $select = "selected";
                                                 } else {
                                                     $select = "";
