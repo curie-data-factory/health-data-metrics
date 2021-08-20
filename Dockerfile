@@ -34,9 +34,6 @@ WORKDIR /var/www/html/
 # Get Sources
 COPY . /var/www/html/
 
-# Copy SMTP config
-RUN ln -sv /var/www/html/conf/mail/msmtprc /etc/msmtprc
-
 # Add Version number
 RUN rm -rf /var/www/html/version && \
     mkdir /var/www/html/version && \
@@ -49,3 +46,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Installing php App Dependencies
 RUN composer install --no-dev --optimize-autoloader 
+
+# By default start up apache in the foreground, override with /bin/bash for interative.
+CMD ["sh", "-c","/var/www/html/start.sh"]
