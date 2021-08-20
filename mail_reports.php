@@ -3,45 +3,22 @@
 ###########################
 # ARMAND LEOPOLD
 # 19/08/2021
-# This page receives send mails of alerts.
+# This page show sended mails of alerts.
 ###########################
 include_once("core.php");
+include_once("connect_db.php");
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-
-    $_SESSION['split-display-database'] = "True";
-    $_SESSION['split-display-table'] = "False";
-    $_SESSION['split-display-column'] = "False";
-    $_SESSION['split-display-scope'] = "database";
-    $_SESSION['alert-display-high'] = "True";
-    $_SESSION['alert-display-warn'] = "True";
-    $_SESSION['alert-display-info'] = "True";
-    $_SESSION['filter-display-METRICCOMPARE'] = "True";
-    $_SESSION['filter-display-METRIQUE'] = "True";
-    $_SESSION['filter-display-DATA'] = "True";
-    $_SESSION['filter-display-SCHEMA'] = "True";
-}
-
-/* loading json */
-$conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
-$json = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
-
-/* Connexion à une base MySQL avec l'invocation de pilote */
-$dsn = 'mysql:dbname='.$json["hdm-core-database"]["database"].';host='.$json["hdm-core-database"]['host'].':'.$json["hdm-core-database"]['port'];
-$user = $json["hdm-core-database"]['user'];
-$password = $json["hdm-core-database"]['password'];
-
-$conn = NULL;
-try {
-    $conn = new PDO($dsn, $user, $password);
-} catch (PDOException $e) {
-    ?>
-    <div class="alert alert-danger mb-0 p-2" role="alert">
-        <?php echo 'Connexion échouée : ' . $e->getMessage(); ?>
-    </div>
-    <?php
-}
+$_SESSION['split-display-database'] = "True";
+$_SESSION['split-display-table'] = "False";
+$_SESSION['split-display-column'] = "False";
+$_SESSION['split-display-scope'] = "database";
+$_SESSION['alert-display-high'] = "True";
+$_SESSION['alert-display-warn'] = "True";
+$_SESSION['alert-display-info'] = "True";
+$_SESSION['filter-display-METRICCOMPARE'] = "True";
+$_SESSION['filter-display-METRIQUE'] = "True";
+$_SESSION['filter-display-DATA'] = "True";
+$_SESSION['filter-display-SCHEMA'] = "True";
 
 ###########################
 # Récupération de la liste des abonnements mails :
@@ -51,21 +28,12 @@ $alerts_subs = simple_query_db($conn,"SELECT DISTINCT mail FROM hdm_core_mail_li
 
 ###########################
 # Envoi des alertes :
-foreach($alerts_subs as $sub) {
 
-    $alert_db_list_for_sub = simple_query_db($conn,"SELECT * FROM hdm_core_mail_list  WHERE `type` = 'alerts' AND `mail` = '".$sub['mail']."'");
+$alert_db_list_for_sub = simple_query_db($conn,"SELECT * FROM hdm_core_mail_list  WHERE `type` = 'alerts' AND `mail` = '".$_SESSION['user_ids']['mail']."'");
+# Construction de la requête pour récupérer les alertes
+showAlertMessage($_SESSION['user_ids']['mail'],$alert_db_list_for_sub,$conn);
 
-    # Construction de la requête pour récupérer les alertes
-    sendAlertMessage($sub,$alert_db_list_for_sub,$conn);
-}
-
-function sendAlertMessage($infos,$db_list,$conn) {
-
-    // Plusieurs destinataires
-    $to  = $infos['mail'];
-
-    // Sujet
-    $subject = '[HDM] Alert Report';
+function showAlertMessage($infos,$db_list,$conn) {
 
     // message
     $message = '<html lang="en">
@@ -118,9 +86,8 @@ function sendAlertMessage($infos,$db_list,$conn) {
       <div class="row">
           <div class="col-lg-12">
               <img alt="logo" src="https://raw.githubusercontent.com/curie-data-factory/health-data-metrics/master/img/logo-hdm.png" width="105" height="67" style="float:right;">
-              <h3 style="color:#111c;">HDM / Alert Report : '.date("Y-m-d").' / '.$infos['mail'].'</h3>
+              <h3 style="color:#111c;">HDM / Alert Report : '.date("Y-m-d").' / '.$infos.'</h3>
               <hr>
-              <h3><a href="http://'.$_SERVER['SERVER_NAME'].'/mail_reports.php">See Full report in Browser</a></h3>
           </div>
       </div>
       <div class="row">
@@ -150,8 +117,5 @@ function sendAlertMessage($infos,$db_list,$conn) {
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-type: text/html; charset=utf-8';
 
-//    echo $message;
-
-    // Envoi
-    mail($to, $subject, $message, implode("\r\n", $headers));
+    echo $message;
 }
