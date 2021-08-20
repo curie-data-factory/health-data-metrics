@@ -130,7 +130,7 @@ function getDbRpCorrList($conn) {
 }
 
 // alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheurs de filtre de niveau d'alerte
-function writeRow($row)
+function writeRow($row): string
 {
     $row_print = "";
     $linkRule = "";
@@ -248,28 +248,26 @@ function printBadge($array,$selector,$scope){
 }
 
 // alert table function
-function printHeader($value='',$display=False)
+function printHeader($value='',$display=False): string
 {
 	$valueDisplay = "";
 	if ($display) {
 		$valueDisplay = "active show";
 	}
 
-	$tableHeader = '<div class="tab-pane fade '.$valueDisplay.'" id="v-pills-'.$value.'" role="tabpanel" aria-labelledby="v-pills-'.$value.'-tab">
-	<h4 id="'.$value.'">'.$value.'</h4>
-	<table class="table">
-	<thead><tr class="row">
-	<th class="col-lg-1"><a href="?orderBy=alertClass">Badges</a></th>
-	<th class="col-lg-2"><a href="?orderBy=database">database</a></th>
-	<th class="col-lg-1"><a href="?orderBy=version">version</a></th>
-	<th class="col-lg-2"><a href="?orderBy=table">table</a></th>
-	<th class="col-lg-3"><a href="?orderBy=column">column</a></th>
-	<th class="col-lg-2"><a href="?orderBy=alert_message">message</a></th>
-	<th class="col-lg-1"><a href="?orderBy=rule">Link</a></th>
-	</tr></thead>
-	<tbody>';
-
-	return $tableHeader;
+    return '<div class="tab-pane fade '.$valueDisplay.'" id="v-pills-'.$value.'" role="tabpanel" aria-labelledby="v-pills-'.$value.'-tab">
+    <h4 id="'.$value.'">'.$value.'</h4>
+    <table class="table">
+    <thead><tr class="row">
+    <th class="col-lg-1"><a href="?orderBy=alertClass">Badges</a></th>
+    <th class="col-lg-2"><a href="?orderBy=database">database</a></th>
+    <th class="col-lg-1"><a href="?orderBy=version">version</a></th>
+    <th class="col-lg-2"><a href="?orderBy=table">table</a></th>
+    <th class="col-lg-3"><a href="?orderBy=column">column</a></th>
+    <th class="col-lg-2"><a href="?orderBy=alert_message">message</a></th>
+    <th class="col-lg-1"><a href="?orderBy=rule">Link</a></th>
+    </tr></thead>
+    <tbody>';
 }
 
 // fonction qui permet de détruire toutes les variables de session des formulaires d'ajout des règles
@@ -291,3 +289,20 @@ function unsetFormRule()
 	unset($_SESSION['conditionScope']);
 }
 
+# Fonction qui permet de requêter sans arguments
+function simple_query_db($conn,$query_string) {
+    try {
+        # Préparation de la requête pour insertion des données dans la table de tokens
+        $query = $conn->prepare($query_string);
+        # Execution de la requête
+        if(!$query->execute()) {
+            print_r($query->errorInfo());
+        } else {
+            return $query->fetchAll();
+        }
+    } catch (PDOException $e) {
+        echo 'Connexion échouée : '. $e->getMessage();
+    }
+
+    return null;
+}

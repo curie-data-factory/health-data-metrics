@@ -1,4 +1,15 @@
 <?php
+###########################
+# ARMAND LEOPOLD
+# 19/08/2021
+# This page receives send mails of alerts.
+###########################
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+include_once("core.php");
 
 /* loading json */
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
@@ -15,42 +26,9 @@ try {
 } catch (PDOException $e) {
     ?>
     <div class="alert alert-danger mb-0 p-2" role="alert">
-        <?php echo 'Connexion échouée : ' . $e->getMessage() . ' |  You should consider running the create db script : '; ?>
-        <a href="/admin/create_db.php">Run the create db script</a>
+        <?php echo 'Connexion échouée : ' . $e->getMessage(); ?>
     </div>
     <?php
-}
-include_once("core.php");
-
-if(!isset($_SESSION['split-display-database'])){
-    $_SESSION['split-display-database'] = "True";
-    $_SESSION['split-display-table'] = "False";
-    $_SESSION['split-display-column'] = "False";
-    $_SESSION['split-display-scope'] = "database";
-}
-
-###########################
-# ARMAND LEOPOLD
-# 19/08/2021
-# This page receives send mails of alerts.
-###########################
-
-# Fonction qui permet de requêter sans arguments
-function simple_query_db($conn,$query_string) {
-    try {
-        # Préparation de la requête pour insertion des données dans la table de tokens
-        $query = $conn->prepare($query_string);
-        # Execution de la requête
-        if(!$query->execute()) {
-            print_r($query->errorInfo());
-        } else {
-            return $query->fetchAll();
-        }
-    } catch (PDOException $e) {
-        echo 'Connexion échouée : '. $e->getMessage();
-    }
-
-    return null;
 }
 
 ###########################
@@ -60,8 +38,7 @@ $reports_subs = simple_query_db($conn,"SELECT DISTINCT mail FROM hdm_core_mail_l
 $alerts_subs = simple_query_db($conn,"SELECT DISTINCT mail FROM hdm_core_mail_list WHERE `type` = 'alerts'");
 
 ###########################
-# Envoie des alertes :
-
+# Envoi des alertes :
 foreach($alerts_subs as $sub) {
 
     $alert_db_list_for_sub = simple_query_db($conn,"SELECT * FROM hdm_core_mail_list  WHERE `type` = 'alerts' AND `mail` = '".$sub['mail']."'");
@@ -88,10 +65,19 @@ function sendAlertMessage($infos,$db_list,$conn) {
     </head>
     <body>
     <style>
+    .table td, .table th {
+        padding: 0.2rem;
+    }
       html,body {
       height: 100%;
       font-family: "Gill Sans", sans-serif;
       color: #1f4e79;
+    }
+    
+    a {
+        color: #1F4E79;
+        text-decoration: none;
+        background-color: transparent;
     }
     
     img {
@@ -121,7 +107,7 @@ function sendAlertMessage($infos,$db_list,$conn) {
       <div class="row">
           <div class="col-lg-12">
               <img alt="logo" src="https://raw.githubusercontent.com/curie-data-factory/health-data-metrics/master/img/logo-hdm.png" width="105" height="67" style="float:right;">
-              <h3>HDM / Alert Report : '.date("Y-m-d").'</h3>
+              <h3 style="color:#111c;">HDM / Alert Report : '.date("Y-m-d").' / '.$infos['mail'].'</h3>
               <hr>
           </div>
       </div>
