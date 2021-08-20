@@ -1,15 +1,29 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
 ###########################
 # ARMAND LEOPOLD
 # 19/08/2021
 # This page receives send mails of alerts.
 ###########################
+include_once("core.php");
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-}
 
-include_once("core.php");
+    $_SESSION['split-display-database'] = "True";
+    $_SESSION['split-display-table'] = "False";
+    $_SESSION['split-display-column'] = "False";
+    $_SESSION['split-display-scope'] = "database";
+    $_SESSION['alert-display-high'] = "True";
+    $_SESSION['alert-display-warn'] = "True";
+    $_SESSION['alert-display-info'] = "True";
+    $_SESSION['filter-display-METRICCOMPARE'] = "True";
+    $_SESSION['filter-display-METRIQUE'] = "True";
+    $_SESSION['filter-display-DATA'] = "True";
+    $_SESSION['filter-display-SCHEMA'] = "True";
+}
 
 /* loading json */
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);

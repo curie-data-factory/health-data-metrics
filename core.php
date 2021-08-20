@@ -132,6 +132,7 @@ function getDbRpCorrList($conn) {
 // alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheurs de filtre de niveau d'alerte
 function writeRow($row): string
 {
+
     $row_print = "";
     $linkRule = "";
 	switch ($row['alert_scope']) {
