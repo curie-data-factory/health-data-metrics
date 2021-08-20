@@ -33,6 +33,7 @@ WORKDIR /var/www/html/
 
 # Get Sources
 COPY . /var/www/html/
+RUN chmod u+x /var/www/html/start.sh
 
 # Add Version number
 RUN rm -rf /var/www/html/version && \
