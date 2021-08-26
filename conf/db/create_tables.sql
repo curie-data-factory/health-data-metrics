@@ -71,7 +71,8 @@ CREATE TABLE `hdm_alerts` (
   `alert_message` TEXT(65535) NULL DEFAULT NULL,
   `alert_class` TEXT(65535) NULL DEFAULT NULL,
   `alert_scope` TEXT(65535) NULL DEFAULT NULL,
-  `rule_id` BIGINT(20) NULL DEFAULT NULL
+  `rule_id` BIGINT(20) NULL DEFAULT NULL,
+  `rule_pack` TEXT NULL DEFAULT NULL
 )
 COMMENT='TABLE qui contient les alertes.'
 ENGINE=InnoDB;
