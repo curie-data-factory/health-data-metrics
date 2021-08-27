@@ -16,7 +16,7 @@
 
 # Goal
 
-The main goal of HDM is to help asses data quality by running ad-hoc programs that "scan" databases regularly to compute metrics & calculate divergence wether in structure or content of databases. Generating alerts that gives Data Engineers insights on what broke down.
+The main goal of HDM is to help asses data quality by running ad-hoc programs that "scan" databases regularly to compute metrics & calculate divergence whether in structure or content of databases. Generating alerts that gives Data Engineers insights on what broke down.
 
 To do this we have developed the following features:
 
@@ -41,7 +41,7 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 - Airflow `>=v2.1.0`
   - Airflow Installed and API Endpoint accessible.
-  - HDM Pipeline imported, setup & running (See More on [Airflow Pipeline](#Airflow-Pipeline).
+  - HDM Pipeline imported, setup & running (See More on [Airflow Pipeline](#Airflow-Pipeline)).
 
 - Nexus `>=3.29.2-02`
 	- Nexus Installed and API Endpoint accessible.
@@ -54,17 +54,25 @@ As you may have understood, Health Data Metrics needs an **ecosystem** of applic
 
 `/var/www/html/conf/appli/conf-appli.json`
 
-See default file : [conf/appli/conf-appli.json](conf/appli/conf-appli.json)
+See default file : [docs/templates/conf-appli.json](docs/templates/conf-appli.json)
+
+### Database Configuration File
 
 `/var/www/html/conf/db/conf-db.json` :
 
-See default file : [conf/db/conf-db.json](conf/db/conf-db.json)
+See default file : [docs/templates/conf-db.json](docs/templates/conf-db.json)
 
 ### Ldap Configuration File
 
 `/var/www/html/conf/ldap/conf-ldap.json` :
 
-See default file : [conf/ldap/conf-ldap.json](conf/ldap/conf-ldap.json)
+See default file : [docs/templates/conf-ldap.json](docs/templates/conf-ldap.json)
+
+### Mail Configuration File
+
+`/var/www/html/conf/ldap/conf-ldap.json` :
+
+See default file : [docs/templates/conf-ldap.json](docs/templates/conf-ldap.json)
 
 ## Run it !
 
@@ -151,6 +159,10 @@ cd health-data-metrics
 ```bash
 docker run --rm -i -v "$PWD:/docs" squidfunk/mkdocs-material:latest build
 ```
+
+# Airflow Pipeline
+
+See [https://airflow.apache.org/docs/apache-airflow/stable/index.html](https://airflow.apache.org/docs/apache-airflow/stable/index.html)
 
 ____
 Data Factory - Institut Curie - 2021

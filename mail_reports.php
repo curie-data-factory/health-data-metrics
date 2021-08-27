@@ -97,7 +97,7 @@ function showAlertMessage($infos,$db_list,$conn) {
     foreach($db_list as $db_key) {
 
         $db_ids = explode(":",$db_key['db_key']);
-        $query = "SELECT * FROM `hdm-dev`.`hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."'";
+        $query = "SELECT * FROM `hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."'";
         $alert_data = simple_query_db($conn,$query);
 
         if(sizeof($alert_data) > 0){

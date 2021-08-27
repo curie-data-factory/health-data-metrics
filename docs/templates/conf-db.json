@@ -1,0 +1,44 @@
+{
+  "hdm-nexus-creds": {
+    "user": "user",
+    "password": "**************"
+  },
+  "hdm-core-database": {
+    "user": "hdm",
+    "password": "**************",
+    "host": "mysql.domain.net",
+    "port": "2051",
+    "database": "hdm-dev",
+    "type": "mysql",
+    "ssl": "false"
+  },
+  "hdm-nosql-database": {
+    "user": "",
+    "password": "",
+    "host": "hdm-elastic.domain.net",
+    "namespace": "hdm",
+    "port": "443",
+    "type": "elasticsearch",
+    "ssl": "false"
+  },
+  "hdm-sql-database": {
+    "user": "hdm",
+    "password": "**************",
+    "host": "mysql.domain.net",
+    "port": "2051",
+    "database": "hdm",
+    "type": "mysql",
+    "ssl": "false"
+  },
+  "hdm-scanned-database": [
+    {
+      "user":"user",
+      "host":"sushi.domain.net",
+      "port":"3306",
+      "database":"mydb",
+      "type": "mysql",
+      "ssl": "false"
+    }
+    ....
+  ]
+}
