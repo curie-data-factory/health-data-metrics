@@ -68,9 +68,9 @@ See default file : [docs/templates/conf-ldap.json](docs/templates/conf-ldap.json
 
 ### Mail Configuration File
 
-`/var/www/html/conf/ldap/conf-ldap.json` :
+`/var/www/html/conf/mail/msmtprc` :
 
-See default file : [docs/templates/conf-ldap.json](docs/templates/msmtprc)
+See default file : [docs/templates/msmtprc](docs/templates/msmtprc)
 
 ## Run it !
 
