@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 if (isset($_SESSION['connected'])) {
 
-	$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'metric_basic'";
+	$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'metric_".$pack_name."'";
 	$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$sth->execute();
 	$res = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -77,15 +77,15 @@ if (isset($_SESSION['connected'])) {
 	}
 ?>
 <div class="mb-2">
-	<input type="submit" class="btn btn-primary" value="Sur les métriques" name="conditionOnMetrics">
-	<input type="submit" class="btn btn-primary" value="Sur les données" name="conditionOnValues">
+	<input type="submit" class="btn btn-primary" value="On metrics" name="conditionOnMetrics">
+	<input type="submit" class="btn btn-primary" value="On data" name="conditionOnValues">
 </div>
 <div class="alert alert-info" role="alert">
 	<?php echo('IF '.$metric.' '.$condition.' '.$conditionValue); ?>
 </div>
 <?php if ($_SESSION['conditionScope'] == "value") { ?>
 
-<h4>Conditions sur les données : </h4>
+<h4>Conditions on data : </h4>
 <div class="row">
 	<div class="col-lg-3"><label>
             <input type="text" class="form-control" name="metric" value="<?php echo($_GET['table']."/".$_GET['column']); ?>" disabled>
@@ -100,7 +100,7 @@ if (isset($_SESSION['connected'])) {
 </div>
 <?php } else if ($_SESSION['conditionScope'] == "metrics") {  ?>
 
-<h4>Conditions sur les métriques : </h4>
+<h4>Conditions on metrics : </h4>
 <div class="row">
 	<div class="col-lg-3"><?php generateSelector("metric",$metricsList); ?></div>
 	<div class="col-lg-2"><?php generateSelector("condition",$conditionsList); ?></div>

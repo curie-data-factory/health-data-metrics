@@ -222,7 +222,6 @@ if(isset($_POST['kibana2'])) {
 						<button type="submit" value="<?php echo($_SESSION['filter-display-METRIQUE']); ?>" <?php if($_SESSION["filter-display-METRIQUE"] == "True"){ echo('style="background-color: #007bff; border-color: #007bff; "');
 						} ?> name="filter-display-METRIQUE" class=' mr-4 btn btn-<?php if($_SESSION["filter-display-METRIQUE"] == "True"){ echo("primary") ;} else {echo("light") ;} ?>'>METRIQUE</button>
 						<button type="submit" value="<?php echo($_SESSION['seeAll']) ?>" name="seeAll" class='btn btn-<?php if($_SESSION["seeAll"] == "True"){ echo("primary") ;} else {echo("light") ;} ?>'>See All</button>
-
 						</div>
 						</div>
 				</div>

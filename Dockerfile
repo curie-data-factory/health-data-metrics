@@ -10,11 +10,22 @@ FROM php:${PHP_VERSION}-apache
 
 ARG APP_VERSION=2.2.0
 
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 # hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get -y --no-install-recommends install wget unzip libldap2-dev zip libzip-dev openssl libc-dev build-essential default-libmysqlclient-dev msmtp msmtp-mta && \
     rm -R /var/lib/apt/lists/*
-    
+
+RUN pear config-set http_proxy $http_proxy && \
+    pear config-set php_ini $PHP_INI_DIR/php.ini
+
+
+# Install XDebug
+RUN pecl install redis \
+    && pecl install xdebug
+
 # Configuring LDAP
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
 &&  docker-php-ext-install ldap

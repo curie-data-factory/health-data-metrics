@@ -30,8 +30,11 @@ $alerts_subs = simple_query_db($conn,"SELECT DISTINCT mail FROM hdm_core_mail_li
 # Envoi des alertes :
 
 $alert_db_list_for_sub = simple_query_db($conn,"SELECT * FROM hdm_core_mail_list  WHERE `type` = 'alerts' AND `mail` = '".$_SESSION['user_ids']['mail']."'");
-# Construction de la requête pour récupérer les alertes
-showAlertMessage($_SESSION['user_ids']['mail'],$alert_db_list_for_sub,$conn);
+
+if ($alert_db_list_for_sub != null) {
+    # Construction de la requête pour récupérer les alertes
+    showAlertMessage($_SESSION['user_ids']['mail'],$alert_db_list_for_sub,$conn);
+}
 
 function showAlertMessage($infos,$db_list,$conn) {
 

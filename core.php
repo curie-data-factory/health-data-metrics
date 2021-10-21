@@ -288,18 +288,23 @@ function unsetFormRule()
 	unset($_SESSION['condition']);
 	unset($_SESSION['conditionValue']);
 	unset($_SESSION['conditionScope']);
+	unset($_SESSION['metrics']);
 }
 
 # Fonction qui permet de requêter sans arguments
 function simple_query_db($conn,$query_string) {
     try {
         # Préparation de la requête pour insertion des données dans la table de tokens
-        $query = $conn->prepare($query_string);
-        # Execution de la requête
-        if(!$query->execute()) {
-            print_r($query->errorInfo());
+        if ($conn != null) {
+            $query = $conn->prepare($query_string);
+            # Execution de la requête
+            if(!$query->execute()) {
+                print_r($query->errorInfo());
+            } else {
+                return $query->fetchAll();
+            }
         } else {
-            return $query->fetchAll();
+            return "";
         }
     } catch (PDOException $e) {
         echo 'Connexion échouée : '. $e->getMessage();
