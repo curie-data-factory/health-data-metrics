@@ -4,8 +4,6 @@
 * [Get Started](#get-started)
 	* [Dependencies](#dependencies)
 	* [Configuration](#configuration)
-		* [Application Configuration File](#application-configuration-file)
-		* [LDAP Configuration File](#ldap-configuration-file)
 	* [Run it !](#run-it-)
 		* [Docker Image](#docker-image)
 		* [Helm Chart](#helm-chart)
@@ -70,9 +68,9 @@ See default file : [docs/templates/conf-ldap.json](docs/templates/conf-ldap.json
 
 ### Mail Configuration File
 
-`/var/www/html/conf/ldap/conf-ldap.json` :
+`/var/www/html/conf/mail/msmtprc` :
 
-See default file : [docs/templates/conf-ldap.json](docs/templates/conf-ldap.json)
+See default file : [docs/templates/msmtprc](docs/templates/msmtprc)
 
 ## Run it !
 
