@@ -18,8 +18,8 @@ RUN apt-get update && \
     apt-get -y --no-install-recommends install wget unzip libldap2-dev zip libzip-dev openssl libc-dev build-essential default-libmysqlclient-dev msmtp msmtp-mta && \
     rm -R /var/lib/apt/lists/*
 
-RUN pear config-set http_proxy $http_proxy && \
-    pear config-set php_ini $PHP_INI_DIR/php.ini
+RUN pear config-set http_proxy "$http_proxy" && \
+    pear config-set php_ini "$PHP_INI_DIR/php.ini"
 
 
 # Install XDebug
