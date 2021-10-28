@@ -190,9 +190,6 @@ if(isset($_POST['cancelRule'])){
 
 if(isset($_POST['saveRule'])){
 
-
-    var_dump($_POST);
-
 	// Récupération des variables à enregistrer :
 	$ruleName = $_SESSION['ruleName'];
 	$ruleType = $_SESSION['ruleType'];
@@ -202,8 +199,6 @@ if(isset($_POST['saveRule'])){
     if (!empty($_SESSION['conditionTrigger'])) {
         $conditionTrigger = $_SESSION['conditionTrigger'];
     }
-
-    var_dump($ruleName,$ruleType,$alertLevel,$alertClass);
 
     $alertMessage = $_POST['alertMessage'] ?? $_SESSION['alertMessage'];
 
