@@ -37,6 +37,7 @@ CREATE TABLE `hdm_core_mail_list` (
   `mail` VARCHAR(255) NULL DEFAULT NULL,
   `key` VARCHAR(600) NULL DEFAULT NULL,
   `db_key` VARCHAR(600) NULL DEFAULT NULL,
+  `filters` VARCHAR(600) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 )
 COMMENT='TABLE qui contient la liste des souscriptions mails aux alertes et rapports.'

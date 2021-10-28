@@ -3,10 +3,12 @@
 ###########################
 # ARMAND LEOPOLD
 # 19/08/2021
-# This page show sended mails of alerts.
+# This page show sent mails of alerts.
 ###########################
-include_once("core.php");
-include_once("connect_db.php");
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 $_SESSION['split-display-database'] = "True";
 $_SESSION['split-display-table'] = "False";
@@ -19,6 +21,11 @@ $_SESSION['filter-display-METRICCOMPARE'] = "True";
 $_SESSION['filter-display-METRIQUE'] = "True";
 $_SESSION['filter-display-DATA'] = "True";
 $_SESSION['filter-display-SCHEMA'] = "True";
+
+include_once("connect_db.php");
+if (isset($_SESSION['connected'])) {
+    include_once("header.php");
+}
 
 ###########################
 # Récupération de la liste des abonnements mails :
@@ -39,13 +46,7 @@ if ($alert_db_list_for_sub != null) {
 function showAlertMessage($infos,$db_list,$conn) {
 
     // message
-    $message = '<html lang="en">
-    <head>
-        <title>[HDM] Alert Report</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    </head>
-    <body>
+    $message = '
     <style>
     .table td, .table th {
         padding: 0.2rem;
@@ -99,16 +100,22 @@ function showAlertMessage($infos,$db_list,$conn) {
 
     foreach($db_list as $db_key) {
 
-        $db_ids = explode(":",$db_key['db_key']);
-        $query = "SELECT * FROM `hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."'";
-        $alert_data = simple_query_db($conn,$query);
+        if(($db_key['filters'] != null) && ($db_key['filters'] != '')) {
+            # Filtres
+            $filters = $db_key['filters'];
+            $db_ids = explode(":",$db_key['db_key']);
 
-        if(sizeof($alert_data) > 0){
-            $message .= printHeader($alert_data[0]['database'],true);
-            foreach ($alert_data as $row){
-                $message .= writeRow($row);
+            $query = "SELECT * FROM `hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."' AND (`alert_level` IN ('".$filters."') OR `alert_class` IN ('".$filters."'))";
+
+            $alert_data = simple_query_db($conn,$query);
+
+            if(sizeof($alert_data) > 0){
+                $message .= printHeader($alert_data[0]['database'],true);
+                foreach ($alert_data as $row){
+                    $message .= writeRow($row);
+                }
+                $message .= '</tbody></table></div>';
             }
-            $message .= '</tbody></table></div>';
         }
     }
 

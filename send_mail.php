@@ -120,7 +120,7 @@ function sendAlertMessage($infos,$db_list,$conn) {
               <img alt="logo" src="https://raw.githubusercontent.com/curie-data-factory/health-data-metrics/master/img/logo-hdm.png" width="105" height="67" style="float:right;">
               <h3 style="color:#111c;">HDM / Alert Report : '.date("Y-m-d").' / '.$infos['mail'].'</h3>
               <hr>
-              <h3><a href="http://'.$_SERVER['SERVER_NAME'].'/mail_reports.php">See Full report in Browser</a></h3>
+              <h3><a href="https://'.$_SERVER['SERVER_NAME'].'/mail_reports.php">See Full report in Browser</a></h3>
           </div>
       </div>
       <div class="row">
@@ -129,16 +129,22 @@ function sendAlertMessage($infos,$db_list,$conn) {
 
     foreach($db_list as $db_key) {
 
-        $db_ids = explode(":",$db_key['db_key']);
-        $query = "SELECT * FROM `hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."'";
-        $alert_data = simple_query_db($conn,$query);
+        if(($db_key['filters'] != null) && ($db_key['filters'] != '')) {
+            # Filtres
+            $filters = $db_key['filters'];
+            $db_ids = explode(":",$db_key['db_key']);
 
-        if(sizeof($alert_data) > 0){
-            $message .= printHeader($alert_data[0]['database'],true);
-            foreach ($alert_data as $row){
-                $message .= writeRow($row);
+            $query = "SELECT * FROM `hdm_alerts` WHERE `database` = '".$db_ids[0]."' AND `date` = '".date("Y-m-d")."' AND (`alert_level` IN ('".$filters."') OR `alert_class` IN ('".$filters."'))";
+
+            $alert_data = simple_query_db($conn,$query);
+
+            if(sizeof($alert_data) > 0){
+                $message .= printHeader($alert_data[0]['database'],true);
+                foreach ($alert_data as $row){
+                    $message .= writeRow($row);
+                }
+                $message .= '</tbody></table></div>';
             }
-            $message .= '</tbody></table></div>';
         }
     }
 
@@ -149,8 +155,6 @@ function sendAlertMessage($infos,$db_list,$conn) {
     $headers[] = "Reply-To: no-reply-hdm@".$_SERVER['SERVER_NAME'];
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-type: text/html; charset=utf-8';
-
-//    echo $message;
 
     // Envoi
     mail($to, $subject, $message, implode("\r\n", $headers));

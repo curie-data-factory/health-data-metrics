@@ -541,7 +541,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/header.php';
 												<strong class="p-1 colg-lg-9 d-block text-gray-dark"><?php echo $value['rule_name']; ?></strong>
 												<?php
 												switch ($value['alert_level']) {
-													case 'Haut':
+													case 'High':
 													echo('<span class="col-lg-5 badge badge-danger p-2 mr-2"><b> High Priority </b></span>');
 													break;
 													case 'Warning':
