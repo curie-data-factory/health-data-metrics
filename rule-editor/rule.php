@@ -4,6 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (isset($_SESSION['connected'])) {
 
 include_once($_SERVER['DOCUMENT_ROOT'].'/connect_db.php');
@@ -15,6 +19,7 @@ if (!isset($_SESSION['rulePack'])) {
 } else {
     $rule_pack = $_GET['rulePack'] ?? $_SESSION['rulePack'];
 }
+
 $_SESSION['rulePack'] = $rule_pack;
 
 // Pack Name :
@@ -22,8 +27,9 @@ $pack_name = explode("_",$_SESSION['rulePack'])[1];
 
 $sql_rule_pack = "SELECT * FROM `information_schema`.`TABLES` WHERE TABLE_NAME LIKE 'rule%'LIMIT 100;";
 $sth = $conn->prepare($sql_rule_pack, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-$sth->execute(array('id_rule' => $_POST['id_rule']));
+$sth->execute();
 $rule_pack_table_list = $sth->fetchAll(PDO::FETCH_ASSOC);
+
 #########
 
 if (isset($_POST['editRule'])) {
@@ -45,7 +51,7 @@ if (isset($_POST['editRule'])) {
 
 	switch ($_SESSION['ruleType']) {
 		case 'sql':
-			$_SESSION['sqlRequestValue'] = base64_encode($res['rule_content']);
+			$_SESSION['sqlRequestValue'] = base64_decode($res['rule_content']);
 			break;
 		case 'conditionnelle':
 
@@ -60,6 +66,9 @@ if (isset($_POST['editRule'])) {
 			$_SESSION['conditionValue'] = $dataParsed->{'conditionValue'};
 			$_SESSION['conditionTrigger'] = $dataParsed->{'conditionTrigger'};
 			break;
+        default:
+            $_SESSION['rawContentRule'] = base64_decode($res['rule_content']);
+            break;
 	}
 
 	$_SESSION['ruleEdit'] = True;
@@ -210,13 +219,16 @@ if(isset($_POST['saveRule'])){
 	switch ($ruleType) {
 		case 'sql':
 		    $ruleContent = base64_encode($_SESSION['sqlRequestValue']);
-		break;
+		    break;
 		case 'conditionnelle':
 		    $ruleContent = base64_encode(json_encode(array("metric" => $_SESSION['metric'],
 							"condition" => $_SESSION['condition'],
                             "conditionValue" => $_SESSION['conditionValue'],
 							"conditionTrigger" => $_SESSION['conditionTrigger'])));
-		break;
+		    break;
+        default:
+            $ruleContent = base64_encode($_SESSION['rawContentRule']);
+            break;
 	}
 
 	switch ($alertScope) {
@@ -236,7 +248,11 @@ if(isset($_POST['saveRule'])){
 		break;
 	}
 
-	$conditionScope = $_SESSION['conditionScope'];
+    if(isset($_SESSION['conditionScope']) AND $_SESSION['conditionScope'] != null) {
+        $conditionScope = $_SESSION['conditionScope'];
+    } else {
+        $conditionScope = '';
+    }
 
 	if (isset($_SESSION['ruleEdit'])) {
 		$sql = 'UPDATE `'.$_SESSION['rulePack'].'` SET `rule_name`=:rule_name, `rule_type`=:rule_type, `alert_level`=:alert_level, `alert_class`=:alert_class, `alert_message`=:alert_message, `alert_scope`=:alert_scope, `condition_trigger`=:condition_trigger,`condition_scope`=:condition_scope, `database`=:database, `table`=:table, `column`=:column, `rule_content`=:rule_content WHERE `id_rule`=:id_rule;';

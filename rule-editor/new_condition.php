@@ -12,62 +12,66 @@ $varType = "";
 if (!isset($_SESSION['form-step'])) {
 	$_SESSION['form-step'] = 0;
 	$_SESSION['alertClass'] = "Conditionnelle";
-	$_SESSION['alertLevel'] = "Haut";
+	$_SESSION['alertLevel'] = "High";
 	$_SESSION['alertMessage'] = "";
 }
 
 if((isset($_POST['newConditionColumn']) || isset($_SESSION['form-step'])) && (isset($_SESSION['metrics']))) {
-	switch ($_SESSION['metrics']['infered_data_type']) {
-		case 'string':
-            switch (@$_SESSION['metrics']['is_categorical']) {
-                case 1:
-                $varType = "Catégorique";
-                break;
-                default:
-                $varType = "Texte Non Catégorique";
-                break;
-            }
-		break;
-		case 'date':
-		    $varType = "Date";
-		break;
-		case 'floating':
-		    $varType = "Numérique décimale";
-		break;
-		case 'integer':
-		    $varType = "Numérique Entier";
-		break;
-		case 'empty':
-		    $varType = "NULL";
-		break;
-	}
 
-    switch ($_SESSION['metrics']['datatype']) {
-        case 'string':
-            switch (@$_SESSION['metrics']['is_categorical']) {
-                case 1:
-                    $varType = "Catégorique";
-                    break;
-                default:
-                    $varType = "Texte Non Catégorique";
-                    break;
-            }
-            break;
-        case 'date':
-            $varType = "Date";
-            break;
-        case 'floating':
-            $varType = "Numérique décimale";
-            break;
-        case 'integer':
-            $varType = "Numérique Entier";
-            break;
-        case 'datetime':
-            $varType = "Date Horaire";
-            break;
-        case 'empty':
-            $varType = "NULL";
-            break;
+    if(isset($_SESSION['metrics']['infered_data_type'])) {
+        switch ($_SESSION['metrics']['infered_data_type']) {
+            case 'string':
+                switch (@$_SESSION['metrics']['is_categorical']) {
+                    case 1:
+                        $varType = "Catégorique";
+                        break;
+                    default:
+                        $varType = "Texte Non Catégorique";
+                        break;
+                }
+                break;
+            case 'date':
+                $varType = "Date";
+                break;
+            case 'floating':
+                $varType = "Numérique décimale";
+                break;
+            case 'integer':
+                $varType = "Numérique Entier";
+                break;
+            case 'empty':
+                $varType = "NULL";
+                break;
+        }
+    }
+    else if(isset($_SESSION['metrics']['datatype'])) {
+        switch ($_SESSION['metrics']['datatype']) {
+            case 'string':
+                switch (@$_SESSION['metrics']['is_categorical']) {
+                    case 1:
+                        $varType = "Catégorique";
+                        break;
+                    default:
+                        $varType = "Texte Non Catégorique";
+                        break;
+                }
+                break;
+            case 'date':
+                $varType = "Date";
+                break;
+            case 'floating':
+                $varType = "Numérique décimale";
+                break;
+            case 'integer':
+                $varType = "Numérique Entier";
+                break;
+            case 'datetime':
+                $varType = "Date Horaire";
+                break;
+            case 'empty':
+                $varType = "NULL";
+                break;
+        }
     }
 }
 
@@ -100,6 +104,10 @@ if (isset($_POST['alertLevel'])) {
 
 if (isset($_POST['sqlRequestValue'])) {
 	$_SESSION['sqlRequestValue'] = $_POST['sqlRequestValue'];
+}
+
+if (isset($_POST['rawContentRule'])){
+    $_SESSION['rawContentRule'] = $_POST['rawContentRule'];
 }
 
 if (isset($_POST['ruleName'])) {
@@ -171,7 +179,7 @@ if (isset($_POST['nextConditionnalQuery'])) {
 				<legend  class="w-auto">2. Construction : </legend>
 				<div class="form-group">
 					<label for="sqlRequestValue">Your SQL Query : </label>
-					<textarea required class="form-control" id="sqlRequestValue" name="sqlRequestValue" rows="5"><?php echo @$_SESSION['sqlRequestValue']; ?></textarea>
+					<textarea required class="form-control" id="sqlRequestValue" name="sqlRequestValue" rows="5"><?php if(isset($_SESSION['sqlRequestValue'])) {echo $_SESSION['sqlRequestValue'];} ?></textarea>
 				</div>
 				<input type="submit" name="nextSQLConstruct" value="Save the SQL query" class="btn btn-primary col-sm-12 col-lg-4">
 			</fieldset>
@@ -182,10 +190,10 @@ if (isset($_POST['nextConditionnalQuery'])) {
                 <fieldset class="border p-3 mb-1">
                     <legend  class="w-auto">2. Construction : </legend>
                     <div class="form-group">
-                        <label for="sqlRequestValue">Rule's content : <i>(the data will be encoded in base64)</i> </label>
-                        <textarea required class="form-control" id="sqlRequestValue" name="sqlRequestValue" rows="5"><?php echo base64_decode($res['rule_content']); ?></textarea>
+                        <label for="rawContentRule">Rule's content : <i>(the data will be encoded in base64)</i> </label>
+                        <textarea required class="form-control" id="rawContentRule" name="rawContentRule" rows="5"><?php if(isset($_SESSION['rawContentRule'])) {echo $_SESSION['rawContentRule'];} ?></textarea>
                     </div>
-                    <input type="submit" name="nextSQLConstruct" value="Save the SQL query" class="btn btn-primary col-sm-12 col-lg-4">
+                    <input type="submit" name="nextSQLConstruct" value="Save the rule content" class="btn btn-primary col-sm-12 col-lg-4">
                 </fieldset>
             </form>
             <?php
@@ -265,7 +273,7 @@ if (isset($_POST['nextConditionnalQuery'])) {
 					<div class="col-sm-4">
                         <label>
                             <select class="form-control" name="alertLevel" onchange="this.form.submit()">
-                                <option <?php if($_SESSION['alertLevel'] == "Haut"){ echo "selected";} ?>>High</option>
+                                <option <?php if($_SESSION['alertLevel'] == "High"){ echo "selected";} ?>>High</option>
                                 <option <?php if($_SESSION['alertLevel'] == "Warning"){ echo "selected";} ?>>Warning</option>
                                 <option <?php if($_SESSION['alertLevel'] == "Info"){ echo "selected";} ?>>Info</option>
                             </select>

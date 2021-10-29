@@ -132,19 +132,18 @@ function getDbRpCorrList($conn) {
 // alert table Fonction php qui prend en entrée une ligne de donnée SQL et affiche en une ligne de tableau HTML en tenant compte des afficheurs de filtre de niveau d'alerte
 function writeRow($row): string
 {
-
     $row_print = "";
     $linkRule = "";
 	switch ($row['alert_scope']) {
         case 'database':
         case 'all':
-			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&newFilter=#";
+			$linkRule =  "/rule-editor/rule.php?rulePack=rule_".$row['rule_pack']."&database=".$row['database']."&newFilter=#";
 			break;
         case 'table':
-			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&table=".$row['table']."&newFilter=#";
+			$linkRule =  "/rule-editor/rule.php?rulePack=rule_".$row['rule_pack']."&database=".$row['database']."&table=".$row['table']."&newFilter=#";
 			break;
 		case 'column':
-			$linkRule =  "/rule-editor/rule.php?database=".$row['database']."&table=".$row['table']."&column=".$row['column']."&newFilter=#";
+			$linkRule =  "/rule-editor/rule.php?rulePack=rule_".$row['rule_pack']."&database=".$row['database']."&table=".$row['table']."&column=".$row['column']."&newFilter=#";
 			break;
 	}
 	$display = FALSE;
