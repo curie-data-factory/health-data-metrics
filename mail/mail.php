@@ -184,282 +184,293 @@ if($hdmRulePacks['items'] != NULL){
             <p>Subscription email : <span class="badge badge-primary"><?php echo($_SESSION['user_ids']['mail']); ?></span></p>
                 <div class="row">
                     <div class="col-lg-12">
-                        <fieldset class="border p-3 mb-4">
-                            <legend class="w-auto">Alerts :
-                            <a href="#" data-toggle="tooltip" title="Notice : Receive alerts coming from only selected data-sources."><i class="fas fa-question-circle"></i></a></legend>
-                            <div class="alert alert-primary" role="alert">
-                                Notice :
-                                <br>Receive alerts coming from only selected data-sources.
-                            </div>
-                            <br/>
+                        <ul class="nav nav-tabs" id="mail_content" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="true">Alerts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports" aria-selected="false">Reports</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content col-lg-12" id="mail_content">
+                        <div class="tab-pane active" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+                            <fieldset class="border p-3 mb-4 mt-2">
+                                <legend class="w-auto">Alerts :
+                                <a href="#" data-toggle="tooltip" title="Notice : Receive alerts coming from only selected data-sources."><i class="fas fa-question-circle"></i></a></legend>
+                                <div class="alert alert-primary" role="alert">
+                                    Notice :
+                                    <br>Receive alerts coming from only selected data-sources.
+                                </div>
+                                <br/>
 
-                            <!--
-                            ################################################################################
-                            Matrice de correspondance Rule Pack / Databases :
-                             -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Database</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Host</th>
-                                            <?php
-                                            foreach ($dataReMapRP as $key => $value) {
-                                                if (!isset($terpvalue)
-                                                    OR ($value != $terpvalue)) {
-                                                    echo("<th scope=\"col\">".$value[array_key_first($value)]['name']."</th>");
-                                                    $terpvalue = $value;
-                                                }
-                                            }
-                                            ?>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        foreach ($hdmDbList as $db) {
-
-                                            $dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
-                                            ?>
+                                <!--
+                                ################################################################################
+                                Matrice de correspondance Rule Pack / Databases :
+                                 -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-bordered">
+                                            <thead>
                                             <tr>
-                                                <td><?php echo($db['db_name']) ?></td>
-                                                <td><?php echo($db['db_type']) ?></td>
-                                                <td><?php echo($db['db_host']) ?></td>
+                                                <th scope="col">Database</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Host</th>
                                                 <?php
                                                 foreach ($dataReMapRP as $key => $value) {
-
-                                                    $scanned = false;
-                                                    $checked = false;
-                                                    // Si la clé est déjà présente en base on check la box
-                                                    foreach ($hdmRPCorrList as $CorrDbKey) {
-                                                        if(($CorrDbKey['db_key'] == $dbkey)
-                                                            && ($CorrDbKey['rp_key'] == $value[array_key_first($value)]['name'])){
-                                                            $scanned = true;
-                                                        }
+                                                    if (!isset($terpvalue)
+                                                        OR ($value != $terpvalue)) {
+                                                        echo("<th scope=\"col\">".$value[array_key_first($value)]['name']."</th>");
+                                                        $terpvalue = $value;
                                                     }
+                                                }
+                                                ?>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            foreach ($hdmDbList as $db) {
 
-                                                    // Si la clé est déjà présente en base on check la box
-                                                    foreach ($hdmMailList as $CorrDbKey) {
-                                                        if(($CorrDbKey['db_key'] == $dbkey)
-                                                            && $CorrDbKey['type'] == "alerts"
-                                                            && ($CorrDbKey['key'] == $value[array_key_first($value)]['name'])){
-                                                            $checked = true;
-                                                            $current_filters = $CorrDbKey['filters'];
+                                                $dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo($db['db_name']) ?></td>
+                                                    <td><?php echo($db['db_type']) ?></td>
+                                                    <td><?php echo($db['db_host']) ?></td>
+                                                    <?php
+                                                    foreach ($dataReMapRP as $key => $value) {
+
+                                                        $scanned = false;
+                                                        $checked = false;
+                                                        // Si la clé est déjà présente en base on check la box
+                                                        foreach ($hdmRPCorrList as $CorrDbKey) {
+                                                            if(($CorrDbKey['db_key'] == $dbkey)
+                                                                && ($CorrDbKey['rp_key'] == $value[array_key_first($value)]['name'])){
+                                                                $scanned = true;
+                                                            }
                                                         }
-                                                    }
 
-                                                    ?>
-                                                    <td>
-                                                        <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
-                                                            <input type="checkbox" name="checkbox"  class="double" <?php if($scanned & $checked) { echo "checked"; } else if($scanned) { echo ""; } else { echo "disabled"; } ?> onChange="this.form.submit()">
-                                                            <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
-                                                            <input type="hidden" name="rpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
-                                                        </form>
-                                                        <form method="post" action="mail.php" style="display: inline-block; vertical-align: middle;">
-                                                            <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
-                                                            <input type="hidden" name="rpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
-                                                            <input type="hidden" name="rpconfig" value="True">
-                                                        </form>
-                                                        <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
-                                                            <?php
-                                                            if($scanned & $checked) {
-                                                                $modal_id = sanitize($dbkey.'-'.$value[array_key_first($value)]['name']);
+                                                        // Si la clé est déjà présente en base on check la box
+                                                        foreach ($hdmMailList as $CorrDbKey) {
+                                                            if(($CorrDbKey['db_key'] == $dbkey)
+                                                                && $CorrDbKey['type'] == "alerts"
+                                                                && ($CorrDbKey['key'] == $value[array_key_first($value)]['name'])){
+                                                                $checked = true;
+                                                                $current_filters = $CorrDbKey['filters'];
+                                                            }
+                                                        }
 
-                                                                $mail_alert_display_high = "False";
-                                                                $mail_alert_display_warn = "False";
-                                                                $mail_alert_display_info = "False";
+                                                        ?>
+                                                        <td>
+                                                            <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
+                                                                <input type="checkbox" name="checkbox"  class="double" <?php if($scanned & $checked) { echo "checked"; } else if($scanned) { echo ""; } else { echo "disabled"; } ?> onChange="this.form.submit()">
+                                                                <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+                                                                <input type="hidden" name="rpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
+                                                            </form>
+                                                            <form method="post" action="mail.php" style="display: inline-block; vertical-align: middle;">
+                                                                <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+                                                                <input type="hidden" name="rpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
+                                                                <input type="hidden" name="rpconfig" value="True">
+                                                            </form>
+                                                            <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
+                                                                <?php
+                                                                if($scanned & $checked) {
+                                                                    $modal_id = sanitize($dbkey.'-'.$value[array_key_first($value)]['name']);
 
-                                                                $mail_filter_display_METRICCOMPARE = "False";
-                                                                $mail_filter_display_SCHEMA = "False";
-                                                                $mail_filter_display_DATA = "False";
-                                                                $mail_filter_display_METRIQUE = "False";
+                                                                    $mail_alert_display_high = "False";
+                                                                    $mail_alert_display_warn = "False";
+                                                                    $mail_alert_display_info = "False";
 
-                                                                if ($current_filters != null) {
-                                                                    $current_filters = explode(",",$current_filters);
-                                                                    if (in_array("HIGH", $current_filters)) {
-                                                                        $mail_alert_display_high = "True";
-                                                                    }
-                                                                    if (in_array("WARN", $current_filters)) {
-                                                                        $mail_alert_display_warn = "True";
-                                                                    }
-                                                                    if (in_array("INFO", $current_filters)) {
-                                                                        $mail_alert_display_info = "True";
-                                                                    }
-                                                                    if (in_array("METRICCOMPARE", $current_filters)) {
-                                                                        $mail_filter_display_METRICCOMPARE = "True";
-                                                                    }
-                                                                    if (in_array("SCHEMA", $current_filters)) {
-                                                                        $mail_filter_display_SCHEMA = "True";
-                                                                    }
-                                                                    if (in_array("DATA", $current_filters)) {
-                                                                        $mail_filter_display_DATA = "True";
-                                                                    }
-                                                                    if (in_array("METRIQUE", $current_filters)) {
-                                                                        $mail_filter_display_METRIQUE = "True";
-                                                                    }
-                                                                }
+                                                                    $mail_filter_display_METRICCOMPARE = "False";
+                                                                    $mail_filter_display_SCHEMA = "False";
+                                                                    $mail_filter_display_DATA = "False";
+                                                                    $mail_filter_display_METRIQUE = "False";
 
-                                                                ?>
-                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<?php echo($modal_id) ?>">
-                                                                    <i class="fas fa-filter"></i>
-                                                                </button>
-                                                                <div class="modal fade" id="<?php echo($modal_id) ?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo($modal_id) ?>" aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="<?php echo($modal_id) ?>">Alert Filters</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-12">
-                                                                                    <p>You can apply filters on alerts to get only those who are interesting for you.</p>
-                                                                                    </div>
+                                                                    if ($current_filters != null) {
+                                                                        $current_filters = explode(",",$current_filters);
+                                                                        if (in_array("HIGH", $current_filters)) {
+                                                                            $mail_alert_display_high = "True";
+                                                                        }
+                                                                        if (in_array("WARN", $current_filters)) {
+                                                                            $mail_alert_display_warn = "True";
+                                                                        }
+                                                                        if (in_array("INFO", $current_filters)) {
+                                                                            $mail_alert_display_info = "True";
+                                                                        }
+                                                                        if (in_array("METRICCOMPARE", $current_filters)) {
+                                                                            $mail_filter_display_METRICCOMPARE = "True";
+                                                                        }
+                                                                        if (in_array("SCHEMA", $current_filters)) {
+                                                                            $mail_filter_display_SCHEMA = "True";
+                                                                        }
+                                                                        if (in_array("DATA", $current_filters)) {
+                                                                            $mail_filter_display_DATA = "True";
+                                                                        }
+                                                                        if (in_array("METRIQUE", $current_filters)) {
+                                                                            $mail_filter_display_METRIQUE = "True";
+                                                                        }
+                                                                    }
+
+                                                                    ?>
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<?php echo($modal_id) ?>">
+                                                                        <i class="fas fa-filter"></i>
+                                                                    </button>
+                                                                    <div class="modal fade" id="<?php echo($modal_id) ?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo($modal_id) ?>" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="<?php echo($modal_id) ?>">Alert Filters</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
                                                                                 </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-4">
-                                                                                        <h5>Alert Level : </h5>
-                                                                                        <button type="submit" value="<?php echo($mail_alert_display_high) ?>" name="mail-alert-display-high" class='btn btn-<?php if($mail_alert_display_high == "True"){ echo("danger") ;} else {echo("light") ;} ?> '>High</button>
-                                                                                        <button type="submit" value="<?php echo($mail_alert_display_warn) ?>" name="mail-alert-display-warn" class='btn btn-<?php if($mail_alert_display_warn == "True"){ echo("warning") ;} else {echo("light") ;} ?> '>Warning</button>
-                                                                                        <button type="submit" value="<?php echo($mail_alert_display_info) ?>" name="mail-alert-display-info" class='mr-4 btn btn-<?php if($mail_alert_display_info == "True"){ echo("info") ;} else {echo("light") ;} ?> '>Info</button>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12">
+                                                                                        <p>You can apply filters on alerts to get only those who are interesting for you.</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="col-lg-8">
-                                                                                        <h5> Alert Class : </h5>
-                                                                                        <button type="submit" value="<?php echo($mail_filter_display_METRICCOMPARE) ?>" name="mail-filter-display-METRICCOMPARE" class='btn btn-<?php if($mail_filter_display_METRICCOMPARE == "True"){ echo("secondary") ;} else {echo("light") ;} ?> '>METRICCOMPARE</button>
-                                                                                        <button type="submit" value="<?php echo($mail_filter_display_SCHEMA) ?>" name="mail-filter-display-SCHEMA" class='btn btn-<?php if($mail_filter_display_SCHEMA == "True"){ echo("success") ;} else {echo("light") ;} ?> '>SCHEMA</button>
-                                                                                        <button type="submit" value="<?php echo($mail_filter_display_DATA) ?>" name="mail-filter-display-DATA" class='btn btn-<?php if($mail_filter_display_DATA == "True"){ echo("dark") ;} else {echo("light") ;} ?> '>DATA</button>
-                                                                                        <button type="submit" value="<?php echo($mail_filter_display_METRIQUE); ?>" name="mail-filter-display-METRIQUE" class=' mr-4 btn btn-<?php if($mail_filter_display_METRIQUE == "True"){ echo("primary") ;} else {echo("light") ;} ?>'>METRIQUE</button>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-4">
+                                                                                            <h5>Alert Level : </h5>
+                                                                                            <button type="submit" value="<?php echo($mail_alert_display_high) ?>" name="mail-alert-display-high" class='btn btn-<?php if($mail_alert_display_high == "True"){ echo("danger") ;} else {echo("light") ;} ?> '>High</button>
+                                                                                            <button type="submit" value="<?php echo($mail_alert_display_warn) ?>" name="mail-alert-display-warn" class='btn btn-<?php if($mail_alert_display_warn == "True"){ echo("warning") ;} else {echo("light") ;} ?> '>Warning</button>
+                                                                                            <button type="submit" value="<?php echo($mail_alert_display_info) ?>" name="mail-alert-display-info" class='mr-4 btn btn-<?php if($mail_alert_display_info == "True"){ echo("info") ;} else {echo("light") ;} ?> '>Info</button>
+                                                                                        </div>
+                                                                                        <div class="col-lg-8">
+                                                                                            <h5> Alert Class : </h5>
+                                                                                            <button type="submit" value="<?php echo($mail_filter_display_METRICCOMPARE) ?>" name="mail-filter-display-METRICCOMPARE" class='btn btn-<?php if($mail_filter_display_METRICCOMPARE == "True"){ echo("secondary") ;} else {echo("light") ;} ?> '>METRICCOMPARE</button>
+                                                                                            <button type="submit" value="<?php echo($mail_filter_display_SCHEMA) ?>" name="mail-filter-display-SCHEMA" class='btn btn-<?php if($mail_filter_display_SCHEMA == "True"){ echo("success") ;} else {echo("light") ;} ?> '>SCHEMA</button>
+                                                                                            <button type="submit" value="<?php echo($mail_filter_display_DATA) ?>" name="mail-filter-display-DATA" class='btn btn-<?php if($mail_filter_display_DATA == "True"){ echo("dark") ;} else {echo("light") ;} ?> '>DATA</button>
+                                                                                            <button type="submit" value="<?php echo($mail_filter_display_METRIQUE); ?>" name="mail-filter-display-METRIQUE" class=' mr-4 btn btn-<?php if($mail_filter_display_METRIQUE == "True"){ echo("primary") ;} else {echo("light") ;} ?>'>METRIQUE</button>
+                                                                                        </div>
                                                                                     </div>
+                                                                                    <div class="row mt-4">
+                                                                                        <div class="col-lg-8">
+                                                                                            <p>Database key : <span class="badge badge-primary"><?php echo($dbkey); ?></span></p>
+                                                                                        </div>
+                                                                                        <div class="col-lg-4">
+                                                                                            <p>Pack name : <span class="badge badge-primary"><?php echo($value[array_key_first($value)]['name']); ?></span></p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <input type="hidden" name="alertType" value="alerts">
+                                                                                    <input type="hidden" name="filterUpdate" value="True">
+                                                                                    <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+                                                                                    <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
                                                                                 </div>
-                                                                                <div class="row mt-4">
-                                                                                    <div class="col-lg-8">
-                                                                                        <p>Database key : <span class="badge badge-primary"><?php echo($dbkey); ?></span></p>
-                                                                                    </div>
-                                                                                    <div class="col-lg-4">
-                                                                                        <p>Pack name : <span class="badge badge-primary"><?php echo($value[array_key_first($value)]['name']); ?></span></p>
-                                                                                    </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                                 </div>
-                                                                                <input type="hidden" name="alertType" value="alerts">
-                                                                                <input type="hidden" name="filterUpdate" value="True">
-                                                                                <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
-                                                                                <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </form>
-                                                    </td>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </tr>
-                                            <?php
-                                        } ?>
-                                        </tbody>
-                                    </table>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </form>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                <?php
+                                            } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="col-lg-12">
-                        <fieldset class="border p-3 mb-4">
-                            <legend class="w-auto">Reports :
-                                <a href="#" data-toggle="tooltip" title="Notice : Reports comes from Metric Packs, they are aggregated view of computed metrics. They are sent periodically"><i class="fas fa-question-circle"></i></a></legend>
-                            <div class="alert alert-primary" role="alert">
-                                Notice :
-                                <br> Reports comes from Metric Packs, they are aggregated view of computed metrics. They are sent periodically.
-                                <br> Note that not all metric pack generate reports. Refer to pack documentation to know more, also, schedule can be managed on a per pack basis, but can be also global, be aware of that.
-                                <br> You can only subscribe to databases that are currently scanned by metric packs.
-                            </div>
-                            <!--
-                            ################################################################################
-                            Matrice de correspondance Metric Pack / Databases :
-                             -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Database</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Host</th>
-                                            <?php
-                                            foreach ($dataReMapMP as $key => $value) {
-                                                if (!isset($tempvalue)
-                                                    OR ($value != $tempvalue)) {
-                                                    echo("<th scope=\"col\">".$value[array_key_first($value)]['name']."</th>");
-                                                    $tempvalue = $value;
-                                                }
-                                            }
-                                            ?>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        foreach ($hdmDbList as $db) {
-
-                                            $dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
-                                            ?>
+                            </fieldset>
+                        </div>
+                        <div class="tab-pane" id="reports" role="tabpanel" aria-labelledby="reports-tab">
+                            <fieldset class="border p-3 mb-4 mt-2">
+                                <legend class="w-auto">Reports :
+                                    <a href="#" data-toggle="tooltip" title="Notice : Reports comes from Metric Packs, they are aggregated view of computed metrics. They are sent periodically"><i class="fas fa-question-circle"></i></a></legend>
+                                <div class="alert alert-primary" role="alert">
+                                    Notice :
+                                    <br> Reports comes from Metric Packs, they are aggregated view of computed metrics. They are sent periodically.
+                                    <br> Note that not all metric pack generate reports. Refer to pack documentation to know more, also, schedule can be managed on a per pack basis, but can be also global, be aware of that.
+                                    <br> You can only subscribe to databases that are currently scanned by metric packs.
+                                </div>
+                                <!--
+                                ################################################################################
+                                Matrice de correspondance Metric Pack / Databases :
+                                 -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-bordered">
+                                            <thead>
                                             <tr>
-                                                <td><?php echo($db['db_name']) ?></td>
-                                                <td><?php echo($db['db_type']) ?></td>
-                                                <td><?php echo($db['db_host']) ?></td>
+                                                <th scope="col">Database</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Host</th>
                                                 <?php
                                                 foreach ($dataReMapMP as $key => $value) {
-
-                                                    $scanned = false;
-                                                    $checked = false;
-                                                    // Si la clé est déjà présente en base on rend la box "checkable"
-                                                    foreach ($hdmMPCorrList as $CorrDbKey) {
-                                                        if(($CorrDbKey['db_key'] == $dbkey)
-                                                            && ($CorrDbKey['mp_key'] == $value[array_key_first($value)]['name'])){
-                                                            $scanned = true;
-                                                        }
+                                                    if (!isset($tempvalue)
+                                                        OR ($value != $tempvalue)) {
+                                                        echo("<th scope=\"col\">".$value[array_key_first($value)]['name']."</th>");
+                                                        $tempvalue = $value;
                                                     }
-
-                                                    // Si la clé est déjà présente en base on check la box
-                                                    foreach ($hdmMailList as $CorrDbKey) {
-                                                        if(($CorrDbKey['db_key'] == $dbkey)
-                                                            && $CorrDbKey['type'] == "reports"
-                                                            && ($CorrDbKey['key'] == $value[array_key_first($value)]['name'])){
-                                                            $checked = true;
-                                                        }
-                                                    }
-
-                                                    ?>
-                                                    <td>
-                                                        <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
-                                                            <input type="checkbox" name="checkbox"  class="double" <?php if($scanned & $checked) { echo "checked"; } else if($scanned) { echo ""; } else { echo "disabled"; } ?> onChange="this.form.submit()">
-                                                            <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
-                                                            <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
-                                                        </form>
-                                                        <form method="post" action="mail.php" style="display: inline-block; vertical-align: middle;">
-                                                            <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
-                                                            <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
-                                                            <input type="hidden" name="mpconfig" value="True">
-                                                        </form>
-                                                    </td>
-                                                    <?php
                                                 }
                                                 ?>
                                             </tr>
+                                            </thead>
+                                            <tbody>
                                             <?php
-                                        } ?>
-                                        </tbody>
-                                    </table>
+                                            foreach ($hdmDbList as $db) {
+
+                                                $dbkey = $db['db_name'].":".$db['db_type'].":".$db['db_host'].":".$db['db_port'].":".$db['db_user'].":".$db['db_is_ssl'];
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo($db['db_name']) ?></td>
+                                                    <td><?php echo($db['db_type']) ?></td>
+                                                    <td><?php echo($db['db_host']) ?></td>
+                                                    <?php
+                                                    foreach ($dataReMapMP as $key => $value) {
+
+                                                        $scanned = false;
+                                                        $checked = false;
+                                                        // Si la clé est déjà présente en base on rend la box "checkable"
+                                                        foreach ($hdmMPCorrList as $CorrDbKey) {
+                                                            if(($CorrDbKey['db_key'] == $dbkey)
+                                                                && ($CorrDbKey['mp_key'] == $value[array_key_first($value)]['name'])){
+                                                                $scanned = true;
+                                                            }
+                                                        }
+
+                                                        // Si la clé est déjà présente en base on check la box
+                                                        foreach ($hdmMailList as $CorrDbKey) {
+                                                            if(($CorrDbKey['db_key'] == $dbkey)
+                                                                && $CorrDbKey['type'] == "reports"
+                                                                && ($CorrDbKey['key'] == $value[array_key_first($value)]['name'])){
+                                                                $checked = true;
+                                                            }
+                                                        }
+
+                                                        ?>
+                                                        <td>
+                                                            <form method="POST" action="mail.php" style="display: inline-block; vertical-align: middle;">
+                                                                <input type="checkbox" name="checkbox"  class="double" <?php if($scanned & $checked) { echo "checked"; } else if($scanned) { echo ""; } else { echo "disabled"; } ?> onChange="this.form.submit()">
+                                                                <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+                                                                <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
+                                                            </form>
+                                                            <form method="post" action="mail.php" style="display: inline-block; vertical-align: middle;">
+                                                                <input type="hidden" name="dbkey" value="<?php echo($dbkey) ?>">
+                                                                <input type="hidden" name="mpkey" value="<?php echo($value[array_key_first($value)]['name']) ?>">
+                                                                <input type="hidden" name="mpconfig" value="True">
+                                                            </form>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                <?php
+                                            } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
         </div>

@@ -147,7 +147,7 @@ function writeRow($row): string
 			break;
 	}
 	$display = FALSE;
-	if(($_SESSION['alert-display-high'] == "True") && ($row['alert_level'] == "Haut")){
+	if(($_SESSION['alert-display-high'] == "True") && ($row['alert_level'] == "High")){
         $row_print .= "<tr class=\"table-danger row\">";
 		$display = TRUE;
 	} elseif(($_SESSION['alert-display-warn'] == "True") && ($row['alert_level'] == "Warning")){
@@ -186,7 +186,7 @@ function writeRow($row): string
 	}
 
 	switch ($row['alert_level']) {
-		case 'Haut':
+		case 'High':
 			$messageClass .= '<span class="badge badge-danger">High</span>';
 			break;
 		case 'Warning':
@@ -228,7 +228,7 @@ function printBadge($array,$selector,$scope){
 					if ($indice == "alert_level") {
 						echo('<span style="float: right;" class="badge badge-');
 						switch($count) {
-							case 'Haut':
+							case 'High':
 							echo "danger";
 							break;
 							case 'Warning':
