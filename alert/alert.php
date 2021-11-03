@@ -404,8 +404,8 @@ if(isset($_POST['kibana2'])) {
 								<div class="col-lg-9">
 									<div class="tab-content" id="v-pills-tabContent">
 									<?php } 
-										$orderbywarning="ORDER BY FIELD(`hdm_alerts`.alert_level, 'Haut', 'Warning', 'Info')";
-										$orderbytable="ORDER BY FIELD( `hdm_alerts`.TABLE,'".$_SESSION['tableName']."',`hdm_alerts`.TABLE),`hdm_alerts`.TABLE,FIELD(`hdm_alerts`.alert_level, 'Haut', 'Warning', 'Info') ; ";
+										$orderbywarning="ORDER BY FIELD(`hdm_alerts`.alert_level, 'High', 'Warning', 'Info')";
+										$orderbytable="ORDER BY FIELD( `hdm_alerts`.TABLE,'".$_SESSION['tableName']."',`hdm_alerts`.TABLE),`hdm_alerts`.TABLE,FIELD(`hdm_alerts`.alert_level, 'High', 'Warning', 'Info') ; ";
 										
 										$alldb="and `hdm_alerts`.database='".$_SESSION['databaseName']."' ";
 										if (@$_SESSION['seeAll'] == "True") {
