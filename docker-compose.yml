@@ -1,14 +1,14 @@
 version: "3.9"
 services:
 
-  # nexus:
-  #   container_name: nexus
-  #   hostname: nexus
-  #   image: "sonatype/nexus3"
-  #   ports:
-  #     - '8081:8081'
-  #   volumes:
-  #     - "nexus-data:/nexus-data"
+  nexus:
+    container_name: nexus
+    hostname: nexus
+    image: "sonatype/nexus3"
+    ports:
+      - '8081:8081'
+    volumes:
+      - "nexus-data:/nexus-data"
 
   hdm:
     container_name: hdm
@@ -25,68 +25,68 @@ services:
     volumes:
       - ".:/var/www/html/"
 
-  # mysql:
-  #   container_name: mysql
-  #   hostname: mysql
-  #   image: mysql:8.0.23
-  #   restart: always
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   environment:
-  #     - "MYSQL_DATABASE=dbhdm"
-  #     # So you don't have to use root, but you can if you like
-  #     - "MYSQL_USER=hdm"
-  #     # You can use whatever password you like
-  #     - "MYSQL_PASSWORD=password"
-  #     # Password for root access
-  #     - "MYSQL_ROOT_PASSWORD=rootpassword"
-  #   ports:
-  #     # <Port exposed> : < MySQL Port running inside container>
-  #     - '3306:3306'
-  #   expose:
-  #     # Opens port 3306 on the container
-  #     - '3306'
-  #     # Where our data will be persisted
-  #   volumes:
-  #     - my-db:/var/lib/mysql
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    image: mysql:8.0.23
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - "MYSQL_DATABASE=dbhdm"
+      # So you don't have to use root, but you can if you like
+      - "MYSQL_USER=hdm"
+      # You can use whatever password you like
+      - "MYSQL_PASSWORD=password"
+      # Password for root access
+      - "MYSQL_ROOT_PASSWORD=rootpassword"
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
 
-  # elasticsearch:
-  #   container_name: elasticsearch
-  #   hostname: elasticsearch
-  #   image: "docker.elastic.co/elasticsearch/elasticsearch:7.12.0"
-  #   environment:
-  #     - cluster.name=es-cluster
-  #     - node.name=es-node-1
-  #     - path.data=/usr/share/elasticsearch/data
-  #     - http.port=9200
-  #     - http.host=0.0.0.0
-  #     - transport.host=127.0.0.1
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
-  #     - xpack.security.enabled=false
-  #   volumes:
-  #     - es-data:/usr/share/elasticsearch/data
-  #   ports:
-  #     - '9200:9200'
-  #   healthcheck:
-  #     test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:password", "http://localhost:9200/_cat/health"]
+  elasticsearch:
+    container_name: elasticsearch
+    hostname: elasticsearch
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.12.0"
+    environment:
+      - cluster.name=es-cluster
+      - node.name=es-node-1
+      - path.data=/usr/share/elasticsearch/data
+      - http.port=9200
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+      - xpack.security.enabled=false
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - '9200:9200'
+    healthcheck:
+      test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:password", "http://localhost:9200/_cat/health"]
 
-  # kibana:
-  #   container_name: kibana
-  #   hostname: kibana
-  #   image: "docker.elastic.co/kibana/kibana:7.12.0"
-  #   environment:
-  #     - "ELASTICSEARCH_PASSWORD=password"
-  #     - server.port=127.0.0.1:5601
-  #     - elasticsearch.url="http://elasticsearch:9200"
-  #     - server.name="kibana"
-  #     - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
-  #   ports:
-  #     - '5601:5601'
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
-  #     retries: 6
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    container_name: kibana
+    hostname: kibana
+    image: "docker.elastic.co/kibana/kibana:7.12.0"
+    environment:
+      - "ELASTICSEARCH_PASSWORD=password"
+      - server.port=127.0.0.1:5601
+      - elasticsearch.url="http://elasticsearch:9200"
+      - server.name="kibana"
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+    ports:
+      - '5601:5601'
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
+      retries: 6
+    depends_on:
+      - elasticsearch
 
 volumes:
   my-db:

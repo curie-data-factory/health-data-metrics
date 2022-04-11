@@ -9,4 +9,4 @@ echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 docker-compose -f docker-compose-airflow.yaml up -d
 
 # fetch hdm application composer dependencies
-docker exec -ti hdm sh -c "composer install --no-dev --optimize-autoloader"
+docker exec -ti hdm sh -c "composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-apache"
