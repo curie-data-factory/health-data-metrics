@@ -30,7 +30,7 @@
 				<li class="nav-item ml-auto">
 					<a class="navbar-brand">
 						<span class="badge badge-secondary">
-							<?php echo($_SESSION['user_ids']['displayname']) ?>
+							<?php echo(@$_SESSION['user_ids']['displayname']) ?>
 						</span>
 					</a>
 				</li>
