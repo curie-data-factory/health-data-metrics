@@ -68,6 +68,13 @@
                                 <?php
                             }
                         break;
+                        case 'none':
+                        	?>
+                                <li class="nav-item" >
+                                    <a class='nav-link <?php if($_SESSION["page"] == "admin"){echo("active");} ?>' href = "/admin.php" ><i class="fas fa-cogs" ></i > Admin</a >
+                                </li >
+                                <?php
+                        break;
                     }
                 ?>
                 <li class="nav-item">

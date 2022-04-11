@@ -1,6 +1,6 @@
 {
   "AUTH": {
-    "AUTH_MODE": "ldap",
+    "AUTH_MODE": "none",
     "AUTH_LDAP_CONF_PATH": "/conf/ldap/conf-ldap.json"
   },
   "DB": {

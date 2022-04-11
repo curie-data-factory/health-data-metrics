@@ -9,8 +9,9 @@ $confFile = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$confFilePat
 $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $confFile['AUTH']['AUTH_LDAP_CONF_PATH']), true);
 
 if (isset($_SESSION['connected'])
-AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])) {
-
+    AND (in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])
+	OR $conf['AUTH']['AUTH_MODE'] == "none")) {
+	
 # On réécrit les valeurs si elles ont été modifiées.
 if (isset($_POST['editApplicationConfiguration'])) {
 	foreach ($confFile as $key => $value) {
