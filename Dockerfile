@@ -57,7 +57,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Installing php App Dependencies
-RUN composer install --no-dev --optimize-autoloader 
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-apache
 
 # By default start up apache in the foreground, override with /bin/bash for interative.
 CMD ["sh", "-c","/var/www/html/start.sh"]
