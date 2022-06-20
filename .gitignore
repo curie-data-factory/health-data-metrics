@@ -9,9 +9,9 @@ __pycache__
 logs
 plugins
 docker-compose.yml
-# tutorials/full-installation/conf-db.json
+tutorials/full-installation/conf-db.json
 .idea/
-# conf/ldap/conf-ldap.json
-# conf/appli/conf-appli.json
-# conf/db/conf-db.json
+conf/ldap/conf-ldap.json
+conf/appli/conf-appli.json
+conf/db/conf-db.json
 site/
