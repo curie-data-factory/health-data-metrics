@@ -1,0 +1,43 @@
+{
+    "hdm-nexus-creds": {
+      "user": "admin",
+      "password": "123qwe"
+    },
+    "hdm-core-database": {
+      "user": "hdm",
+      "password": "password",
+      "host": "mysql",
+      "port": "3306",
+      "database": "dbhdm",
+      "type": "mysql",
+      "ssl": "false"
+    },
+    "hdm-nosql-database": {
+      "user": "",
+      "password": "",
+      "host": "elasticsearch",
+      "namespace": "default",
+      "port": "80",
+      "type": "elasticsearch",
+      "ssl": "false"
+    },
+    "hdm-sql-database": {
+      "user": "hdm",
+      "password": "password",
+      "host": "mysql",
+      "port": "3306",
+      "database": "dbhdm",
+      "type": "mysql",
+      "ssl": "false"
+    },
+    "hdm-scanned-database": [
+      {
+        "user":"hdm",
+        "host":"mysql",
+        "port":"3306",
+        "database":"heart-attack",
+        "type": "mysql",
+        "ssl": "false"
+      }
+    ]
+  }

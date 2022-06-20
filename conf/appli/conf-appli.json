@@ -1,0 +1,26 @@
+{
+    "AUTH": {
+      "AUTH_MODE": "none",
+      "AUTH_LDAP_CONF_PATH": "/conf/ldap/conf-ldap.json"
+    },
+    "DB": {
+      "DB_CONF_PATH": "/conf/db/conf-db.json",
+      "DB_CREATE_SCRIPT_PATH": "/conf/db/create_tables.sql"
+    },
+    "EXPLORER": {
+      "KIBANA_URL": "http://localhost:5601",
+      "KIBANA_NAMESPACE": "default",
+      "KIBANA_HOME_DASHBOARD": "6fd6e110-61bc-11e9-a3e3-29a6fcac61c5",
+      "KIBANA_EXPLORATOR_DASHBOARD": "9c61a2b0-80e2-11ea-9253-e194f90d6a30",
+      "KIBANA_EXPLORATOR_INDEX": "e3a92550-3eb4-11ea-b8ad-5ffe5099689d"
+    },
+    "PACK": {
+      "NEXUS_URL": "http://nexus:8081",
+      "NEXUS_API_URL": "http://nexus:8081/service/rest/v1/",
+      "NEXUS_PACKS_ROOT_REPOSITORY": "hdm-snapshots"
+    },
+    "PIPELINE": {
+      "PIPELINE_RUNNING_MODE": "airflow",
+      "AIRFLOW_URL": "http://localhost:8080/"
+    }
+}

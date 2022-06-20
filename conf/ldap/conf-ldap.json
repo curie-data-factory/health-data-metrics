@@ -1,0 +1,15 @@
+{
+    "service_ldap_authorization_domain": "CN=,OU=,DC=domain,DC=net",
+    "admin_ldap_authorization_domain": "CN=,OU=,DC=domain,DC=net",
+    "config": [
+        {
+            "hosts": [
+                "ldap.domain.net"
+            ],
+            "base_dn": "dc=domain,dc=net",
+            "username": "user",
+            "password": "**********",
+            "account_suffix": "@domain.net"
+        }
+    ]
+}
