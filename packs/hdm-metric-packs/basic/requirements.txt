@@ -1,4 +1,4 @@
 pandas
 sqlalchemy
-elasticsearch
+elasticsearch==7.12.0
 ipython
