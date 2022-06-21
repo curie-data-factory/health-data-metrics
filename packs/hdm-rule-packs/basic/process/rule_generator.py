@@ -96,7 +96,7 @@ for database in dbList:
 ruleList = []
 for schema in databaseSchemas:
     for elem in schema.iterrows():
-        dictElem = {"rule_name":"doublons_ids","rule_type":"conditionnelle","alert_level":"Haut","alert_class":"METRIQUE","alert_message":"Doublons dans la clé Primaire","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem[1]["CONSTRAINT_SCHEMA"],"table":elem[1]["TABLE_NAME"],"column":elem[1]["COLUMN_NAME"],"rule_content":'{"metric":"highest_frequency","condition":">","conditionValue":"1","conditionTrigger":"returnTrue"}'}
+        dictElem = {"rule_name":"doublons_ids","rule_type":"conditionnelle","alert_level":"High","alert_class":"METRIQUE","alert_message":"Doublons dans la clé Primaire","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem[1]["CONSTRAINT_SCHEMA"],"table":elem[1]["TABLE_NAME"],"column":elem[1]["COLUMN_NAME"],"rule_content":'{"metric":"highest_frequency","condition":">","conditionValue":"1","conditionTrigger":"returnTrue"}'}
         ruleList.append(dictElem)
 
 rulesDf = pd.DataFrame(ruleList,columns=["rule_name","rule_type","alert_level","alert_class","alert_message","alert_scope","condition_trigger","condition_scope","database","table","column","rule_content"])
@@ -123,7 +123,7 @@ metricsDB.close()
 
 ruleList = []
 for index, elem in dfMetrics[['database','table','column']].iterrows():
-    dictElem = {"rule_name":"100% missing values","rule_type":"conditionnelle","alert_level":"Haut","alert_class":"METRIQUE","alert_message":"La colonne est vide.","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem["database"],"table":elem["table"],"column":elem["column"],"rule_content":'{"metric":"percent_na_values","condition":"==","conditionValue":"100","conditionTrigger":"returnTrue"}'}
+    dictElem = {"rule_name":"100% missing values","rule_type":"conditionnelle","alert_level":"High","alert_class":"METRIQUE","alert_message":"La colonne est vide.","alert_scope":"column","condition_trigger":"returnTrue","condition_scope":"metrics","database":elem["database"],"table":elem["table"],"column":elem["column"],"rule_content":'{"metric":"percent_na_values","condition":"==","conditionValue":"100","conditionTrigger":"returnTrue"}'}
     ruleList.append(dictElem)
 
 rulesDf = pd.DataFrame(ruleList,columns=["rule_name","rule_type","alert_level","alert_class","alert_message","alert_scope","condition_trigger","condition_scope","database","table","column","rule_content"])
