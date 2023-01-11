@@ -6,7 +6,7 @@
     "hdm-core-database": {
       "user": "hdm",
       "password": "password",
-      "host": "mysql",
+      "host":"mysql",
       "port": "3306",
       "database": "dbhdm",
       "type": "mysql",
@@ -24,7 +24,7 @@
     "hdm-sql-database": {
       "user": "hdm",
       "password": "password",
-      "host": "mysql",
+      "host":"mysql",
       "port": "3306",
       "database": "dbhdm",
       "type": "mysql",
