@@ -62,6 +62,7 @@ We are going to run the `docker-compose` files :
 - `docker-compose-airflow.yml` (Airflow Stack) More INFO [Here](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#)
 
 ```bash
+sed -i -e 's/\r$//' tutorials/full-installation/*.sh
 bash tutorials/full-installation/launch-stack.sh
 ```
 

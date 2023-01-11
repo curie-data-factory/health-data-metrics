@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # pull & run hdm docker container stack
 docker-compose -f docker-compose.yml up -d
 

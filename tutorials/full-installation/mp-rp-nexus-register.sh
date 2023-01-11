@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Prerequis :
 # ZIP
 sudo apt update && sudo apt install -y zip
