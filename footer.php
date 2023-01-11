@@ -1,7 +1,7 @@
 <footer>
 	<br/>
 	<p>
-		Data Factory / Direction des données / Institut Curie - <?php 
+			Health Data Metrics - <?php 
 		echo(date('Y'));
 
         # ouverture du json
