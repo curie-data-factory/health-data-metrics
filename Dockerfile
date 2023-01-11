@@ -4,7 +4,7 @@
 # Container for Health Data Metrics                            #
 ################################################################
 
-ARG PHP_VERSION=7.4.15
+ARG PHP_VERSION=8.0.0
 
 FROM php:${PHP_VERSION}-apache
 
