@@ -63,6 +63,8 @@ We are going to run the `docker-compose` files :
 
 ```bash
 sed -i -e 's/\r$//' tutorials/full-installation/*.sh
+sed -i -e 's/\r$//' packs/hdm-metric-packs/basic/*.sh
+sed -i -e 's/\r$//' packs/hdm-rule-packs/basic/*.sh
 bash tutorials/full-installation/launch-stack.sh
 ```
 
