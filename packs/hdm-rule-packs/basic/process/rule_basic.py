@@ -223,10 +223,11 @@ def ruleInterpreterConditionnal(elem):
         resultsCondition['alert_class'] = rule['alert_class']
         resultsCondition['alert_scope'] = rule['alert_scope']
         resultsCondition['rule_id'] = rule['id_rule']
+        resultsCondition['rule_pack'] = "basic"
         resultsCondition['index'] = resultsCondition['table'].astype(str) +'-'+ resultsCondition['column'].astype(str) +'-'+ resultsCondition['date'].astype(str) +'-'+ resultsCondition['rule_id'].astype(str)
 
         # results cleanning data table
-        resultsCondition = resultsCondition[['database','dbversion','table','column','date','alert_level','alert_message','alert_class','alert_scope','rule_id']]
+        resultsCondition = resultsCondition[['database','dbversion','table','column','date','alert_level','alert_message','alert_class','alert_scope','rule_id','rule_pack']]
         resultsCondition.reset_index(inplace=True,drop=True)
         
         return resultsCondition
@@ -277,6 +278,7 @@ def ruleInterpreterSQL(elem):
         resultQueryTemp['alert_class'] = rule['alert_class']
         resultQueryTemp['alert_scope'] = rule['alert_scope']
         resultQueryTemp['rule_id'] = rule['id_rule']
+        resultQueryTemp['rule_pack'] = "basic"
 
         resultQuery = resultQuery.append(resultQueryTemp,ignore_index=True)
     remoteDB.close()
