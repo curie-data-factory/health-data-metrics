@@ -29,6 +29,7 @@ try {
     <?php
 }
 
+
 /* CONNEXION A LA BASE DE DONNEE */
 $dsn = 'mysql:dbname='.$json["hdm-core-database"]["database"].';host='.$json["hdm-core-database"]['host'].':'.$json["hdm-core-database"]['port'];
 $user = $json["hdm-core-database"]['user'];
@@ -39,6 +40,7 @@ try {
 } catch (PDOException $e) {
    echo $e->getMessage();
 }
+
 
 /* CREATION DES TABLES TECHNIQUES */
 try {
@@ -58,10 +60,8 @@ try {
 }
 
 /* RESULT */
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-if ($res == array()) {
-	echo "Database HDM Script Complete";
-}
+
+echo "Database HDM Script Complete";
 
 }} else {
     include $_SERVER['DOCUMENT_ROOT'].'/login.php';

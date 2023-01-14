@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `hdm_pack_rule_conf` (
 COMMENT='TABLE qui contient la liste des bases de données.'
 ENGINE=InnoDB;
 
-CREATE TABLE `hdm_core_mail_list` (
+CREATE TABLE IF NOT EXISTS `hdm_core_mail_list` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(50) NULL DEFAULT NULL,
   `mail` VARCHAR(255) NULL DEFAULT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `hdm_core_table_corr_db_rp` (
 COMMENT='TABLE qui fait la correspondance entre les bases de données et les rule packs.'
 ENGINE=InnoDB;
 
-CREATE TABLE `hdm_alerts` (
+CREATE TABLE IF NOT EXISTS `hdm_alerts` (
   `database` TEXT(65535) NULL DEFAULT NULL,
   `dbversion` TEXT(65535) NULL DEFAULT NULL,
   `table` TEXT(65535) NULL DEFAULT NULL,
