@@ -62,8 +62,8 @@ mpConf = json.loads(base64.b64decode(mpConf.iloc[0]['pack_config']).decode("utf-
 
 dbList = []
 for db in dbKeys['db_key'].apply(lambda x: x.split(':')).to_list():
-    dbList.append({'database':db[0],'host':db[1],'port':db[2],'user':db[3],'ssl':db[4]})
-dbList = pd.DataFrame(dbList).merge(pd.DataFrame(conf['databases']),on=['database','host','port','user','ssl']).to_json(orient="records")
+    dbList.append({'database':db[0],'host':db[1],'type':db[2],'port':db[3],'user':db[4],'ssl':db[5]})
+dbList = pd.DataFrame(dbList).merge(pd.DataFrame(conf['databases']),on=['database','host','type','port','user','ssl']).to_json(orient="records")
 dbList = json.loads(dbList)
 
 

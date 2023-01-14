@@ -16,7 +16,8 @@
     "databases": [
         {
             "user":"hdm",
-            "host":"mysql",
+            "host": "mysql",
+            "type": "mysql",
             "port":"3306",
             "database":"heart-attack",
             "password":"password",
