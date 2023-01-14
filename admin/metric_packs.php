@@ -4,10 +4,26 @@ $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/con
 $dataConfDb = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].$conf['DB']['DB_CONF_PATH']),true);
 $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
 
-if (isset($_SESSION['connected'])
-    AND (in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])
-	OR $conf['AUTH']['AUTH_MODE'] == "none")) {
-	
+if (isset($_SESSION['connected'])) {
+	if(($conf['AUTH']['AUTH_MODE'] == "none") 
+	|| (isset($_SESSION['user_ids']['memberof']) 
+	AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof']))) {
+
+# Check si la base contient des données sur les MP
+$checkFailed = True;
+try {
+	$hdmDbList = getDbList($conn);
+	$hdmCorrList = getDbMpCorrList($conn);
+	$checkFailed = False;
+} catch (Exception $e) {}
+
+if ($checkFailed) {
+	?>
+	<div class="alert alert-danger" role="alert">
+		Metric Packs loading Error : <?php echo $e->getMessage() ?>.
+	</div>
+	<?php
+} else {
 
 # On passe en variable d'env la conf
 define('NEXUS_URL',$conf['PACK']['NEXUS_URL']);
@@ -331,6 +347,6 @@ if(isset($_POST['mpconfig'])) { ?>
 		</script>
 	</div>
 <?php }
-} else {
+}}} else {
     include $_SERVER['DOCUMENT_ROOT'].'/login.php';
 }

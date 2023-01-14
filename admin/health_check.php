@@ -4,10 +4,11 @@
 $conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT']."/conf/appli/conf-appli.json"), true);
 $ldap_conf = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $conf['AUTH']['AUTH_LDAP_CONF_PATH']), true);
 
-if (isset($_SESSION['connected'])
-    AND (in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof'])
-	OR $conf['AUTH']['AUTH_MODE'] == "none")) {
-	
+if (isset($_SESSION['connected'])) {
+	if(($conf['AUTH']['AUTH_MODE'] == "none") 
+	|| (isset($_SESSION['user_ids']['memberof']) 
+	AND in_array($ldap_conf['admin_ldap_authorization_domain'],$_SESSION['user_ids']['memberof']))) {
+
 ?>
 
 <a href="?tab=health" class="btn btn-primary">Refresh</a>
@@ -52,9 +53,14 @@ if (isset($_SESSION['connected'])
 			foreach ($tableChecks as $table) {
 				$sql = "SELECT * FROM ".$table." LIMIT 1";
 				$sth = $conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-				$sth->execute();
-				$res = $sth->fetchAll(PDO::FETCH_ASSOC);
-				$testTable = false;
+				try {
+					$sth->execute();
+					$res = $sth->fetchAll(PDO::FETCH_ASSOC);
+					$testTable = false;
+				} catch (Exception $e) {
+					$res = [];
+					echo $e->getMessage();
+				}				
 				if (count($res) >= 1) {
 					$testTable = true;
 					?><div class="alert alert-success mb-0 p-2" role="alert">Table [<?php echo($table); ?>] exist and is not empty.</div><?php
@@ -66,6 +72,6 @@ if (isset($_SESSION['connected'])
 		</div>
 	</div>
 </div>
-<?php } else {
+<?php }} else {
     include $_SERVER['DOCUMENT_ROOT'].'/login.php';
 }
