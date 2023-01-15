@@ -12,6 +12,9 @@
 * [Screenshots & User Guide](#screenshots--user-guide)
 * [Build the doc](#build-doc)
 
+## [Youtube Video (French)](https://youtu.be/8YmNQUuj6-E)
+![https://youtu.be/8YmNQUuj6-E](docs/youtube.png)
+
 # Goal
 
 The main goal of HDM is to help asses data quality by running ad-hoc programs that "scan" databases regularly to compute metrics & calculate divergence whether in structure or content of databases. Generating alerts that gives Data Engineers insights on what broke down.
